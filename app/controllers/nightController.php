@@ -16,6 +16,9 @@ class NightController extends AppController
         $this->params = $params;
 
         $this->model = new Models\nightModel();
+
+        $images = $this->model->retrieveAtNightImages();
+        $this->view->assign('images', $images);
     }
 
     public function index(array $params)

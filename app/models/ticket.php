@@ -9,8 +9,9 @@ class Ticket extends AppModel
     private $guide_Id;
     private $date;
     private $event_name;
+    private $amount;
 
-    public function __construct(double $price, int $nrOfPeople, string $language, int $guide_name, datetime $date, string $event_name)
+    public function __construct($price, $nrOfPeople, $language, $guide_name, $date, $event_name, $amount)
     {
         $this->price = $price;
         $this->nrOfPeople = $nrOfPeople;
@@ -18,6 +19,7 @@ class Ticket extends AppModel
         $this->guide_Id = $guide_Id;
         $this->date = $date;
         $this->event_name = $event_name;
+        $this->amount = $amount;
     }
 
     public function setPrice(double $price)
@@ -50,6 +52,11 @@ class Ticket extends AppModel
         $this->event_name = $event_name;
     }
 
+    public function setAmount(int $amount)
+    {
+        $this->amount = $amount;
+    }
+
     public function getPrice()
     {
         return $this->price;
@@ -78,6 +85,11 @@ class Ticket extends AppModel
     public function getEventName()
     {
         return $this->event_name;
+    }
+
+    public function getAmount()
+    {
+        return $this->amount;
     }
 }
 ?>
