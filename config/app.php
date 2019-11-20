@@ -8,7 +8,7 @@ $GLOBALS["CONFIG"] = [
         "host" => "localhost",
         "username" => "root",
         "password" => "",
-        "database" => "budget_system_db"
+        "database" => "hffit1_db"
     ],
     "default" => [
         "controller" => "home",
