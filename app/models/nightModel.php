@@ -51,7 +51,8 @@ class NightModel extends AppModel
         ON tour.event_id = event.id
         INNER JOIN guides 
         ON tour.guides_id = guides.id 
-        WHERE `tour_name` LIKE '%$tour_name%'");
+        WHERE `tour_name` LIKE '%$tour_name%'
+        ORDER BY event.date ASC");
         $db->execute();
         $result = $db->get_result();
 
