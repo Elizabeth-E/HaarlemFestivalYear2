@@ -6,7 +6,7 @@ class Ticket extends AppModel
     private $price;
     private $nrOfPeople;
     private $language;
-    private $guide_Id;
+    private $guide_name;
     private $date;
     private $event_name;
     private $amount;
@@ -16,7 +16,7 @@ class Ticket extends AppModel
         $this->price = $price;
         $this->nrOfPeople = $nrOfPeople;
         $this->language = $language;
-        $this->guide_Id = $guide_Id;
+        $this->guide_name = $guide_name;
         $this->date = $date;
         $this->event_name = $event_name;
         $this->amount = $amount;
@@ -37,9 +37,9 @@ class Ticket extends AppModel
         $this->language = $language;
     }
 
-    public function setGuideName(int $guide_Id)
+    public function setGuideName(string $guide_name)
     {
-        $this->guide_Id = $guide_Id;
+        $this->guide_name = $guide_name;
     }
 
     public function setDate(datetime $date)
@@ -74,7 +74,7 @@ class Ticket extends AppModel
 
     public function getGuideName()
     {
-        return $this->guide_Id;
+        return $this->guide_name;
     }
 
     public function getDate()

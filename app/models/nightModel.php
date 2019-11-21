@@ -40,5 +40,28 @@ class NightModel extends AppModel
         $db->close();
         return $images;
     }
+
+    //retrieves tickets for the At Night event by using the name of a specific tour
+    public function retrieveAtNightTickets($tour_name):array
+    {
+        $tickets = array();
+
+        $db = $this->database->prepare("SELECT tour.tour_language, event.date, guides.name, event.amount FROM tour 
+        INNER JOIN event
+        ON tour.event_id = event.id
+        INNER JOIN guides 
+        ON tour.guides_id = guides.id 
+        WHERE `tour_name` LIKE '%$tour_name%'");
+        $db->execute();
+        $result = $db->get_result();
+
+        while($row = mysqli_fetch_assoc($result))
+        {
+            $ticket = new Ticket(0, 0, $row['tour_language'], $row['name'], $row['date'], $tour_name . ' Tour', $row['amount']);
+            $tickets[] = $ticket;
+        }
+
+        return $tickets;
+    }
 }
 ?>
