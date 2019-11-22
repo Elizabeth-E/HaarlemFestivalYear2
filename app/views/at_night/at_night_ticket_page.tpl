@@ -7,31 +7,46 @@
 
         <!--the tickets will be displayed here based on which tour the customer has selected-->
         {for $i=0 to $tickets|@count-1}
-            <section style="border: 1px black solid; background-color: #F2F2F2; width: 100%; height: 100px;">
-                <section style="text-align: center; height: 100%; width: 20%; border-right: 1px black solid; display: inline-block; font-family: Helvetica Neue; font-size: 20px;">
-                    <section style="margin-top: 22px;">
-                        {print_r(date('l', strtotime($tickets[$i]->getDate())), true)}
-                        <br>
-                        {print_r(date('jS F Y', strtotime($tickets[$i]->getDate())), true)}
+            <form action="{$www}/cart/setTicket/" method=POST>
+                <section style="border: 1px black solid; background-color: #F2F2F2; width: 100%; height: 100px;">
+                    <section style="text-align: center; height: 100%; width: 20%; border-right: 1px black solid; display: inline-block; font-family: Helvetica Neue; font-size: 20px;">
+                        <section style="margin-top: 22px;">
+                            {print_r(date('l', strtotime($tickets[$i]->getDate())), true)}
+                            <br>
+                            {print_r(date('jS F Y', strtotime($tickets[$i]->getDate())), true)}
+                        </section>
                     </section>
+                    <section style="text-align: center; height: 100%; width: 20%; border-right: 1px black solid; display: inline-block; font-family: Helvetica Neue; font-size: 20px;">
+                        <section style="margin-top: 50px;">{print_r($tickets[$i]->getLanguage(), true)}</section>
+                    </section>
+                    <section style="text-align: center; height: 100%; width: 20%; border-right: 1px black solid; display: inline-block; font-family: Helvetica Neue; font-size: 20px;">
+                        <p style="font-size: 20px;"> Starts at: </p>
+                        {print_r(date('H:i', strtotime($tickets[$i]->getDate())), true)}
+                    </section>
+                    <section style="text-align: center; height: 100%; width: 20%; border-right: 1px black solid; display: inline-block; font-family: Helvetica Neue; font-size: 20px;">
+                        <p style="font-size: 20px;"> Guide: </p>
+                        {print_r($tickets[$i]->getGuideName(), true)}
+                    </section>   
+                    {$tickets[$i]->setEventName($page_title)}               
+                    <input type=hidden name=hidden_price value={print_r($tickets[$i]->getPrice(), true)}>
+                    <input type=hidden name=hidden_nrOfPeople value={print_r($tickets[$i]->getNrOfPeople(), true)}>  
+                    <input type=hidden name=hidden_language value={print_r($tickets[$i]->getLanguage(), true)}>  
+                    <input type=hidden name=hidden_guide value={print_r($tickets[$i]->getGuideName(), true)}> 
+                    <input type=hidden name=hidden_date value={print_r($tickets[$i]->getDate(), true)}>  
+                    <input type=hidden name=hidden_eventName value={print_r($tickets[$i]->getEventName(), true)}>  
+                    <input type=hidden name=hidden_amount value={print_r($tickets[$i]->getAmount(), true)}>                     
+                    <input type=submit name="Select_Ticket" value="Select Ticket">        
                 </section>
-                <section style="text-align: center; height: 100%; width: 20%; border-right: 1px black solid; display: inline-block; font-family: Helvetica Neue; font-size: 20px;">
-                    <section style="margin-top: 50px;">{print_r($tickets[$i]->getLanguage(), true)}</section>
-                </section>
-                <section style="text-align: center; height: 100%; width: 20%; border-right: 1px black solid; display: inline-block; font-family: Helvetica Neue; font-size: 20px;">
-                    <p style="font-size: 20px;"> Starts at: </p>
-                    {print_r(date('H:i', strtotime($tickets[$i]->getDate())), true)}
-                </section>
-                <section style="text-align: center; height: 100%; width: 20%; border-right: 1px black solid; display: inline-block; font-family: Helvetica Neue; font-size: 20px;">
-                    <p style="font-size: 20px;"> Guide: </p>
-                    {print_r($tickets[$i]->getGuideName(), true)}
-                </section>              
-                    <a href="{$www}/cart/setTicket/{$i}{$tickets}"><button style="border-radius: 20px;  margin-left: 18px;"> Select Ticket </button></a>
-            </section>
-            <br>
+            </form>
         {/for}
-
+        
         </article>
+
+        <!--this is used to prevent the form from resubmitting the users input-->
+        <script>
+        if (window.history.replaceState) 
+           window.history.replaceState(null, null, window.location.href);
+        </script>
     </section>
 </body>
 
