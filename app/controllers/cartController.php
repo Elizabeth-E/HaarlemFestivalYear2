@@ -34,13 +34,13 @@ class CartController extends AppController
     {
         if(isset($_POST['Select_Ticket']))
         {
-            echo $_POST['hidden_price']."<br>";;
-            echo $_POST['hidden_nrOfPeople']."<br>";;
-            echo $_POST['hidden_language']."<br>";;
-            echo $_POST['hidden_guide']."<br>";;
+            echo $_POST['hidden_language']."<br>";
+            echo $_POST['hidden_guide']."<br>";
             echo $_POST['hidden_date']."<br>";
-            echo $_POST['hidden_eventName']."<br>";;
+            echo $_POST['hidden_eventName']."<br>";
             echo $_POST['hidden_amount'];
+
+            //$shoppingCart = [$_POST['hidden_amount']];               
         }
     }
 }

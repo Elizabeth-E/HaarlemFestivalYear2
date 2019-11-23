@@ -58,7 +58,7 @@ class NightModel extends AppModel
 
         while($row = mysqli_fetch_assoc($result))
         {
-            $ticket = new Ticket(0, 0, $row['tour_language'], $row['name'], $row['date'], $tour_name . ' Tour', $row['amount']);
+            $ticket = new TourTicket($row['tour_language'], $row['name'], $row['date'], $tour_name . ' Tour', $row['amount'], 0, 0);
             $tickets[] = $ticket;
         }
 
