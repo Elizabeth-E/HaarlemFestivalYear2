@@ -3,6 +3,15 @@ namespace App\Controllers;
 
 use App\Models;
 
+if(session_id() == '' || !isset($_SESSION)) {
+    session_start();
+}
+
+if(!isset($_SESSION['shoppingCart']))
+{
+    $_SESSION['shoppingCart'] = array();
+}
+
 class NightController extends AppController
 {
     protected $model = "";
@@ -21,6 +30,14 @@ class NightController extends AppController
         //This is used to retrieve all images for the At Night event
         $images = $this->model->retrieveAtNightImages();
         $this->view->assign('images', $images);
+
+        //If the user selects a ticket, the ticket will be saved in the cart
+        if(isset($_POST['Select_Ticket']))
+            $this->setTicket();
+        else if(isset($_POST['Delete_Tickets']))
+            $this->deleteTickets();
+
+        $this->checkShoppingCart();
     }
 
     //This is used to retrieve information for the At Night home page
@@ -48,6 +65,7 @@ class NightController extends AppController
     {
         $this->view->assign("title", $this->getEventInfo($param[0])->getPageHeader());
         $this->view->assign("page_title", $this->getEventInfo($param[0])->getPageName());
+        $this->view->assign("page_id", $this->getEventInfo($param[0])->getPageId());
 
         //This is used to retrieve the name of the tour by selecting the first word of the header
         $tour_name = explode(" ", $this->getEventInfo($param[0])->getPageHeader());
@@ -58,9 +76,19 @@ class NightController extends AppController
         $this->view->display("at_night/at_night_ticket_page.tpl");
     }
 
+    //This is used to retrieve all tickets for the At Night events by using the name of the tour
     public function getTickets(string $tour_name)
     {
         return $this->model->retrieveAtNightTickets($tour_name);
+    }
+
+    //Checks if the cart is empty or not
+    private function checkShoppingCart()
+    {
+        if(isset($_SESSION['shoppingCart']))
+            $this->view->assign('cart', $_SESSION['shoppingCart']);
+        else
+            $this->view->assign('cart', null);
     }
 
     //This is used to get information for the At Night tour pages
@@ -68,9 +96,37 @@ class NightController extends AppController
     {
         $this->view->assign("title", $this->getEventInfo($param[0])->getPageHeader());
         $this->view->assign("page_title", $this->getEventInfo($param[0])->getPageName());      
-        $this->view->assign("description", $this->getEventInfo($param[0])->getPageDescription);
+        $this->view->assign("description", $this->getEventInfo($param[0])->getPageDescription());
 
         $this->view->display("at_night/at_night_tour_page.tpl");
+    }
+    
+    //This is used to set a ticket inside the cart
+    private function setTicket()
+    {
+        $tourTicket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), $_POST['hidden_event_name'],
+        $_POST['hidden_amount'], (float)$_POST['hidden_regular_price'], (float)$_POST['hidden_family_price']);
+
+        if($_SESSION['shoppingCart'] != null)
+        {
+            $previous_tickets = [];
+
+            foreach($_SESSION['shoppingCart'] as $value)
+                $previous_tickets[] = $value;
+
+            $previous_tickets[] = $tourTicket;
+
+            $_SESSION['shoppingCart'] = $previous_tickets;
+        }
+        else
+        {
+            $_SESSION['shoppingCart'][] = $tourTicket;
+        }
+    }
+
+    private function deleteTickets()
+    {
+        session_unset();
     }
 }
 ?>

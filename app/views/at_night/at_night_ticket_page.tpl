@@ -7,7 +7,7 @@
 
         <!--the tickets will be displayed here based on which tour the customer has selected-->
         {for $i=0 to $tickets|@count-1}
-            <form action="{$www}/cart/setTicket" method=POST>
+            <form method=POST>
                 <section style="border: 1px black solid; background-color: #F2F2F2; width: 100%; height: 100px;">
                     <section style="text-align: center; height: 100%; width: 20%; border-right: 1px black solid; display: inline-block; font-family: Helvetica Neue; font-size: 20px;">
                         <section style="margin-top: 22px;">
@@ -27,12 +27,15 @@
                         <p style="font-size: 20px;"> Guide: </p>
                         {print_r($tickets[$i]->getGuideName(), true)}
                     </section>   
-                    <input type=hidden name=hidden_language value='{print_r($tickets[$i]->getLanguage(), true)}'>  
-                    <input type=hidden name=hidden_guide value='{print_r($tickets[$i]->getGuideName(), true)}'> 
+                    <input type=hidden name=hidden_guide_name value='{print_r($tickets[$i]->getGuideName(), true)}'>
+                    <input type=hidden name=hidden_amount value='{print_r($tickets[$i]->getAmount(), true)}'>  
+                    <input type=hidden name=hidden_event_name value='{print_r($tickets[$i]->getEventName(), true)}'>  
                     <input type=hidden name=hidden_date value='{print_r($tickets[$i]->getDate(), true)}'>  
-                    <input type=hidden name=hidden_eventName value='{print_r($tickets[$i]->getEventName(), true)}'>  
-                    <input type=hidden name=hidden_amount value='{print_r($tickets[$i]->getAmount(), true)}'>                     
-                    <input type=submit name="Select_Ticket" value="Select Ticket">        
+                    <input type=hidden name=hidden_language value='{print_r($tickets[$i]->getLanguage(), true)}'>  
+                    <input type=hidden name=hidden_regular_price value='{print_r($tickets[$i]->getRegularTicketPrice(), true)}'>  
+                    <input type=hidden name=hidden_family_price value='{print_r($tickets[$i]->getFamilyTicketPrice(), true)}'>  
+                    <input type=hidden name=hidden_page_id value='{print_r($page_id, true)}'>                   
+                    <input type=submit name="Select_Ticket" value="Add to cart">        
                 </section>
             </form>
         {/for}
