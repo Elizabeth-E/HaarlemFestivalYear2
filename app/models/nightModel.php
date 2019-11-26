@@ -58,11 +58,28 @@ class NightModel extends AppModel
 
         while($row = mysqli_fetch_assoc($result))
         {
-            $ticket = new TourTicket($row['tour_language'], $row['name'], $row['date'], $tour_name . ' Tour', $row['amount'], 0, 0);
+            $ticket = new TourTicket($row['tour_language'], $row['name'], $row['date'], $tour_name . ' Tour', $row['amount'], $this->retrieveTicketPrice(1), $this->retrieveTicketPrice(2));
             $tickets[] = $ticket;
         }
 
         return $tickets;
+    }
+
+    //This is used to retrieve the price of a ticket type
+    public function retrieveTicketPrice(int $ticket_Id)
+    {
+        $price = 0;
+
+        $db = $this->database->prepare("SELECT price FROM ticket_type WHERE id=?");
+        $db->bind_param("i", $ticket_Id);
+        $db->execute();
+
+        $result = $db->get_result();
+
+        while($row = $result->fetch_assoc())
+            $price = $row['price'];
+        
+        return $price;
     }
 }
 ?>

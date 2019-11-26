@@ -104,7 +104,7 @@ class NightController extends AppController
     //This is used to set a ticket inside the cart
     private function setTicket()
     {
-        $tourTicket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), $_POST['hidden_event_name'],
+        $tourTicket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), 'Haarlem At Night - ' . $_POST['hidden_event_name'],
         $_POST['hidden_amount'], (float)$_POST['hidden_regular_price'], (float)$_POST['hidden_family_price']);
 
         if($_SESSION['shoppingCart'] != null)
