@@ -9,7 +9,7 @@ class NightModel extends AppModel
     }
 
     //This is used to retrieve information from an event by using the event_Id to retrieve the data.
-    public function retrieveEventInfoById(int $eventId)
+    public function retrieveEventInfo(int $eventId)
     {
         $db = $this->database->prepare("SELECT page.id, page.page_name, page.page_description, page.header_title FROM page WHERE page.id = ?");
         $db->bind_param("i", $eventId);
@@ -42,22 +42,31 @@ class NightModel extends AppModel
     }
 
     //retrieves tickets for the At Night event by using the name of a specific tour
-    public function retrieveAtNightTickets($tour_name):array
+    public function retrieveAtNightTickets(string $tour_name, string $language):array
     {
         $tickets = array();
+        $sql = "";
 
-        $db = $this->database->prepare("SELECT tour.tour_language, event.date, guides.name, event.amount FROM tour 
-        INNER JOIN event
-        ON tour.event_id = event.id
-        INNER JOIN guides 
-        ON tour.guides_id = guides.id 
-        WHERE `tour_name` LIKE '%$tour_name%'
-        ORDER BY event.date ASC");
+        if($language == 'Dutch' || $language == 'English' || $language == 'Chinese'){
+            $sql = "SELECT tour.tour_language, event.date, guides.name, event.amount FROM tour 
+            INNER JOIN event ON tour.event_id = event.id
+            INNER JOIN guides ON tour.guides_id = guides.id 
+            WHERE `tour_name` LIKE '%$tour_name%' AND `tour_language` = '$language'
+            ORDER BY event.date ASC";            
+        }
+        else{
+            $sql = "SELECT tour.tour_language, event.date, guides.name, event.amount FROM tour 
+            INNER JOIN event ON tour.event_id = event.id
+            INNER JOIN guides ON tour.guides_id = guides.id 
+            WHERE `tour_name` LIKE '%$tour_name%'
+            ORDER BY event.date ASC";   
+        }
+        
+        $db = $this->database->prepare($sql);       
         $db->execute();
-        $result = $db->get_result();
+        $result = $db->get_result();       
 
-        while($row = mysqli_fetch_assoc($result))
-        {
+        while($row = mysqli_fetch_assoc($result)){
             $ticket = new TourTicket($row['tour_language'], $row['name'], $row['date'], $tour_name . ' Tour', $row['amount'], $this->retrieveTicketPrice(1), $this->retrieveTicketPrice(2));
             $tickets[] = $ticket;
         }

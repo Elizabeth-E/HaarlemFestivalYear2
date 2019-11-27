@@ -1,4 +1,4 @@
-<section style="order:1; margin-left: -400px; width: 500px; height: 40%; background-color: #F2F2F2; display: block; margin-top: -3px; border: 1px black solid; postion: relative;">
+<section style="order:1; margin-left: -400px; width: 500px; height: 40%; background-color: #F2F2F2; display: block; border: 1px black solid; postion: relative;">
     {if empty($cart)}
         <section style="margin-top: 2%; text-align: center; height: 50px;">
             <p style="margin-top: 38px;">{print_r("Please select a ticket to proceed", true)}</p>
