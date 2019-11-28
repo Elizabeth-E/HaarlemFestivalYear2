@@ -34,5 +34,4 @@ class TourTicket extends Ticket
         return $this->family_ticket_price;
     }
 }
-
 ?>

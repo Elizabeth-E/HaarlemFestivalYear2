@@ -67,7 +67,7 @@ class NightModel extends AppModel
         $result = $db->get_result();       
 
         while($row = mysqli_fetch_assoc($result)){
-            $ticket = new TourTicket($row['tour_language'], $row['name'], $row['date'], $tour_name . ' Tour', $row['amount'], $this->retrieveTicketPrice(1), $this->retrieveTicketPrice(2));
+            $ticket = new TourTicket($row['tour_language'], $row['name'], $row['date'], $tour_name . ' Tour', $row['amount'], $this->retrieveTicketPrice(2), $this->retrieveTicketPrice(1));
             $tickets[] = $ticket;
         }
 

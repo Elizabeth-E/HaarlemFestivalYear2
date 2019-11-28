@@ -16,6 +16,7 @@ class NightController extends AppController
 {
     protected $model = "";
     protected $params = [];
+    protected $language = "";
 
     public function __construct(string $action = NULL, array $params)
     {
@@ -31,8 +32,7 @@ class NightController extends AppController
         $images = $this->model->retrieveAtNightImages();
         $this->view->assign('images', $images);
 
-        //If the user selects a ticket, the ticket will be saved in the cart
-        if(isset($_POST['Select_Ticket']))
+        if(isset($_POST['add_ticket']))
             $this->setTicket();
         else if(isset($_POST['Delete_Tickets']))
             $this->deleteTickets();
@@ -63,8 +63,6 @@ class NightController extends AppController
     //This is used to get information for the At Night ticket pages
     public function getTicketPageInfo($param)
     {
-        $language = "";
-
         $this->view->assign("title", $this->getEventInfo($param[0])->getPageHeader());
         $this->view->assign("page_title", $this->getEventInfo($param[0])->getPageName());
         $this->view->assign("page_id", $this->getEventInfo($param[0])->getPageId());
@@ -73,10 +71,10 @@ class NightController extends AppController
         $tour_name = explode(" ", $this->getEventInfo($param[0])->getPageHeader());
 
         if(isset($_POST['language']))
-            $language = $_POST['language'];
+            $this->language = $_POST['language'];
             
-        $tickets = $this->getTickets($tour_name[0], $language);
-
+        $tickets = $this->getTickets($tour_name[0], $this->language);
+        
         $this->view->assign("tickets", $tickets);
 
         $this->view->display("at_night/at_night_ticket_page.tpl");
@@ -122,7 +120,7 @@ class NightController extends AppController
     private function setTicket()
     {
         $tourTicket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), 'Haarlem At Night - ' . $_POST['hidden_event_name'],
-        (int)$_POST['hidden_amount'], (float)$_POST['hidden_regular_price'], (float)$_POST['hidden_family_price']);
+        (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount']);
 
         if($_SESSION['shoppingCart'] != null)
         {

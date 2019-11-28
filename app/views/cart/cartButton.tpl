@@ -2,7 +2,7 @@
     //This is used to show the user which tickets they've selected
     function showCart() 
     {
-        var x = document.getElementById("show");
+        var x = document.getElementById("showCart");
     
         if (x.style.display === "none") 
             x.style.display = "block";
@@ -17,9 +17,9 @@
         {$cart_count}
     </button>
 {else}
-    <button onclick="showCart()" style="margin-top: 4px; margin-left: 50px; width: 45px; border: #FF8300; height: 45px; background-color: #ED7D22; border-radius: 50%;">
+    <button onclick="showCart()" style="color: #FFFFFF; margin-top: 4px; margin-left: 50px; width: 45px; border: #FF8300; height: 45px; background-color: #ED7D22; border-radius: 50%;">
         {$cart_count}
     </button>
 {/if}
 
-<section id="show" style="display: none;">{include file="cart/cart.tpl"}</section>
+<section id="showCart" style="display: none;">{include file="cart/cart.tpl"}</section>
