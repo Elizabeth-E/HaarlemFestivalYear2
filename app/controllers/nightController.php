@@ -17,6 +17,7 @@ class NightController extends AppController
     protected $model = "";
     protected $params = [];
     protected $language = "";
+    protected $pages = [];
 
     public function __construct(string $action = NULL, array $params)
     {
@@ -28,36 +29,50 @@ class NightController extends AppController
         //Model for the At Night event
         $this->model = new Models\nightModel();
 
-        //This is used to retrieve all images for the At Night event
-        $images = $this->model->retrieveAtNightImages();
-        $this->view->assign('images', $images);
+        //This is used to retrieve all pages for the At Night event
+        $this->pages = $this->model->retrieveAtNightPages();
+        $this->view->assign('pages', $this->pages);
 
+        //cart
+        $this->cartController = new CartController($action, $params);
+        
         if(isset($_POST['add_ticket']))
-            $this->setTicket();
-        else if(isset($_POST['Delete_Tickets']))
-            $this->deleteTickets();
+            $this->cartController->setTicket();
+        else if(isset($_POST['delete_tickets']))
+            $this->cartController->deleteTickets();
 
-        $this->checkShoppingCart();
+        $count = $this->cartController->countShoppingCart();
+        $this->view->assign("cart_count", $count);
+    
+        $cart = $this->cartController->checkShoppingCart();
+        $this->view->assign("cart", $cart);
     }
 
     //This is used to retrieve information for the At Night home page
     public function index(array $params)
     {   
-        $this->view->assign("title", $this->getEventInfo(9)->getPageHeader());
-        $this->view->assign("page_title", $this->getEventInfo(9)->getPageName());
+        $home_pages = array();
 
-        $this->view->assign("night_tour", $this->getEventInfo(10));
-        $this->view->assign("beer_tour", $this->getEventInfo(11));
-        $this->view->assign("cocktail_tour", $this->getEventInfo(12));
-        $this->view->assign("hookah_tour", $this->getEventInfo(13));
+        foreach($this->pages as $page)
+        {
+            if($page->getPageHeader() == "At Night - Haarlem Festival")
+            {
+                $this->view->assign("title", $page->getPageHeader());
+                $this->view->assign("page_title", $page->getPageName());
+            }      
+
+            if($page->getPageName() == "Night Tour" || $page->getPageName() == "Beer Tour" || $page->getPageName() == "Cocktail Tour" || $page->getPageName() == "Hookah Tour")
+            {
+                $page_information = array();
+                $page_information[] = $page;
+                $page_information[] = $this->model->retrieveImageForPage($page->getPageId());
+                $home_pages[] = $page_information;
+            }
+        }
+
+        $this->view->assign("home_pages", $home_pages);
 
         $this->view->display("at_night/at_night_home.tpl");
-    }
-
-    //This is used to get information for an event
-    public function getEventInfo(int $eventId)
-    {
-        return $this->model->retrieveEventInfo($eventId);
     }
 
     //This is used to get information for the At Night ticket pages
@@ -86,62 +101,32 @@ class NightController extends AppController
         return $this->model->retrieveAtNightTickets($tour_name, $language);
     }
 
-    //Checks if the cart is empty or not
-    private function checkShoppingCart()
-    {
-        $count = 0;
-
-        if(isset($_SESSION['shoppingCart']))
-        { 
-            foreach($_SESSION['shoppingCart'] as $value)
-                $count += 1;
-
-            $this->view->assign('cart', $_SESSION['shoppingCart']);
-        }  
-        else
-        {
-            $this->view->assign('cart', null);
-        } 
-        
-        $this->view->assign('cart_count', $count);
-    }
-
     //This is used to get information for the At Night tour pages
     public function getTourPageInfo($param)
     {
         $this->view->assign("title", $this->getEventInfo($param[0])->getPageHeader());
-        $this->view->assign("page_title", $this->getEventInfo($param[0])->getPageName());      
+        $this->view->assign("page_id", $this->getEventInfo($param[0])->getPageId());
+        $this->view->assign("page_title", $this->getEventInfo($param[0])->getPageName());    
+        $this->view->assign("page_title_link", explode("-", $this->getEventInfo($param[0])->getPageName()));  
         $this->view->assign("description", $this->getEventInfo($param[0])->getPageDescription());
 
+        $tour_images = [];
+
+        //retrieves the correct images based on which tour the user has selected
+        foreach ($this->images as $tour_image) {
+            if (strpos($this->getEventInfo($param[0])->getPageName(), "Night Tour") && strpos($tour_image['path'], 'nighttour'))
+                $tour_images[] = $tour_image;
+            else if(strpos($this->getEventInfo($param[0])->getPageName(), "Beer Tour") && strpos($tour_image['path'], 'beertour'))
+               $tour_images[] = $tour_image;
+            else if(strpos($this->getEventInfo($param[0])->getPageName(), "Cocktail Tour") && strpos($tour_image['path'], 'cocktailtour'))
+               $tour_images[] = $tour_image;
+            else if(strpos($this->getEventInfo($param[0])->getPageName(), "Hookah Tour") && strpos($tour_image['path'], 'hookahtour'))
+               $tour_images[] = $tour_image;
+        }
+        
+        $this->view->assign("tour_images", $tour_images);
+
         $this->view->display("at_night/at_night_tour_page.tpl");
-    }
-    
-    //This is used to set a ticket inside the cart
-    private function setTicket()
-    {
-        $tourTicket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), 'Haarlem At Night - ' . $_POST['hidden_event_name'],
-        (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount']);
-
-        if($_SESSION['shoppingCart'] != null)
-        {
-            $previous_tickets = [];
-
-            foreach($_SESSION['shoppingCart'] as $value)
-                $previous_tickets[] = $value;
-
-            $previous_tickets[] = $tourTicket;
-
-            $_SESSION['shoppingCart'] = $previous_tickets;
-        }
-        else
-        {
-            $_SESSION['shoppingCart'][] = $tourTicket;
-        }
-    }
-
-    private function deleteTickets()
-    {
-        session_unset();
     }
 }
 ?>

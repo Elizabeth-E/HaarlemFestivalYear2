@@ -1,9 +1,5 @@
 <section style="margin-left: -400px; width: 500px; height: 40%; background-color: #F2F2F2; display: block; border: 1px black solid; postion: relative;">
-    {if empty($cart)}
-        <section style="margin-top: 2%; text-align: center; height: 50px;">
-            <p style="margin-top: 38px;">{print_r("Please select a ticket to proceed", true)}</p>
-        </section>
-    {else}
+    {if !empty($cart)}       
         {foreach from=$cart item=$item}
             <!--tour name-->
             <section style="text-align: center; width: 95%; height: 25px; border-bottom: 2px solid #F2F2F2; background-color: #FFFFFF; margin-left: 13px; font-family: Helvetica Neue; font-size: 17px;">
@@ -40,8 +36,8 @@
         <section style="height: 45px;"></section>
         <section style="width: 100%; margin-top: -30px;">
             <form method=POST style="margin-left: 23%;">
-                <input type=submit value="Confirm & Pay" name="Confirm_Tickets" style="height: 40px; width: 130px; border-radius: 8%; display:inline-block; color: #FFFFFF; background-color: black;">
-                <input type=submit value="Erase Tickets" name="Delete_Tickets" style="height: 40px; width: 130px; border-radius: 8%; display:inline-block; margin-left: 10%; color: #FFFFFF; background-color: black;">
+                <input type=submit value="Confirm & Pay" name="confirm_tickets" style="height: 40px; width: 130px; border-radius: 8%; display:inline-block; color: #FFFFFF; background-color: black;">
+                <input type=submit value="Erase Tickets" name="delete_tickets" style="height: 40px; width: 130px; border-radius: 8%; display:inline-block; margin-left: 10%; color: #FFFFFF; background-color: black;">
             </form>
         </section>
     {/if}

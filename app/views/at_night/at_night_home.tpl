@@ -1,68 +1,31 @@
 {include file="{$layout}\\header.tpl"}
 
-<body style="background-color: #F2F2F2; width: 100%; height: 100%; display: inline-block;">
+<body style="background-color: #F2F2F2; width: 100%; height: 100%; display: inline-block; margin-top: 10%;">
     <section style="background-color: #FFFFFF; width: 70%; height: auto; margin-left: 230px;">
-        <h2 style="text-align: center; font-family: Helvetica Neue;">{$page_title}</h2>
+       <section style="margin-left: 1%;">
+            <a href="{$www}" style="color: #ED7D22; display: inline-block; text-decoration: underline;"> Haarlem Festival</a>
+            <p style="width: 7px; display: inline-block; margin-left: 3px;">></p>
+            <a href="{$www}/night/" style="color: #ED7D22; display: inline-block; text-decoration: underline; margin-left: 3px; font-weight: bold;"> Haarlem At Night</a>
+        </section>
+        <h1 style="text-align: center; font-family: Helvetica Neue; font-weight: 1;">{$page_title}</h1>
         <article style="width: 70%; height: 100%; display: inline-block; margin-left: 15%;">
-            <section style="background-color: #F2F2F2; width: 750px; height: 220px; display: inline-block;">           
-                {foreach from=$images item=$image}
-                    {if $image['name'] == 'home_night_tour'}
-                       <img style="width: 250px; height: 180px; margin-left: 20px; margin-top: -150px;" src={$image['path']}>
-                    {/if}
-                {/foreach}
-                <section style="display: inline-block; margin-left: 10px;">
-                    <h3>{$night_tour->getPageName()}</h3>
-                    <h4 style="height: auto; width: 400px;">{$night_tour->getPageDescription()}</h4>
-                    <a href="{$www}/night/getTicketPageInfo/{5}"><button style="margin-top: 30px;"> Check it out!</button></a>
-                </section>
-            </section>
-
-            <p></p>
-
-            <section style="background-color: #F2F2F2; width: 750px; height: 220px; display: inline-block;">           
-                {foreach from=$images item=$image}
-                    {if $image['name'] == 'home_bar_tour'}
-                       <img style="width: 250px; height: 180px; margin-left: 20px; margin-top: -150px;" src={$image['path']}>
-                    {/if}
-                {/foreach}
-                <section style="display: inline-block; margin-left: 10px;">
-                    <h3>{$beer_tour->getPageName()}</h3>
-                    <h4 style="height: auto; width: 400px;">{$beer_tour->getPageDescription()}</h4>
-                    <a href="{$www}/night/getTicketPageInfo/{6}"><button style="margin-top: 30px;"> Check it out!</button></a>
-                </section>
-            </section>
-
-            <p></p>
-
-            <section style="background-color: #F2F2F2; width: 750px; height: 220px; display: inline-block;">           
-                {foreach from=$images item=$image}
-                    {if $image['name'] == 'home_cocktail_tour'}
-                       <img style="width: 250px; height: 180px; margin-left: 20px; margin-top: -150px;" src={$image['path']}>
-                    {/if}
-                {/foreach}
-                <section style="display: inline-block; margin-left: 10px;">
-                    <h3>{$cocktail_tour->getPageName()}</h3>
-                    <h4 style="height: auto; width: 400px;">{$cocktail_tour->getPageDescription()}</h4>
-                    <a href="{$www}/night/getTicketPageInfo/{7}"><button style="margin-top: 30px;"> Check it out!</button></a>
-                </section>
-            </section>
-
-            <p></p>
-
-            <section style="background-color: #F2F2F2; width: 750px; height: 220px; display: inline-block;">           
-                {foreach from=$images item=$image}
-                    {if $image['name'] == 'home_hookah_tour'}
-                       <img style="width: 250px; height: 180px; margin-left: 20px; margin-top: -150px;" src={$image['path']}>
-                    {/if}
-                {/foreach}
-                <section style="display: inline-block; margin-left: 10px;">
-                    <h3>{$hookah_tour->getPageName()}</h3>
-                    <h4 style="height: auto; width: 400px;">{$hookah_tour->getPageDescription()}</h4>
-                    <a href="{$www}/night/getTicketPageInfo/{8}"><button style="margin-top: 30px;"> Check it out!</button></a>
-                </section>
-            </section>
-
-            <p></p>
+            {foreach from=$home_pages item=$page}
+                    <section style="background-color: #F2F2F2; width: 750px; height: 220px; display: inline-block;">           
+                        <section style="display: inline-block; margin-left: 10px;">
+                            <h3>{$page[0]->getPageName()}</h3>
+                            <section style="display: inline-block; width: 200px;">
+                                {foreach from=$page[1] item=$item}
+                                    <img style="width: 200px; height: 140px; margin-top: -90px;" src='{$item->getImagePath()}'>
+                                {/foreach}
+                            </section>
+                            <section style="display: inline-block; margin-left: 20px;">
+                                <h4 style="width: 400px; display: inline-block;">{$page[0]->getPageDescription()}</h4>
+                                <a href="{$www}/night/getTourPageInfo/{1}"><button style="color: #000000; background-color: #ED7D22; color: white; border: none; display: block;"> Check it out!</button></a>
+                            </section>
+                        </section>
+                    </section>
+                    <p style="display: block; height: 5px;"></p>
+            {/foreach}
         </article>
     </section>
 </body>

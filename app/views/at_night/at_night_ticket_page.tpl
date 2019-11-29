@@ -2,7 +2,7 @@
 
 <body style="background-color: #F2F2F2; width: 100%; height: 100%; display: inline-block;">
     <section style="background-color: #FFFFFF; width: 70%; height: auto; margin-left: 230px;">
-        <h2 style="text-align: center; font-family: Helvetica Neue; font-weight: 1;">{$page_title}</h2>
+        <h1 style="text-align: center; font-family: Helvetica Neue; font-weight: 1;">{$page_title}</h1>
         <article style="width: 70%; height: 100%; display: block; margin-left: 15%;">
             
             <!--this display will be used to filter the tickets by selecting the language-->
@@ -79,7 +79,7 @@
                         </section>
                         <!-- 'Select Ticket' button-->
                         <section style="margin-top: -54px; display: block; margin-left: 628px; ">                
-                            <button onclick="showDropDown({$i})" style="font-size: 13px; width: 90px; height: 30px; color: white; background-color: #ED7D22; border-radius: 5%; border: none; margin-left: 5px;"> Select Ticket </button>
+                            <button onclick="showDropDown({$i})" style="font-size: 15px; width: 110px; height: 30px; color: white; background-color: #ED7D22; border-radius: 5%; border: none; margin-left: -3.5%;"> Select Ticket </button>
                             <script style="display: none;">{include file="js/showDropDownMenu.js"}</script>
                         </section>
                     </section> 
