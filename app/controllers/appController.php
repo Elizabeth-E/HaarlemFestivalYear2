@@ -26,12 +26,8 @@ abstract class AppController
             $this->setTicket();
         else if(isset($_POST['delete_tickets']))
             $this->deleteTickets();
-
-        $count = $this->countShoppingCart();
-        $this->view->assign("cart_count", $count);
     
-        $cart = $this->checkShoppingCart();
-        $this->view->assign("cart", $cart);   
+        $this->checkShoppingCart();
     }
 
     protected function setLayout(string $layout)
@@ -56,28 +52,21 @@ abstract class AppController
         }
     }
 
-    //This is used to count how items are inside the cart
-    public function countShoppingCart(): int
+    //This is used to return any items inside the shoppingCart variable
+    public function checkShoppingCart()
     {
+        $cart = array();
         $count = 0;
 
         if(isset($_SESSION['shoppingCart']))
             foreach($_SESSION['shoppingCart'] as $value)
+            {
                 $count += 1;  
-        
-        return $count;
-    }
-
-    //This is used to return any items inside the shoppingCart variable
-    public function checkShoppingCart(): array
-    {
-        $cart = array();
-
-        if(isset($_SESSION['shoppingCart']))
-            foreach($_SESSION['shoppingCart'] as $value)
                 $cart[] = $value;
-  
-        return $cart;
+            }
+        
+        $this->view->assign("cart_count", $count);
+        $this->view->assign("cart", $cart);  
     }
 
     //This is used to set a ticket inside the cart
