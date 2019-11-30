@@ -21,6 +21,17 @@ abstract class AppController
 
         $this->view->assign("layout", $this->layout);
         $this->view->assign("www", BASE_URL);
+
+        if(isset($_POST['add_ticket']))
+            $this->setTicket();
+        else if(isset($_POST['delete_tickets']))
+            $this->deleteTickets();
+
+        $count = $this->countShoppingCart();
+        $this->view->assign("cart_count", $count);
+    
+        $cart = $this->checkShoppingCart();
+        $this->view->assign("cart", $cart);   
     }
 
     protected function setLayout(string $layout)
@@ -43,6 +54,60 @@ abstract class AppController
         {
             $this->{$this->action}($this->params); // Dispatch to provided action
         }
+    }
+
+    //This is used to count how items are inside the cart
+    public function countShoppingCart(): int
+    {
+        $count = 0;
+
+        if(isset($_SESSION['shoppingCart']))
+            foreach($_SESSION['shoppingCart'] as $value)
+                $count += 1;  
+        
+        return $count;
+    }
+
+    //This is used to return any items inside the shoppingCart variable
+    public function checkShoppingCart(): array
+    {
+        $cart = array();
+
+        if(isset($_SESSION['shoppingCart']))
+            foreach($_SESSION['shoppingCart'] as $value)
+                $cart[] = $value;
+  
+        return $cart;
+    }
+
+    //This is used to set a ticket inside the cart
+    public function setTicket()
+    {
+        //if statements
+        $ticket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), 'Haarlem At Night - ' . $_POST['hidden_event_name'],
+        (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount']);
+
+        if($_SESSION['shoppingCart'] != null)
+        {
+            $previous_tickets = [];
+
+            foreach($_SESSION['shoppingCart'] as $value)
+                $previous_tickets[] = $value;
+
+            $previous_tickets[] = $ticket;
+
+            $_SESSION['shoppingCart'] = $previous_tickets;
+        }
+        else
+        {
+            $_SESSION['shoppingCart'][] = $ticket;
+        }
+    }
+
+    //This is used to delete the tickets inside the cart
+    public function deleteTickets()
+    {
+        session_unset();
     }
 }
 ?>

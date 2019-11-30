@@ -3,15 +3,6 @@ namespace App\Controllers;
 
 use App\Models;
 
-if(session_id() == '' || !isset($_SESSION)) {
-    session_start();
-}
-
-if(!isset($_SESSION['shoppingCart']))
-{
-    $_SESSION['shoppingCart'] = array();
-}
-
 class NightController extends AppController
 {
     protected $model = "";
@@ -32,20 +23,6 @@ class NightController extends AppController
         //This is used to retrieve all pages for the At Night event
         $this->pages = $this->model->retrieveAtNightPages();
         $this->view->assign('pages', $this->pages);
-
-        //cart
-        $this->cartController = new CartController($action, $params);
-        
-        if(isset($_POST['add_ticket']))
-            $this->cartController->setTicket();
-        else if(isset($_POST['delete_tickets']))
-            $this->cartController->deleteTickets();
-
-        $count = $this->cartController->countShoppingCart();
-        $this->view->assign("cart_count", $count);
-    
-        $cart = $this->cartController->checkShoppingCart();
-        $this->view->assign("cart", $cart);
     }
 
     //This is used to retrieve information for the At Night home page
