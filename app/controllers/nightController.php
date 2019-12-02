@@ -9,7 +9,6 @@ class NightController extends AppController
     protected $params = [];
     protected $language = "";
     protected $at_night_pages = [];
-    protected $shopping_cart = NULL;
 
     public function __construct(string $action = NULL, array $params)
     {
@@ -21,18 +20,17 @@ class NightController extends AppController
         //Model for the At Night event
         $this->model = new Models\nightModel();
 
-        $shopping_cart = $this->getCart(); 
-
-
         //This is used to retrieve all pages for the At Night event
         $this->at_night_pages = $this->model->retrieveAtNightPages();
         $this->view->assign('pages', $this->at_night_pages);
+
+        $this->getCart();
     }
 
     //This is used to retrieve information for the At Night home page
     public function index(array $params)
     {   
-        $home_pages = array();
+        $tour_pages = array();
 
         foreach($this->at_night_pages as $page)
         {
@@ -47,28 +45,25 @@ class NightController extends AppController
                 $page_information = array();
                 $page_information[] = $page;
                 $page_information[] = $this->model->retrieveImageForPage($page->getPageId());
-                $home_pages[] = $page_information;
+                $tour_pages[] = $page_information;
             }
         }
 
-        $this->view->assign("home_pages", $home_pages);
-
+        $this->view->assign("tour_pages", $tour_pages);
         $this->view->display("at_night/at_night_home.tpl");
     }
 
      //This is used to get information for the At Night tour pages
      public function getTourPageInfo($param)
      {
-         $tour_name = explode('_', $param[0]); 
-
          foreach($this->at_night_pages as $page)
          {
-             if($page->getPageName() == ($tour_name[0] . ' - ' . $tour_name[1]))
+             if($page->getPageName() == ('Haarlem At Night' . ' - ' . $param[0]))
              {
                 $this->view->assign("title", $page->getPageHeader());
                 $this->view->assign("page_id", $page->getPageId());
                 $this->view->assign("page_title", $page->getPageName());    
-                $this->view->assign("page_title_link", $tour_name[1]);  
+                $this->view->assign("page_title_link", $param[0]);  
                 $this->view->assign("description", $page->getPageDescription());
                 $this->view->assign("tour_images", $this->model->retrieveImageForPage($page->getPageId()));
              }
@@ -80,6 +75,8 @@ class NightController extends AppController
     //This is used to get information for the At Night ticket pages
     public function getTicketPageInfo($param)
     {
+        $tour_name = explode(' - ', $param[0]);
+
         foreach($this->at_night_pages as $page)
         {
             if($page->getPageName() == ($param[0] . " Tickets"))
@@ -87,15 +84,14 @@ class NightController extends AppController
                 $this->view->assign("title", $page->getPageHeader());
                 $this->view->assign("page_title", $page->getPageName());
                 $this->view->assign("page_id", $page->getPageId());
-                $tour_name = explode(" ", $param[0]);
+                $this->view->assign("tour_page", $tour_name[1]);
+                $tourType = explode(" ", $param[0]);
 
                 if(isset($_POST['language']))
                     $this->language = $_POST['language'];
 
-                $tickets = $this->getTickets($tour_name[4], $this->language);
-        
                 $this->view->assign("language_images", $this->model->retrieveImageForPage($page->getPageId()));
-                $this->view->assign("tickets", $tickets);
+                $this->view->assign("tickets", $this->getTickets($tourType[4], $this->language));
             }
         }
 
