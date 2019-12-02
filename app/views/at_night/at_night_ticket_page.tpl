@@ -1,7 +1,16 @@
 {include file="{$layout}\\header.tpl"}
 
-<body style="background-color: #F2F2F2; width: 100%; height: 100%; display: inline-block;">
+<body style="background-color: #F2F2F2; width: 100%; height: 100%; display: inline-block; margin-top: 10%;">
     <section style="background-color: #FFFFFF; width: 70%; height: auto; margin-left: 230px;">
+     <section style="margin-left: 1%;">
+            <a href="{$www}" style="color: #ED7D22; display: inline-block; text-decoration: underline;"> Haarlem Festival </a>
+            <p style="width: 7px; display: inline-block; margin-left: 3px;">></p>
+            <a href="{$www}/night/" style="color: #ED7D22; display: inline-block; text-decoration: underline; margin-left: 3px;"> Haarlem At Night</a>
+            <p style="width: 7px; display: inline-block; margin-left: 3px;">></p>
+            <a href="{$www}/night/getTourPageInfo/{$tour_page}" style="color: #ED7D22; display: inline-block; text-decoration: underline; margin-left: 3px;">{$tour_page}</a>
+            <p style="width: 7px; display: inline-block; margin-left: 3px;">></p>
+            <p style="color: #ED7D22; display: inline-block; text-decoration: underline; margin-left: 3px; font-weight: bold;">Tickets</p>
+        </section>
         <h1 style="text-align: center; font-family: Helvetica Neue; font-weight: 1;">{$page_title}</h1>
         <article style="width: 70%; height: 100%; display: block; margin-left: 15%;">
             
@@ -91,17 +100,20 @@
                                         <input type=hidden name=hidden_language value='{print_r($tickets[$i]->getLanguage(), true)}'>  
                                         <input type=hidden name=hidden_regular_price id="regular_price" value='{print_r($tickets[$i]->getRegularTicketPrice(), true)}'>  
                                         <input type=hidden name=hidden_family_price id="family_price" value='{print_r($tickets[$i]->getFamilyTicketPrice(), true)}'>  
-                                        <input type=hidden name=hidden_regular_amount id="reg_amount{$i}" value=0>
-                                        <input type=hidden name=hidden_family_amount id="fam_amount{$i}" value=0>
-                                        <input type=hidden name=hidden_total_payment id="tot_amount{$i}"> 
+                                        <input type=hidden name=hidden_regular_amount id="regular_amount{$i}" value=0>
+                                        <input type=hidden name=hidden_family_amount id="family_amount{$i}" value=0>
+                                        <input type=hidden name=hidden_total_payment id="total_amount{$i}"> 
                                         <p style="width: 200px; font-size: 15px; text-align: center;"> *The items inside the cart will only last for 24 hours </p>
                                         <input type=submit name=add_ticket value="Add to cart" style="margin-left: 50px; font-family: Helvetica Neue; background-color: #000000; border-radius: 5%; width: 120px; height: 40px; color: #FFFFFF; border: none; font-size: 22px;">
                                     </form>
                                 </section>
                                 <!--total payment-->
                                 <section style="display: block; height: 20px; border-top: 1px solid black; margin-left: 10px;">
-                                    <p style="display: inline-block; width: 30%; font-size: 24px; background: none;">Total cost:</p>
-                                    <input disabled type=text name="total_payment" id="total_payment{$i}" value='€{number_format((float)print_r(0, true), 2, '.', '')}' style="width: 68%; border: none; display: inline-block; text-align: right; background: none; font-size: 24px;">
+                                    <p style="display: inline-block; width: 35%; font-size: 24px;">Total cost: </p>
+                                    <section style="display: inline-block; width: 60%; text-align: right;">
+                                        <p style="display: inline-block; font-size: 24px;">€</p>
+                                        <input disabled type=text id="total_payment{$i}" style="display: inline-block; border: none; background: none; font-size: 24px; width: 23%;" value='{number_format((float)print_r(0, true), 2, '.', '')}'>
+                                    </section>
                                 </section>                               
                             </section>                          
                         </section> 

@@ -7,12 +7,12 @@
             <p style="width: 7px; display: inline-block; margin-left: 3px;">></p>
             <a href="{$www}/night/" style="color: #ED7D22; display: inline-block; text-decoration: underline; margin-left: 3px;"> Haarlem At Night</a>
             <p style="width: 7px; display: inline-block; margin-left: 3px;">></p>
-            <a href="{$www}/night/getTourPageInfo/{$page_title_link}" style="color: #ED7D22; display: inline-block; text-decoration: underline; margin-left: 3px; font-weight: bold;"> {$page_title_link} </a>
+            <p style="color: #ED7D22; display: inline-block; text-decoration: underline; margin-left: 3px; font-weight: bold;"> {$page_title_link} </p>
         </section>
         <h1 style="text-align: center; font-family: Helvetica Neue; font-weight: 1;">{$page_title}</h1>
         <p style="height: 5px;"></p>
         <h2 style="font-family: Helvetica Neue; font-weight: 1; width: 58%; font-size: 26px; margin-left: 25%;">{$description}</h2>
-        <a href="{$www}/night/getTicketPageInfo/{$page_title}"><button style="font-family: Helvetica Neue; font-weight: 1; width: 100px; height: 30px; border:none; font-size: 14px; margin-left: 25%; background-color: #ED7D22; color: #FFFFFF;;"> Get Tickets </button></a>
+        <a href="{$www}/night/getTicketPageInfo/{$page_title}"><button style="font-family: Helvetica Neue; width: 100px; height: 30px; border:none; font-size: 14px; margin-left: 25%; background-color: #ED7D22; color: #FFFFFF;">Get Tickets</button></a>
         <p style="height: 5px;"></p>
 
         <!--images of locations-->

@@ -47,9 +47,9 @@ function updateTotalPayment(i)
     var regular_total = parseInt(document.getElementById("regular_ticket" + i).value, 10) * parseFloat(document.getElementById("regular_price").value);
     var family_total = parseInt(document.getElementById("family_ticket" + i).value, 10) * parseFloat(document.getElementById("family_price").value);
     
-    document.getElementById("total_payment" + i).value = "€" + parseFloat(family_total + regular_total).toFixed(2);
+    document.getElementById("total_payment" + i).value = parseFloat(family_total + regular_total).toFixed(2);
 
-    document.getElementById("reg_amount" + i).value = parseInt(document.getElementById("regular_ticket" + i).value, 10);
-    document.getElementById("fam_amount" + i).value = parseInt(document.getElementById("family_ticket" + i).value, 10);
-    document.getElementById("tot_amount" + i).value = document.getElementById("total_payment" + i).value;
+    document.getElementById("regular_amount" + i).value = parseInt(document.getElementById("regular_ticket" + i).value, 10);
+    document.getElementById("family_amount" + i).value = parseInt(document.getElementById("family_ticket" + i).value, 10);
+    document.getElementById("total_amount" + i).value = document.getElementById("total_payment" + i).value;
 }

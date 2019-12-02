@@ -35,6 +35,10 @@
         {/foreach}
         <section style="height: 45px;"></section>
         <section style="width: 100%; margin-top: -30px;">
+            <section style="width: 95%; height: 25px; margin-left: 13px; background-color: white; display: white;">
+                <p style="display: inline-block; width: 20%;">Total cost: </p>
+                <p style="display: inline-block; text-align: right; width: 75%">€{$total_payment}</p>
+            </section>
             <form method=POST style="margin-left: 23%;">
                 <input type=submit value="Confirm & Pay" name="confirm_tickets" style="height: 40px; width: 130px; border-radius: 8%; display:inline-block; color: #FFFFFF; background-color: black;">
                 <input type=submit value="Erase Tickets" name="delete_tickets" style="height: 40px; width: 130px; border-radius: 8%; display:inline-block; margin-left: 10%; color: #FFFFFF; background-color: black;">

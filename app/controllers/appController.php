@@ -48,6 +48,10 @@ abstract class AppController
     {
         $cartController = new CartController("index", []);
 
+        $this->view->assign("cart_count", count($cartController->checkShoppingCart()));
+        $this->view->assign("cart", $cartController->checkShoppingCart());
+        $this->view->assign("total_payment", $cartController->calculateTotalPayment());
+        
         return $cartController;
     }
 }
