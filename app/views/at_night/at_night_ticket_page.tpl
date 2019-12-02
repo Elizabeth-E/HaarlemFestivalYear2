@@ -12,34 +12,15 @@
 			            <h3 style="font-size: 16px; font-weight: normal; padding-top: 8px;"> Select your preferred language</h3>
 			        </header>
 
-                    <section style="margin-top: 20px; ">
-                    <!--filters the ticket if it contains the Dutch language-->
-                       <section style="width: 40px; display: inline-block; margin-left: 17px;">
-                            {foreach from=$images item=$image}
-                                {if $image['name'] == 'Dutch'}
-                                    <img style="width: 60px; height: 40px;"src={$image['path']}>
-                                    <input type=submit name=language value='{$image['name']}' style="background-color: #ED7D22; color: #FFFFFF; border: none; width: 60px; margin-top: 8px;">
-                                {/if}
-                            {/foreach}
-                        </section>
-                        <!--filters the ticket if it contains the English language-->
-                       <section style="width: 40px; display: inline-block; margin-left: 33px;">
-                           {foreach from=$images item=$image}
-                                {if $image['name'] == 'English'}
-                                    <img style="width: 60px; height: 40px;"src={$image['path']}>
-                                    <input type=submit name=language value='{$image['name']}' style="background-color: #ED7D22; color: #FFFFFF; border: none; width: 60px; margin-top: 8px;">
-                                {/if}
-                            {/foreach}
-                        </section>
-                        <!--filters the ticket if it contains the Chinese language-->
-                        <section style="width: 40px; display: inline-block; margin-left: 33px;">
-                            {foreach from=$images item=$image}
-                                {if $image['name'] == 'Chinese'}
-                                    <img style="width: 60px; height: 40px;" src={$image['path']}>
-                                    <input type=submit name=language value='{$image['name']}' style="background-color: #ED7D22; color: #FFFFFF; border: none; width: 60px; margin-top: 8px;">
-                                {/if}
-                            {/foreach}
-                        </section>
+                    <section style="margin-top: 20px; margin-left:-2px;">
+                    <!--filters the ticket if the user selects a langauge-->
+                        {foreach from=$language_images item=$image}
+                            <section style="width: 40px; display: inline-block; margin-left: 26px;">
+                                <img style="width: 60px; height: 40px;"src={$image->getImagePath()}>
+                                <input type=submit name=language value='{$image->getImageName()}' style="background-color: #ED7D22; color: #FFFFFF; border: none; width: 60px; margin-top: 8px;">
+                            </section>
+                        {/foreach}
+                        
                     </section>
                     
                     <input type=submit name=language value='Show All Available Languages' style="background-color: #ED7D22; color: #FFFFFF; margin-top: 3.5%; height: 30px; width: 100.1%; border: none;">
@@ -59,9 +40,9 @@
                             </section>
                             <!--image of country flag with language-->
                             <section style="text-align: center; width: 20%; border-right: 1px black solid; display: inline-block;">
-                                {foreach from=$images item=$image}
-                                    {if $image['name'] == print_r($tickets[$i]->getLanguage(), true)}
-                                        <img style="width: 60px; height: 40px; margin-top: 7px;" src={$image['path']}>
+                                {foreach from=$language_images item=$image}
+                                    {if $image->getImageName() == print_r($tickets[$i]->getLanguage(), true)}
+                                        <img style="width: 60px; height: 40px; margin-top: 7px;" src={$image->getImagePath()}>
                                         <section style="margin-top: 3.6px;">{print_r($tickets[$i]->getLanguage(), true)}</section>
                                     {/if}
                                 {/foreach}                            
@@ -79,7 +60,7 @@
                         </section>
                         <!-- 'Select Ticket' button-->
                         <section style="margin-top: -54px; display: block; margin-left: 628px; ">                
-                            <button onclick="showDropDown({$i})" style="font-size: 15px; width: 110px; height: 30px; color: white; background-color: #ED7D22; border-radius: 5%; border: none; margin-left: -3.5%;"> Select Ticket </button>
+                            <button onclick="showDropDown({$i})" style="font-size: 15px; width: 110px; height: 30px; color: white; background-color: #ED7D22; border-radius: 5%; border: none; margin-left: -66px;"> Select Ticket </button>
                             <script style="display: none;">{include file="js/showDropDownMenu.js"}</script>
                         </section>
                     </section> 
@@ -112,15 +93,15 @@
                                         <input type=hidden name=hidden_family_price id="family_price" value='{print_r($tickets[$i]->getFamilyTicketPrice(), true)}'>  
                                         <input type=hidden name=hidden_regular_amount id="reg_amount{$i}" value=0>
                                         <input type=hidden name=hidden_family_amount id="fam_amount{$i}" value=0>
-                                        <input type=hidden name=hidden_total_payment id="tot_payment{$i}" value=0> 
+                                        <input type=hidden name=hidden_total_payment id="tot_amount{$i}"> 
                                         <p style="width: 200px; font-size: 15px; text-align: center;"> *The items inside the cart will only last for 24 hours </p>
                                         <input type=submit name=add_ticket value="Add to cart" style="margin-left: 50px; font-family: Helvetica Neue; background-color: #000000; border-radius: 5%; width: 120px; height: 40px; color: #FFFFFF; border: none; font-size: 22px;">
                                     </form>
                                 </section>
                                 <!--total payment-->
-                                <section style="display: block; height: 20px; border-top: 1px solid black;margin-left: 10px;">
-                                    <p style="width: 25%; font-size: 24px; background: none; display: inline-block;">Total cost:</p>
-                                    <input disabled type=text name="total_payment" id="total_payment{$i}" value='€{number_format((float)print_r(0, true), 2, '.', '')}' style="border: none; display: inline-block; text-align: right; background: none; font-size: 24px;">
+                                <section style="display: block; height: 20px; border-top: 1px solid black; margin-left: 10px;">
+                                    <p style="display: inline-block; width: 30%; font-size: 24px; background: none;">Total cost:</p>
+                                    <input disabled type=text name="total_payment" id="total_payment{$i}" value='€{number_format((float)print_r(0, true), 2, '.', '')}' style="width: 68%; border: none; display: inline-block; text-align: right; background: none; font-size: 24px;">
                                 </section>                               
                             </section>                          
                         </section> 

@@ -8,37 +8,61 @@ class NightModel extends AppModel
         parent::__construct();
     }
 
-    //This is used to retrieve information from an event by using the event_Id to retrieve the data.
-    public function retrieveEventInfo(int $eventId)
+    //This is used to retrieve information from all pages that belongs to the At Night event
+    public function retrieveAtNightPages():array
     {
-        $db = $this->database->prepare("SELECT page.id, page.page_name, page.page_description, page.header_title FROM page WHERE page.id = ?");
-        $db->bind_param("i", $eventId);
+        $db = $this->database->prepare("SELECT page.id, page.page_name, page.page_description, page.header_title FROM page 
+        WHERE page.page_name LIKE '%Night%' 
+        OR page.page_name LIKE '%Beer%' 
+        OR page.page_name LIKE '%Cocktail%'
+        OR page.page_name LIKE '%Hookah%'");
         $db->execute();
 
         $result = $db->get_result();
-        $eventInfo = null;
+        $event_pages = [];
 
         while($row = $result->fetch_assoc())
-            $eventInfo = new Page($row['id'], $row['page_name'], $row['page_description'], $row['header_title']);
+        {
+            $event_page = new Page($row['id'], $row['page_name'], $row['page_description'], $row['header_title']);
+            $event_pages[] = $event_page;
+        }
 
-        return $eventInfo;
+        return $event_pages;
     }
 
-    //retrieves all images that belongs to the At Night event
-    public function retrieveAtNightImages():array
+    //retrieves the image for a specific page
+    public function retrieveImageForPage(int $page_id):array
     {
-        $db = $this->database->prepare("SELECT * FROM picture WHERE `path` LIKE '%night%' ");
+        $db = $this->database->prepare("SELECT * FROM picture_has_page WHERE `page_id` = ?");
+        $db->bind_param("i", $page_id);
         $db->execute();
         $result = $db->get_result();
 
-        //an array of pictures for the At Night event
-        $images = array();
+        $images_for_page = [];
 
         while($row = mysqli_fetch_assoc($result))
-            $images[] = $row;
+        {
+            $image = $this->retrieveImage($row['picture_id']);
+            $images_for_page[] = $image;
+        }
         
         $db->close();
-        return $images;
+        return $images_for_page;
+    }
+
+    private function retrieveImage(int $picture_id)
+    {
+        $db = $this->database->prepare("SELECT * FROM picture WHERE `id` = ?");
+        $db->bind_param("i", $picture_id);
+        $db->execute();
+        $result = $db->get_result();
+
+        $image = null;
+
+        while($row = mysqli_fetch_assoc($result))
+            $image = new Picture($row['id'], $row['name'], $row['path']);
+
+        return $image;
     }
 
     //retrieves tickets for the At Night event by using the name of a specific tour
@@ -75,7 +99,7 @@ class NightModel extends AppModel
     }
 
     //This is used to retrieve the price of a ticket type
-    public function retrieveTicketPrice(int $ticket_Id)
+    private function retrieveTicketPrice(int $ticket_Id)
     {
         $price = 0;
 
