@@ -19,8 +19,6 @@ abstract class AppController
         $this->params = $params;
         $this->view = new TemplateEngine(); // Initiate template engine
 
-        $cartController = new CartController($action, $params);
-        
         $this->view->assign("layout", $this->layout);
         $this->view->assign("www", BASE_URL);
     }
@@ -44,6 +42,13 @@ abstract class AppController
         {
             $this->{$this->action}($this->params); // Dispatch to provided action
         }
+    }
+    
+    public function getCart()
+    {
+        $cartController = new CartController("index", []);
+
+        return $cartController;
     }
 }
 ?>

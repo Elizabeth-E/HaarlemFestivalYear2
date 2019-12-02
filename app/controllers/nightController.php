@@ -9,6 +9,7 @@ class NightController extends AppController
     protected $params = [];
     protected $language = "";
     protected $at_night_pages = [];
+    protected $shopping_cart = NULL;
 
     public function __construct(string $action = NULL, array $params)
     {
@@ -19,6 +20,9 @@ class NightController extends AppController
 
         //Model for the At Night event
         $this->model = new Models\nightModel();
+
+        $shopping_cart = $this->getCart(); 
+
 
         //This is used to retrieve all pages for the At Night event
         $this->at_night_pages = $this->model->retrieveAtNightPages();

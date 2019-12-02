@@ -9,7 +9,7 @@ class Ticket extends AppModel
     private $event_name;
     private $amount;
 
-    protected function __construct($language, $guide_name, $date, $event_name, $amount)
+    public function __construct($language, $guide_name, $date, $event_name, $amount)
     {
         $this->language = $language;
         $this->guide_name = $guide_name;
