@@ -20,7 +20,7 @@
                             </section>
                             <section style="display: inline-block; margin-left: 20px;">
                                 <h4 style="width: 400px; display: inline-block;">{$page[0]->getPageDescription()}</h4>
-                                <a href="{$www}/night/getTourPageInfo/{1}"><button style="color: #000000; background-color: #ED7D22; color: white; border: none; display: block;"> Check it out!</button></a>
+                                <a href="{$www}/night/getTourPageInfo/{$page_title}_{$page[0]->getPageName()}"><button style="color: #000000; background-color: #ED7D22; color: white; border: none; display: block;"> Check it out!</button></a>
                             </section>
                         </section>
                     </section>
