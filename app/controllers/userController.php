@@ -332,23 +332,6 @@ class UserController extends AppController
 	
 	}
 
-	public function search(array $params)
-	{
-		$this->setLayout("authenticated");
-
-		$this->view->assign("title", "Find members");        
-		$this->view->assign("PUT_URL", $this->getUrlSelf());
-
-		$searchResults = [];
-		if (!empty($_POST))
-		{
-			$searchResults = $this->model->searchUsers($_POST["query"]);	
-		}
-
-		$this->view->assign("resultsFound", count($searchResults));
-		$this->view->assign("searchResults", $searchResults);
-		$this->view->display("user/search.tpl");
-    }
     
     public function profile(array $params)
     {
