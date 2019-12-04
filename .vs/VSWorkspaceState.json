@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\controllers",
+    "\\app\\views",
+    "\\app\\views\\home",
+    "\\app\\views\\layouts\\default",
+    "\\webroot\\js"
+  ],
+  "SelectedNode": "\\app\\views\\home\\index.tpl",
+  "PreviewInSolutionExplorer": false
+}
