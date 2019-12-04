@@ -6,7 +6,7 @@ html, body {
   padding-top: 20px;
 }
 
-section.a {
+/*section.a {
 	padding: 50px 0;
     background-color: #f8f8f8;
 }
@@ -18,7 +18,7 @@ section.b {
 
 ul li.indent {
   padding-left: 20px;
-}
+}*/
 
 /* TYPOGRAPHY */
 h1, h2, h3, h4, h5, h6 {
@@ -315,4 +315,15 @@ footer {
     width: 100%;
     /* margin: 0px; */
     padding: 0px;
+}
+
+a.payment 
+{
+    outline: #000000;
+
+}
+section.maincontent{
+    border: #000000;
+    border-style: solid;
+    border-width: 25px;
 }
