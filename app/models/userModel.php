@@ -32,7 +32,7 @@ class UserModel extends AppModel
 
 		
 
-		$dbHandle = $this->database->prepare("INSERT INTO users (username, password, email, validation_token, firstname, lastname, birthdate) VALUES (?,?,?,?,?,?,?)");
+		$dbHandle = $this->database->prepare("INSERT INTO user (username, password, email, validation_token, firstname, lastname, birthdate) VALUES (?,?,?,?,?,?,?)");
 		$dbHandle->bind_param("sssssss", $username, $password, $email, $validationToken, $firstname, $lastname);
 		$dbHandle->execute();
 		
@@ -43,7 +43,7 @@ class UserModel extends AppModel
 	{
 		$validationToken = $this->generateValidationToken($email);
 		
-		$dbHandle = $this->database->prepare("UPDATE users SET validation_token = ? WHERE email = ?");
+		$dbHandle = $this->database->prepare("UPDATE user SET validation_token = ? WHERE email = ?");
 		$dbHandle->bind_param("ss", $validationToken, $email);
 		$dbHandle->execute();
 		$dbHandle->close();
@@ -65,7 +65,7 @@ class UserModel extends AppModel
 
 	public function userExists(string $email) : bool
 	{
-		$dbHandle = $this->database->prepare("SELECT email from users where email = ?");
+		$dbHandle = $this->database->prepare("SELECT email from user where email = ?");
 		$dbHandle->bind_param("s", $email);
 		$dbHandle->execute();
 
@@ -87,8 +87,8 @@ class UserModel extends AppModel
 
 		$dbHandle = $this->database->prepare("
 		SELECT user.email, user.is_activated, role.role
-		FROM users, user_roles AS role
-		WHERE email = ? and password = ? AND role.id = users.user_roles_id");
+		FROM user, user_roles AS role
+		WHERE email = ? and password = ? AND role.id = user.user_roles_id");
 		$dbHandle->bind_param("ss", $email, $password);
 		$dbHandle->execute();
 
@@ -116,7 +116,7 @@ class UserModel extends AppModel
 
 	public function checkValidationToken(string $email, string $validationToken) : bool
 	{
-		$dbHandle = $this->database->prepare("SELECT validation_token FROM users WHERE email = ? and validation_token = ? ");
+		$dbHandle = $this->database->prepare("SELECT validation_token FROM user WHERE email = ? and validation_token = ? ");
 		$dbHandle->bind_param("ss", $email, $validationToken);
 		$dbHandle->execute();
 
@@ -143,7 +143,7 @@ class UserModel extends AppModel
 
 		if ($this->checkValidationToken($email, $validationToken))
 		{
-			$dbHandle = $this->database->prepare("UPDATE users SET activation_status = 1 WHERE validation_token = ? AND email = ?");
+			$dbHandle = $this->database->prepare("UPDATE user SET activation_status = 1 WHERE validation_token = ? AND email = ?");
 			$dbHandle->bind_param("ss", $validationToken, $email);
 			
 			$status = $dbHandle->execute();
@@ -157,44 +157,12 @@ class UserModel extends AppModel
 	{
 		$password = sha1($password . $this->salt);
 
-		$dbHandle = $this->database->prepare("UPDATE users SET password = ? WHERE email = ?");
+		$dbHandle = $this->database->prepare("UPDATE user SET password = ? WHERE email = ?");
 		$dbHandle->bind_param("ss", $password, $email);
 		$dbHandle->execute();
 		$dbHandle->close();
 	}
 
-	public function searchUsers(string $query) : array
-	{
-		$query = "%" . $query . "%";
-
-		$dbHandle = $this->database->prepare("
-			SELECT users.id, users.username, users.email, users.registration_date, roles.role
-			FROM users, user_roles AS roles
-			WHERE
-				roles.id = users.user_roles_id AND (
-				username LIKE ? OR 
-				email LIKE ? OR 
-				registration_date LIKE ? )
-			LIMIT 0, 10");
-
-		$dbHandle->bind_param("sss", $query, $query, $query);
-		$dbHandle->execute();
-
-		$result = $dbHandle->get_result();
-
-		$searchResults = [];
-		if ($result->num_rows > 0)
-		{
-			while ($row = $result->fetch_assoc())
-			{
-				$searchResults[] = $row;
-			}
-		}
-
-		$dbHandle->close();
-		
-		return $searchResults;
-	}
 
 	public function getUsername() : string
 	{
@@ -224,7 +192,7 @@ class UserModel extends AppModel
 	{
 		$email=\Framework\CryptXOR($email);
 
-		$dbHandle = $this->database->prepare("SELECT username, email, firstname, lastname, birthdate, registration_date FROM users WHERE email = ?");
+		$dbHandle = $this->database->prepare("SELECT username, email, firstname, lastname, birthdate, registration_date FROM user WHERE email = ?");
 		$dbHandle->bind_param("s", $email);
 		$dbHandle->execute();
 
@@ -241,7 +209,7 @@ class UserModel extends AppModel
 
 	public function updateProfile($email, $firstname, $lastname)
 	{
-		$dbHandle = $this->database->prepare("UPDATE users SET email = ?, firstname = ?, lastname = ?, birthdate = ? WHERE email = ?");
+		$dbHandle = $this->database->prepare("UPDATE user SET email = ?, firstname = ?, lastname = ?, birthdate = ? WHERE email = ?");
 		$dbHandle->bind_param("sssss", $email, $firstname, $lastname, $email);
 		$dbHandle->execute();
 		

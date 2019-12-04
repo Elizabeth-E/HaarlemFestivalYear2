@@ -3,11 +3,10 @@
     "",
     "\\app",
     "\\app\\controllers",
+    "\\app\\models",
     "\\app\\views",
-    "\\app\\views\\home",
-    "\\app\\views\\layouts\\default",
-    "\\webroot\\js"
+    "\\app\\views\\user"
   ],
-  "SelectedNode": "\\app\\views\\home\\index.tpl",
+  "SelectedNode": "\\app\\controllers\\userController.php",
   "PreviewInSolutionExplorer": false
 }
