@@ -26,14 +26,14 @@ class UserModel extends AppModel
 	}
 
 	public function register(string $username, string $email, string $password, 
-		string $validationToken, string $firstname, string $lastname, string $birthday)
+		string $validationToken, string $firstname, string $lastname)
 	{
 		$password = sha1($password . $this->salt);
 
 		
 
 		$dbHandle = $this->database->prepare("INSERT INTO users (username, password, email, validation_token, firstname, lastname, birthdate) VALUES (?,?,?,?,?,?,?)");
-		$dbHandle->bind_param("sssssss", $username, $password, $email, $validationToken, $firstname, $lastname, $birthday);
+		$dbHandle->bind_param("sssssss", $username, $password, $email, $validationToken, $firstname, $lastname);
 		$dbHandle->execute();
 		
 		$dbHandle->close();
@@ -86,7 +86,7 @@ class UserModel extends AppModel
 		$password = sha1($password . $this->salt);
 
 		$dbHandle = $this->database->prepare("
-		SELECT users.id, users.email, users.username, users.activation_status, role.role 
+		SELECT user.email, user.is_activated, role.role
 		FROM users, user_roles AS role
 		WHERE email = ? and password = ? AND role.id = users.user_roles_id");
 		$dbHandle->bind_param("ss", $email, $password);
@@ -239,10 +239,10 @@ class UserModel extends AppModel
 		return $profile;
 	} 
 
-	public function updateProfile($email, $firstname, $lastname, $birthday)
+	public function updateProfile($email, $firstname, $lastname)
 	{
 		$dbHandle = $this->database->prepare("UPDATE users SET email = ?, firstname = ?, lastname = ?, birthdate = ? WHERE email = ?");
-		$dbHandle->bind_param("sssss", $email, $firstname, $lastname, $birthday, $email);
+		$dbHandle->bind_param("sssss", $email, $firstname, $lastname, $email);
 		$dbHandle->execute();
 		
 		$dbHandle->close();

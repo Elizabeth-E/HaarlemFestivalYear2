@@ -103,7 +103,6 @@ class UserController extends AppController
             $username = $_POST["username"];
             $firstname = $_POST["FirstName"];
             $lastname = $_POST["LastName"];
-            $birthday = $_POST["birthday"];
             $password = $_POST["password"];
             $passwordConfirm = $_POST["password_confirmation"];
             
@@ -123,7 +122,7 @@ class UserController extends AppController
                 {
                     // TODO: Make error checking
                     $validationToken = $this->model->generateValidationToken($email);
-                    $this->model->register($username, $email, $password, $validationToken, $firstname, $lastname, $birthday);
+                    $this->model->register($username, $email, $password, $validationToken, $firstname, $lastname);
                     
                     // Send email
                     $this->emailEngine->addAddress($email, $username);
@@ -314,9 +313,9 @@ class UserController extends AppController
             $email = $_POST["email"];
             $firstname = $_POST["firstName"];
             $lastname = $_POST["lastName"];
-            $birthday = $_POST["dateOfBirth"];
+           
     
-            $this->model->updateProfile($email, $firstname, $lastname, $birthday);
+            $this->model->updateProfile($email, $firstname, $lastname);
             header("Refresh:0; url=" . BASE_URL . "/user/profile", true, 200); 
 		}
 
