@@ -16,3 +16,4 @@
 </head>
 <body>
 	{include file="{$layout}\\menu.tpl"}
+	{include file="cart/cartButton.tpl"}
