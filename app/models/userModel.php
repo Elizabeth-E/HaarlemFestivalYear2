@@ -32,8 +32,8 @@ class UserModel extends AppModel
 
 		
 
-		$dbHandle = $this->database->prepare("INSERT INTO user (username, password, email, validation_token, firstname, lastname, birthdate) VALUES (?,?,?,?,?,?,?)");
-		$dbHandle->bind_param("sssssss", $username, $password, $email, $validationToken, $firstname, $lastname);
+		$dbHandle = $this->database->prepare("INSERT INTO user (username, password, email, validation_token, firstname, lastname) VALUES (?,?,?,?,?,?)");
+		$dbHandle->bind_param("ssssss", $username, $password, $email, $validationToken, $firstname, $lastname);
 		$dbHandle->execute();
 		
 		$dbHandle->close();
@@ -105,7 +105,7 @@ class UserModel extends AppModel
 			$this->userId = $userData["id"];
 			$this->username = $userData["username"];
 			$this->email = $userData["email"];
-			$this->isActivated = $userData["activation_status"];
+			$this->isActivated = $userData["is_activated"];
 			$this->role = $userData["role"];
 
 			return true;
