@@ -22,5 +22,11 @@ class CheckoutController extends AppController
 
         $this->view->display("cart/checkout.tpl");
     }
+    public function dummy(array $params)
+    {   
+        $this->view->assign("title", "Checkout test");
+
+        $this->view->display("cart/dummypage.tpl");
+    }
 }
 ?>
