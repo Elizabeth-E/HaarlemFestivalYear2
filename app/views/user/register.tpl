@@ -133,5 +133,13 @@ form p {
 a {
   color: black;
 }
-
+footer {
+    background: url('../img/footer.png') repeat-x;
+    min-height: 12%;
+    position: sticky;
+    bottom: 0%;
+    width: 100%;
+    /* margin: 0px; */
+    padding: 0px;
+}
 </style>

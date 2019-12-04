@@ -101,8 +101,8 @@ class UserController extends AppController
         {
             $email = $_POST["email"];
             $username = $_POST["username"];
-            $firstname = $_POST["FirstName"];
-            $lastname = $_POST["LastName"];
+            $firstname = $_POST["firstname"];
+            $lastname = $_POST["lastname"];
             $password = $_POST["password"];
             $passwordConfirm = $_POST["password_confirmation"];
             
@@ -120,30 +120,36 @@ class UserController extends AppController
                 }
                 else
                 {
-                    // TODO: Make error checking
-                    $validationToken = $this->model->generateValidationToken($email);
-                    $this->model->register($username, $email, $password, $validationToken, $firstname, $lastname);
-                    
-                    // Send email
-                    $this->emailEngine->addAddress($email, $username);
-                    
-                    $subject = "Activation Email";
-                    $body = "<h1>Welcome " . $username . ",</h1>
-                            <p>to activate your account please follow the link to our website:<br />
-                            <a href=" . BASE_URL . "/user/account_activation/" . $email . "/" . $validationToken . ">Activate account</a></p>";
+					$validationToken = $this->model->generateValidationToken($email);
+					$is_activated = 0;
+					$this->model->register($username, $email, $password, $validationToken, $is_activated, $firstname, $lastname);
 
-					$emailSent = $this->emailEngine->sendEmail($subject, $body, true);
+					$this->view->assign("alertType", "success");
+                    $this->view->assign("alertMessage", "await activation");
+                    // // TODO: Make error checking
+                    // $validationToken = $this->model->generateValidationToken($email);
+                    // $this->model->register($username, $email, $password, $validationToken, $firstname, $lastname);
+                    
+                    // // Send email
+                    // $this->emailEngine->addAddress($email, $username);
+                    
+                    // $subject = "Activation Email";
+                    // $body = "<h1>Welcome " . $username . ",</h1>
+                    //         <p>to activate your account please follow the link to our website:<br />
+                    //         <a href=" . BASE_URL . "/user/account_activation/" . $email . "/" . $validationToken . ">Activate account</a></p>";
 
-					if ($emailSent)
-					{
-						$this->view->assign("alertType", "success");
-						$this->view->assign("alertMessage", "Check email for activation link!");
-					}
-					else
-					{
-						$this->view->assign("alertType", "warning");
-						$this->view->assign("alertMessage", "You have been registered, but email could not be sent. Contact an administrator.");  
-					}
+					// $emailSent = $this->emailEngine->sendEmail($subject, $body, true);
+
+					// if ($emailSent)
+					// {
+					// 	$this->view->assign("alertType", "success");
+					// 	$this->view->assign("alertMessage", "Check email for activation link!");
+					// }
+					// else
+					// {
+					// 	$this->view->assign("alertType", "warning");
+					// 	$this->view->assign("alertMessage", "You have been registered, but email could not be sent. Contact an administrator.");  
+					// }
 				}
 			}
 			else

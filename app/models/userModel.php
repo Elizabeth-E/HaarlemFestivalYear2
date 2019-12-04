@@ -26,14 +26,13 @@ class UserModel extends AppModel
 	}
 
 	public function register(string $username, string $email, string $password, 
-		string $validationToken, string $firstname, string $lastname)
+		string $validationToken, int $is_activated, string $firstname, string $lastname)
 	{
 		$password = sha1($password . $this->salt);
-
 		
 
-		$dbHandle = $this->database->prepare("INSERT INTO user (username, password, email, validation_token, firstname, lastname) VALUES (?,?,?,?,?,?)");
-		$dbHandle->bind_param("ssssss", $username, $password, $email, $validationToken, $firstname, $lastname);
+		$dbHandle = $this->database->prepare("INSERT INTO user (email, password, firstname, lastname, validation_token, is_activated, username) VALUES (?,?,?,?,?,?,?)");
+		$dbHandle->bind_param("sssssss",  $email, $password, $firstname, $lastname, $validationToken, $is_activated, $username);
 		$dbHandle->execute();
 		
 		$dbHandle->close();

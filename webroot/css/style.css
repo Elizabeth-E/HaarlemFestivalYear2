@@ -310,7 +310,7 @@ i.failed {
 footer {
     background: url('../img/footer.png') repeat-x;
     min-height: 12%;
-    position: fixed;
+    position: sticky;
     bottom: 0%;
     width: 100%;
     /* margin: 0px; */
