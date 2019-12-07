@@ -11,6 +11,7 @@ class CartController extends AppController
         $this->params = $params;
 
         $this->cartButtons();
+        $this->checkShoppingCartTimer();
     }
 
     //This method contains every button that can be used to perform a another method in the cart
@@ -19,10 +20,10 @@ class CartController extends AppController
         if(isset($_POST['add_ticket']))
            $this->checkTicket();
         else if(isset($_POST['delete_tickets']))
-           $this->deleteAllTicket();
+           $this->deleteAllTickets();
     }
 
-    //This is used to calculate the total price of all items inside the cart
+    //Calculates the total price of all items inside the cart
     public function calculateTotalPayment(): float
     {
         $total = 0.00;
@@ -34,7 +35,7 @@ class CartController extends AppController
         return $total;
     }
 
-    //This is used to return any items inside the shoppingCart variable
+    //Returns any items inside the shoppingCart variable
     public function checkShoppingCart():array
     {
         $cart = array();
@@ -46,7 +47,7 @@ class CartController extends AppController
         return $cart; 
     }
 
-    //This is used to check if the ticket can be added into the cart
+    //Checks if the ticket can be added into the cart
     private function checkTicket()
     {
         try
@@ -75,7 +76,7 @@ class CartController extends AppController
         $this->addTicket($ticket);
     }
 
-    //This is used to add the ticket to the cart
+    //Adds the ticket to the cart
     private function addTicket(array $ticket)
     {
         if(isset($_SESSION['shoppingCart']) != null)
@@ -95,7 +96,7 @@ class CartController extends AppController
        }
     }
 
-    //This is used to check the amount of users which can be involved in an activity
+    //Checks the amount of users which can be involved in an activity
     private function isAvailable():bool
     {
         if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
@@ -105,7 +106,7 @@ class CartController extends AppController
         return false;
     }
 
-    //This function is used to check if the user has selected a ticket type
+    //Checks if the user has selected a ticket type
     private function userSelectedTickets():bool
     {
         if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
@@ -115,10 +116,22 @@ class CartController extends AppController
         return false;
     }
 
-    //This is used to delete the tickets inside the cart
-    private function deleteAllTicket()
+    //Deletes the tickets inside the cart
+    private function deleteAllTickets()
     {
         unset($_SESSION['shoppingCart']);
+    }
+
+    //Deletes the tickets after 24 hours
+    private function checkShoppingCartTimer()
+    {
+        if(!empty($_SESSION['shoppingCart']))
+        {
+            if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 86400))
+                $this->deleteAllTickets();
+
+            $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+        }
     }
 }
 ?>
