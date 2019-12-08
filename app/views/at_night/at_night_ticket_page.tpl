@@ -68,7 +68,7 @@
                             </section>                            
                         </section>
                         <!-- 'Select Ticket' button-->
-                        <section style="margin-top: -54px; display: block; margin-left: 628px; ">                
+                        <section style="margin-top: -54px; display: block; margin-left: 92.6%; ">                
                             <button onclick="showDropDown({$i})" style="font-size: 15px; width: 110px; height: 30px; color: white; background-color: #ED7D22; border-radius: 5%; border: none; margin-left: -66px;"> Select Ticket </button>
                             <script style="display: none;">{include file="js/showDropDownMenu.js"}</script>
                         </section>

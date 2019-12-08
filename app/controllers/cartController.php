@@ -11,17 +11,19 @@ class CartController extends AppController
         $this->params = $params;
 
         $this->cartButtons();
+        $this->checkShoppingCartTimer();
     }
 
     //This method contains every button that can be used to perform a another method in the cart
-    public function cartButtons()
+    private function cartButtons()
     {
         if(isset($_POST['add_ticket']))
-           $this->setTicket();
+           $this->checkTicket();
         else if(isset($_POST['delete_tickets']))
-           $this->deleteAllTicket();
+           $this->deleteAllTickets();
     }
 
+    //Calculates the total price of all items inside the cart
     public function calculateTotalPayment(): float
     {
         $total = 0.00;
@@ -33,7 +35,7 @@ class CartController extends AppController
         return $total;
     }
 
-    //This is used to return any items inside the shoppingCart variable
+    //Returns any items inside the shoppingCart variable
     public function checkShoppingCart():array
     {
         $cart = array();
@@ -45,46 +47,91 @@ class CartController extends AppController
         return $cart; 
     }
 
-    //This is used to set a ticket inside the cart
-    private function setTicket()
+    //Checks if the ticket can be added into the cart
+    private function checkTicket()
     {
-        $ticket = $this->createTicket();
+        try
+        {
+            if($this->userSelectedTickets())
+                if($this->isAvailable())
+                    $this->createTicket();
+                else 
+                   throw new \Exception("Only " . $_POST['hidden_amount'] . " people can be added to this activity");
+            else
+                throw new \Exception("Please select a ticket");            
+        }
+        catch(\Exception $e)
+        {
+            //need to add this to alert thing
+            echo $e->getMessage();
+        }     
+    }
 
+    //This is used to create a ticket. This method will also check if the user has selecting more than one ticket, and if the tickets are available.
+    private function createTicket()
+    {
+        if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
+                $ticket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), 'Haarlem At Night - ' . $_POST['hidden_event_name'], (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount'], (int)$_POST['hidden_total_payment']);
+        
+        $this->addTicket($ticket);
+    }
+
+    //Adds the ticket to the cart
+    private function addTicket(array $ticket)
+    {
         if(isset($_SESSION['shoppingCart']) != null)
         {
             $previous_tickets = [];
-
+    
             foreach($_SESSION['shoppingCart'] as $value)
                 $previous_tickets[] = $value;
-
+    
             $previous_tickets[] = $ticket;
-
+    
             $_SESSION['shoppingCart'] = $previous_tickets;
         }
-        else
-        {
+       else
+       {
             $_SESSION['shoppingCart'][] = $ticket;
-        }
+       }
     }
 
-    //This is used to create a ticket. The ticket will be created based on which event the user has select it from.
-    private function createTicket():array
+    //Checks the amount of users which can be involved in an activity
+    private function isAvailable():bool
     {
-        $ticket = null;
-
         if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
-        {
-            $ticket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), 'Haarlem At Night - ' . $_POST['hidden_event_name'],
-            (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount'], (int)$_POST['hidden_total_payment']);
-        }     
-       
-        return $ticket;
+            if((int)$_POST['hidden_amount'] - (((int)$_POST['hidden_family_amount'] * 4)) + (int)$_POST['hidden_regular_amount'] > 0)
+                return true;
+
+        return false;
     }
 
-    //This is used to delete the tickets inside the cart
-    private function deleteAllTicket()
+    //Checks if the user has selected a ticket type
+    private function userSelectedTickets():bool
+    {
+        if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
+            if((int)$_POST['hidden_family_amount'] || (int)$_POST['hidden_regular_amount'] != 0)
+                return true;
+
+        return false;
+    }
+
+    //Deletes the tickets inside the cart
+    private function deleteAllTickets()
     {
         unset($_SESSION['shoppingCart']);
+    }
+
+    //Deletes the tickets after 24 hours
+    private function checkShoppingCartTimer()
+    {
+        if(!empty($_SESSION['shoppingCart']))
+        {
+            if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 86400))
+                $this->deleteAllTickets();
+
+            $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+        }
     }
 }
 ?>
