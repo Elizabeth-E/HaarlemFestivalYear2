@@ -15,5 +15,6 @@
 	<title>{$title}</title>
 </head>
 <body>
+	{*{include file="cart/cartButton.tpl"}*}
 	{include file="{$layout}\\menu.tpl"}
-	{include file="cart/cartButton.tpl"}
+	
