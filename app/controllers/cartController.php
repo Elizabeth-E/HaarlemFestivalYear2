@@ -19,6 +19,8 @@ class CartController extends AppController
     {
         if(isset($_POST['add_ticket']))
            $this->checkTicket();
+        else if(isset($_POST['delete_single']))
+           $this->deleteSingleTicket();
         else if(isset($_POST['delete_tickets']))
            $this->deleteAllTickets();
     }
@@ -29,8 +31,8 @@ class CartController extends AppController
         $total = 0.00;
 
         if(isset($_SESSION['shoppingCart']) != null)
-            foreach($_SESSION['shoppingCart'] as $value)     
-                $total += (float)$value[6];
+            foreach($_SESSION['shoppingCart'] as $ticket)     
+                $total += $ticket[6];
 
         return $total;
     }
@@ -41,8 +43,8 @@ class CartController extends AppController
         $cart = array();
 
         if(isset($_SESSION['shoppingCart']))
-            foreach($_SESSION['shoppingCart'] as $value)
-                $cart[] = $value;
+            foreach($_SESSION['shoppingCart'] as $ticket)
+                $cart[] = $ticket;
         
         return $cart; 
     }
@@ -62,7 +64,7 @@ class CartController extends AppController
         }
         catch(\Exception $e)
         {
-            //need to add this to alert thing
+            //need to add this to alert thingy
             echo $e->getMessage();
         }     
     }
@@ -71,7 +73,7 @@ class CartController extends AppController
     private function createTicket()
     {
         if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
-                $ticket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), 'Haarlem At Night - ' . $_POST['hidden_event_name'], (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount'], (int)$_POST['hidden_total_payment']);
+                $ticket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), 'Haarlem At Night - ' . $_POST['hidden_event_name'], (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount'], (float)$_POST['hidden_total_payment']);
         
         $this->addTicket($ticket);
     }
@@ -120,6 +122,17 @@ class CartController extends AppController
     private function deleteAllTickets()
     {
         unset($_SESSION['shoppingCart']);
+    }
+
+    //Search the array to find and delete the ticket which the user has selected
+    private function deleteSingleTicket()
+    {
+        if((strpos($_POST['hidden_cart_event_name'], 'Night')) !== false || (strpos($_POST['hidden_cart_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_cart_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_cart_event_name'], 'Hookah')) !== false)
+        {
+            $deleteTicket = array($_POST['hidden_cart_language'], $_POST['hidden_cart_guide'], $_POST['hidden_cart_date'], $_POST['hidden_cart_event_name'], $_POST['hidden_cart_regular'], $_POST['hidden_cart_family'], $_POST['hidden_cart_total']);   
+            $key = array_search($deleteTicket, $_SESSION['shoppingCart']);
+            unset($_SESSION['shoppingCart'][$key]);
+        }
     }
 
     //Deletes the tickets after 24 hours

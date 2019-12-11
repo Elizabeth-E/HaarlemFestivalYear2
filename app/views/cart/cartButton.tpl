@@ -13,11 +13,11 @@
     
 <!--if there is nothing in the cart, the button will be disabled until the user selects a ticket-->
 {if $cart_count eq 0}
-    <button disabled onclick="showCart()" style="margin-top: 4px; margin-left: 50px; width: 45px; border: #ED7D22; height: 45px; background-color: white; border-radius: 50%;">
+    <button disabled onclick="showCart()" name=cartButton>
         {$cart_count}
     </button>
 {else}
-    <button onclick="showCart()" style="color: #FFFFFF; margin-top: 4px; margin-left: 50px; width: 45px; border: #FF8300; height: 45px; background-color: #ED7D22; border-radius: 50%;">
+    <button onclick="showCart()" name=cartButton style="background-color: #ED7D22; color: #FFFFFF;">
         {$cart_count}
     </button>
 {/if}
