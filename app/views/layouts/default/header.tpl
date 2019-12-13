@@ -14,5 +14,5 @@
 
 	<title>{$title}</title>
 </head>
-<body>
+<body class=maincontent>
 	{include file="{$layout}\\menu.tpl"}
