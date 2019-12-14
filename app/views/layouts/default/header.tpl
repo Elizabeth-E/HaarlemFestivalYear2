@@ -14,12 +14,5 @@
 
 	<title>{$title}</title>
 </head>
-<<<<<<< HEAD
-<body>
-	{*{include file="cart/cartButton.tpl"}*}
-	{include file="{$layout}\\menu.tpl"}
-	
-=======
 <body class=maincontent>
 	{include file="{$layout}\\menu.tpl"}
->>>>>>> dev

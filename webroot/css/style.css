@@ -338,26 +338,6 @@ html, body {
     text-decoration: underline;
   }
 
-<<<<<<< HEAD
-/* BUTTONS */
-.btn-blue {
-	font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
-    border: none;
-    border-radius: 300px;
-    font-weight: 700;
-    text-transform: uppercase;
-	color: white;
-    background-color: #78bfe8;
-    border-color: #78bfe8;
-    -webkit-transition: all 0.35s;
-    -moz-transition: all 0.35s;
-    transition: all 0.35s;
-	padding: 15px 30px;
-}
-.btn-blue:hover  {
-    color: white;
-    background-color: #24709c;
-=======
   .link-space
   {
     width: 7px; 
@@ -952,7 +932,6 @@ html, body {
     background-color: rgb(212, 205, 205);
     width: 33%;
     margin-left: -100px;
->>>>>>> dev
 }
 
 .review-price-outline h1
