@@ -21,5 +21,3 @@
         {$cart_count}
     </button>
 {/if}
-
-<section id="showCart" style="display: none;">{include file="cart/cart.tpl"}</section>
