@@ -15,6 +15,8 @@
                         <input type=hidden name="hidden_cart_regular" value='{print_r($item[4], true)}'>
                         <input type=hidden name="hidden_cart_family" value='{print_r($item[5], true)}'>
                         <input type=hidden name="hidden_cart_total" value='{print_r($item[6], true)}'>
+                        <input type=hidden name="hidden_cart_regular_price" value='{print_r($item[7], true)}'>
+                        <input type=hidden name="hidden_cart_family_price" value='{print_r($item[8], true)}'>
                     </form>
                 </section>
                 <section class=cart-tour-data>
@@ -53,7 +55,7 @@
                 <p id=total-cost-format>€{number_format(print_r($total_payment, true), 2, '.', '')}</p>
             </section>
             <form method=POST style="margin-left: 23%;">
-                <input type=submit value="Confirm & Pay" name="confirm_tickets">
+                <a href="{$www}/cart/confirmTickets"><input type=button value="Confirm & Pay" name="confirm_tickets"></a>
                 <input type=submit value="Erase Tickets" name="delete_tickets" style="margin-left: 10%;">
             </form>
         </section>
