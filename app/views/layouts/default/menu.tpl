@@ -11,13 +11,13 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-        <li><a href="{$www}/">Jazz</a></li>
-                <li><a href="{$www}/food">Food</a></li>
-                <li><a href="{$www}/at_night/home">At Night</a></li>
-                <li><a href="{$www}/user/login">Login</a></li>
-                <li><a href="{$www}">Cart</a></li>
-                <li><a href="{$www}">EN/NL</a></li>
-            
+            <li><a href="{$www}/">Jazz</a></li>
+            <li><a href="{$www}/food">Food</a></li>
+            <li><a href="{$www}/night/">At Night</a></li>
+            <li><a href="{$www}/user/login">Login</a></li>
+            <li>{include file="cart/cartButton.tpl"}</li>
+            <li><a href="{$www}">EN/NL</a></li>
         </ul>
     </div>
 </nav>
+<section id="showCart" style="display: none;">{include file="cart/cart.tpl"}</section>
