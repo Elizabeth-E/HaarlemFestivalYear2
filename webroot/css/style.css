@@ -958,7 +958,6 @@ html, body {
     font-size: 25px;
 }
 
-<<<<<<< HEAD
 /* FOOTER */
 footer {
     background: url('../img/footer.png') repeat-x;
@@ -968,12 +967,11 @@ footer {
     width: 100%;
     /* margin: 0px; */
     padding: 0px;
-=======
+}
 .night-page article[name=review-page]
 {
     width: 80%;
     display: block;
->>>>>>> dev
 }
 
 h1[name=review-page-name]
@@ -983,4 +981,70 @@ h1[name=review-page-name]
     border-bottom: 1px solid rgb(212, 205, 205);
     width: 51%;
     text-align: left;
+}
+
+img.jazzhome{
+    max-width: 200px;
+    max-height: 200px;
+}
+
+/* JAZZ PAGE */
+#tickets-button {
+    color: #fff;
+    background-color: #ED7D22;
+    border: none;
+    width: 100%;
+    font-weight: bold;
+}
+#section-break {
+    border-color: #000;
+    border-width: 1px;
+}
+#map {
+    height: 400px;
+    margin-top: 20px;
+    margin-bottom: 10px
+}
+section.jazz {
+    background-color: #fff;
+    padding-left: 3em;
+    padding-right: 3em;
+    padding-bottom: 3em;
+}
+section.jazz h2 {
+    text-align: center;
+    margin-bottom: 1em;
+}
+section ul {
+    margin-block-start: 0em;
+    padding-inline-start: 0em;
+} section ul.nav.nav-tabs {
+    border-style: none;
+} .nav-tabs>li {
+    width: 25%;
+    text-align: center;
+}.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover{
+    border-style: none;
+} .nav-tabs>li>a, .nav-tabs>li>a:hover {
+    border-style: none;
+    color: #fff;
+    background-color: #ED7D22;
+}
+
+
+/* BREADCRUMB */
+.breadcrumb {
+    background: none;
+    margin-top: 10px;
+} .breadcrumb>li>a {
+    color: #ED7D22;
+} 
+.breadcrumb>li>a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+.breadcrumb>li+li:before {
+    padding: 0 5px;
+    color: #000;
+    content: ">";
 }
