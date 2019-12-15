@@ -1,10 +1,14 @@
 <?php
 namespace App\Controllers;
  
+use App\Models;
+
 const VAT = 0.21;
  
 class CartController extends AppController
 {
+    protected $cartPages = [];
+
     public function __construct(string $action = NULL, array $params)
     {
         parent::__construct($action, $params);
@@ -12,6 +16,9 @@ class CartController extends AppController
         $this->action = $action;
         $this->params = $params;
  
+        $this->model = new Models\cartModel();
+        $this->cartPages = $this->model->retrieveCartPages();
+        
         $this->cartButtons();
         $this->checkShoppingCartTimer();
     }
@@ -151,11 +158,17 @@ class CartController extends AppController
     //Calculates all the ticket cost with VAT and redirect the user to the review page
     public function confirmTickets()
     {
+        foreach($this->cartPages as $page)
+        {
+            if(strpos($page->getPageHeader(), 'Review') != false)
+            {
+                $this->view->assign("title", $page->getPageHeader());
+                $this->view->assign("page_title", $page->getPageName());
+            }
+        }
+        
         $this->getCart();
- 
-        $this->view->assign("title", "Haarlem Festival - My tickets");
-        $this->view->assign("page_title", "My tickets");
- 
+
         if(isset($_SESSION['shoppingCart']))
             $this->view->assign("tickets", $_SESSION['shoppingCart']);
         else
@@ -163,7 +176,7 @@ class CartController extends AppController
             
         $this->view->assign("cost", $this->calculateTotalPayment());
         $this->view->assign("cost_with_VAT", $this->calculateTotalPayment() * VAT);
- 
+
         $this->view->display("cart/reviewPage.tpl");
     }
 }

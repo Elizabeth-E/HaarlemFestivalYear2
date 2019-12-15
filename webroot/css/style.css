@@ -721,12 +721,9 @@ html, body {
       display: block;
   }
   
-  
-  
   /*Cart (Jan)*/
   .cart-body
   {
-      margin-left: -400px; 
       width: 500px; 
       height: 40%; 
       background-color: #F2F2F2;
@@ -734,6 +731,13 @@ html, body {
       border: 1px black solid; 
   }
   
+  .cart-position
+  {
+      display: none; 
+      margin-left: 67%; 
+      margin-top: -9.2%;
+  }
+
   .cart-tour-name
   {
       text-align: center; 
@@ -958,16 +962,6 @@ html, body {
     font-size: 25px;
 }
 
-/* FOOTER */
-footer {
-    background: url('../img/footer.png') repeat-x;
-    min-height: 12%;
-    position: sticky;
-    bottom: 0%;
-    width: 100%;
-    /* margin: 0px; */
-    padding: 0px;
-}
 .night-page article[name=review-page]
 {
     width: 80%;

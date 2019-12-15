@@ -40,7 +40,6 @@
                 <section style="margin-left: 10%;">
                     {if strpos($ticket[3], 'Night') != false}
                         <section class=review-night-ticket>
- 
                             <section name=review-night-event-name>                           
                                 <!--event name and language-->
                                 <h3 style="font-weight: bold;">{print_r($ticket[3], true)} ({print_r($ticket[0], true)})</h3>
