@@ -1,7 +1,7 @@
 {include file="{$layout}\\header.tpl"}
 
 <section class=night-page>
-    <section style="margin-left: 1%;">
+    <section name=link-area>
         <a href="{$www}" class=link>Haarlem Festival</a>
         <p class=link-space>></p>
         <p class=link-current>Haarlem At Night</p>
@@ -12,7 +12,7 @@
         <!--images for home page-->
         {foreach from=$tour_pages item=$page}
                 <section class=night-home-tour>           
-                    <section style="display: inline-block; margin-left: 10px;">
+                    <section>
                         <h3>{$page[0]->getPageName()}</h3>
                         <section name=image>
                             {foreach from=$page[1] item=$image}
@@ -25,10 +25,10 @@
                         </section>
                     </section>
                 </section>
-                <p style="display: block; height: 5px;"></p>
+                <p name=home-tiny-space></p>
         {/foreach}
 
-        <p style="display: block; height: 40px;"></p>
+        <p name=home-bottom-space></p>
 
     </article>
 </section>

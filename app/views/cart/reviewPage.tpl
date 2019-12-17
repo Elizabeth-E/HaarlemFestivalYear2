@@ -13,7 +13,7 @@
                     <h6>{print_r($ticket[0], true)}....................................</h6>
                     <h6 name=price>€{number_format(print_r($ticket[6], true), 2, '.', '')}</h6>
                 {/if}
-                <p style="height: 1px;"></p>
+                <p></p>
             {/foreach}
  
             <!--total without vat-->
@@ -29,28 +29,28 @@
             <h6 name=price>€{number_format(print_r($cost + $cost_with_VAT, true), 2, '.', '')}</h6>
  
             <button name=checkout-btn>Checkout</button>
-            <p style="height: 2px;"></p>
+            <p></p>
         </section>
  
         <section class=review-section>
             <!--tickets-->
             {if !empty($tickets)}
               {foreach from=$tickets item=$ticket}                       
-                <p style="height: 5px;"></p>
-                <section style="margin-left: 10%;">
+                <p></p>
+                <section>
                     {if strpos($ticket[3], 'Night') != false}
                         <section class=review-night-ticket>
                             <section name=review-night-event-name>                           
                                 <!--event name and language-->
-                                <h3 style="font-weight: bold;">{print_r($ticket[3], true)} ({print_r($ticket[0], true)})</h3>
+                                <h3 name=event>{print_r($ticket[3], true)} ({print_r($ticket[0], true)})</h3>
                                 <!--date and time-->
-                                <h3 style="margin-top: -5px;">{print_r(date('l jS F Y', $ticket[2]), true)} - {print_r(date('H:i', $ticket[2]), true)}</h3>                               
+                                <h3>{print_r(date('l jS F Y', $ticket[2]), true)} - {print_r(date('H:i', $ticket[2]), true)}</h3>                               
                                 <!--guide-->
-                                <h3 style="margin-top: -5px;">Guide: {print_r($ticket[1], true)}</h3>  
+                                <h3>Guide: {print_r($ticket[1], true)}</h3>  
                                 <!--regular-->
-                                <h3 style="margin-top: -5px;">Regular tickets: €{number_format(print_r($ticket[4] * $ticket[7], true), 2, '.', '')}</h3> 
+                                <h3>Regular tickets: €{number_format(print_r($ticket[4] * $ticket[7], true), 2, '.', '')}</h3> 
                                 <!--family-->
-                                <h3 style="margin-top: -5px;">Family tickets: €{number_format(print_r($ticket[5] * $ticket[8], true), 2, '.', '')}</h3> 
+                                <h3>Family tickets: €{number_format(print_r($ticket[5] * $ticket[8], true), 2, '.', '')}</h3> 
                             </section>
  
                             <!--total-->
@@ -61,13 +61,13 @@
                 </section>
               {/foreach}
             {else}
-                <h5 style="text-align: center;">You have no items in your shopping cart :(</h5>
+                <h5 name=empty-cart>You have no items in your shopping cart :(</h5>
             {/if}
-            <p style="height: 50px;"></p>
+            <p name=review-space-before-article></p>
         </section> 
  
     </article>
-    <p style="height: 100px;"></p>
+    <p name=review-space></p>
  
 </section>
 {include file="{$layout}\\footer.tpl"}
