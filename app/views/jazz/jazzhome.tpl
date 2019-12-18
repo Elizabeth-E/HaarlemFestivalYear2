@@ -3,9 +3,9 @@
 <main>
 	<section class="container">
         <ul class="nav nav-tabs">
-            <li role="presentation" class="active"><a href="#">Artists</a></li>
-            <li role="presentation"><a href="#">Tickets</a></li>
-            <li role="presentation"><a href="#">Timetable</a></li>
+            <li role="presentation" class="active" data-toggle="tab"><a href="#">Artists</a></li>
+            <li role="presentation" data-toggle="tab"><a href="#">Tickets</a></li>
+            <li role="presentation" data-toggle="tab"><a href="#">Timetable</a></li>
         </ul>
     <section>
 
