@@ -2,11 +2,16 @@
 
 <main>
 	<section class="container">
-        <ul class="nav nav-tabs">
-            <li role="presentation" class="active" data-toggle="tab"><a href="#">Artists</a></li>
-            <li role="presentation" data-toggle="tab"><a href="#">Tickets</a></li>
-            <li role="presentation" data-toggle="tab"><a href="#">Timetable</a></li>
-        </ul>
+        {* <ul class="nav nav-tabs" id="myTabs">
+            <li role="presentation" class="active" data-toggle="tab"><a href="#" >Artists</a></li>
+            <li role="presentation" data-toggle="tab"><a href="#" >Tickets</a></li>
+            <li role="presentation" data-toggle="tab"><a href="#" >Timetable</a></li>
+        </ul> *}
+<ul class="nav nav-tabs" id="myTabs">
+  <li role="presentation" data-toggle="tab" id="tab-home" class="active"><a href="#">Home</a></li>
+  <li role="presentation" data-toggle="tab" id="tab-tickets"><a href="#">Tickets</a></li>
+  <li role="presentation" data-toggle="tab" id="tab-timetable"><a href="#">Timetable</a></li>
+</ul>
     <section>
 
     <section class="container jazz">
@@ -15,51 +20,12 @@
             <li><a href="#" class="active">Haarlem Jazz</a></li>
         </ol>
 
-        <h2 class="section-heading">Featured Artists</h2>
+        <div id="tab-content"><!-- Will be filled by JS --></div>
 
-        <!-- TODO: All images need alternative text -->
-        <!-- TODO: All images should be the same size -->
-        <!-- TODO: Images should link to the correct location -->
-        <div class="row">
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/Gumbo_Kings_2008.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/wickedjazzsound.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/evolve-band.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/Jonna-Fraser.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/nordians.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/unclesue.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/KrisAllen.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/Ntjam-Rosie.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/myles-sanko.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/fox.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/han-bennink.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/rilan.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/lilithmerlot.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/garedunord.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/SIX.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/soundsystem.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/familyXL.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-            <div class="col-lg-4"><a href="#"><img src="{$www}/img/jazz-event/Thompson.jpg" alt="whatever band" class="img-responsive img-thumbnail"></a></div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-offset-4 col-lg-4">
-                <button type="button" class="btn btn-primary btn-lg" id="tickets-button">Find Tickets</button>
-            </div>
-        </div>
         <hr id="section-break" />
     </section>
 
-
+    <!-- TODO: Move to homepage -->
     <section class="container jazz">
         <div class="row">
             <div class="col-lg-8">
@@ -91,7 +57,35 @@
 </main>
 
 <script>
+// Bypass Smartry Literal
+var baseUrl = '{$www}';
 {literal}
+$('#tab-content').load(baseUrl + '/jazz/artists_ajax');
+
+//javascript for using tabs 
+$('#myTabs a').click(function (e) {
+    e.preventDefault();
+
+    var tabId = $(this).parent().attr('id');
+
+    switch(tabId) {
+        case 'tab-home':
+            $('#tab-content').load(baseUrl + '/jazz/artists_ajax');
+            break;
+        case 'tab-tickets':
+            $('#tab-content').load(baseUrl + '/jazz/tickets_ajax');
+            break;
+        case 'tab-timetable':
+            $('#tab-content').load(baseUrl + '/jazz/timetable_ajax');
+            break;
+        default:
+            $('#tab-content').load(baseUrl + '/jazz/artists_ajax');
+    }
+    
+    $(this).tab('show');
+});
+
+
 // Initialize and add Google Maps
 function initMap() {
     var haarlem = {lat: 52.3813348,	lng: 4.6341281};
@@ -108,6 +102,7 @@ function initMap() {
         map: map
     });
 }
+
 {/literal}
 </script>
 

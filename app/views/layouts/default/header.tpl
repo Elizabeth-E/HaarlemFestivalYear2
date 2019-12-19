@@ -10,6 +10,7 @@
 	<link href="{$www}/css/bootstrap.min.css" rel="stylesheet">
 	<link href="{$www}/css/font-awesome.min.css" rel="stylesheet">
 	<link href="{$www}/css/style.css" rel="stylesheet">
+	<script src="{$www}/js/jquery-3.3.1.min.js"></script>
 	{* <link href="{$www}/css/darktheme.css" rel="stylesheet"> *}
 
 	<title>{$title}</title>

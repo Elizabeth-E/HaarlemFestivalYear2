@@ -22,5 +22,26 @@ class JazzController extends AppController
 
         $this->view->display("jazz/jazzhome.tpl");
     }
+
+    public function artists_ajax(array $params)
+    {   
+        $this->view->assign("title", "Jazz");
+
+        $this->view->display("jazz/artists_ajax.tpl");
+    }
+
+    public function tickets_ajax(array $params)
+    {   
+        $this->view->assign("title", "Jazz");
+
+        $this->view->display("jazz/tickets_ajax.tpl");
+    }
+
+    public function timetable_ajax(array $params)
+    {   
+        $this->view->assign("title", "Jazz");
+
+        $this->view->display("jazz/timetable_ajax.tpl");
+    }
 }
 ?>
