@@ -1,10 +1,14 @@
 <?php
 namespace App\Controllers;
  
+use App\Models;
+
 const VAT = 0.21;
  
 class CartController extends AppController
 {
+    protected $cartPages = [];
+
     public function __construct(string $action = NULL, array $params)
     {
         parent::__construct($action, $params);
@@ -12,6 +16,9 @@ class CartController extends AppController
         $this->action = $action;
         $this->params = $params;
  
+        $this->model = new Models\cartModel();
+        $this->cartPages = $this->model->retrieveCartPages();
+        
         $this->cartButtons();
         $this->checkShoppingCartTimer();
     }
@@ -77,27 +84,35 @@ class CartController extends AppController
         if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
                 $ticket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), 'Haarlem At Night - ' . $_POST['hidden_event_name'], (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount'], (float)$_POST['hidden_total_payment'], (float)$_POST['hidden_regular_price'], (float)$_POST['hidden_family_price']);
         
-        $this->addTicket($ticket);
-    }
- 
-    //Adds the ticket to the cart
-    private function addTicket(array $ticket)
-    {
-        if(isset($_SESSION['shoppingCart']) != null)
+        if($this->checkDuplicateTicket($ticket))
         {
-            $previous_tickets = [];
+            $key = array_search($ticket, $_SESSION['shoppingCart']);
     
-            foreach($_SESSION['shoppingCart'] as $value)
-                $previous_tickets[] = $value;
-    
-            $previous_tickets[] = $ticket;
-    
-            $_SESSION['shoppingCart'] = $previous_tickets;
+            if(strpos($_POST['hidden_event_name'], 'Night') !== false && ((int)$_POST['hidden_amount'] - (($_SESSION['shoppingCart'][$key][4] + $ticket[4]) + (($_SESSION['shoppingCart'][$key][5] * 4) + ($ticket[5] * 4))) > 0))
+            {
+                $_SESSION['shoppingCart'][$key][4] += $ticket[4];
+                $_SESSION['shoppingCart'][$key][5] += $ticket[5];
+                $_SESSION['shoppingCart'][$key][6] += $ticket[6];
+            }
+            else {
+                echo "Only " . $_POST['hidden_amount'] . " people can be added to this activity";
+            }
         }
-       else
-       {
+        else 
+        {
             $_SESSION['shoppingCart'][] = $ticket;
-       }
+        }
+    }
+
+    //checks if there is a duplicate ticket inside the cart
+    private function checkDuplicateTicket(array $ticket):bool
+    {
+        if(isset($_SESSION['shoppingCart']))
+            foreach($_SESSION['shoppingCart'] as $value)
+                if($value[0] == $ticket[0] && $value[1] == $ticket[1] && $value[2] == $ticket[2] && $value[3] == $ticket[3])
+                    return true;
+
+        return false;
     }
  
     //Checks the amount of users which can be involved in an activity
@@ -151,11 +166,17 @@ class CartController extends AppController
     //Calculates all the ticket cost with VAT and redirect the user to the review page
     public function confirmTickets()
     {
+        foreach($this->cartPages as $page)
+        {
+            if(strpos($page->getPageHeader(), 'Review') != false)
+            {
+                $this->view->assign("title", $page->getPageHeader());
+                $this->view->assign("page_title", $page->getPageName());
+            }
+        }
+        
         $this->getCart();
- 
-        $this->view->assign("title", "Haarlem Festival - My tickets");
-        $this->view->assign("page_title", "My tickets");
- 
+
         if(isset($_SESSION['shoppingCart']))
             $this->view->assign("tickets", $_SESSION['shoppingCart']);
         else
@@ -163,7 +184,7 @@ class CartController extends AppController
             
         $this->view->assign("cost", $this->calculateTotalPayment());
         $this->view->assign("cost_with_VAT", $this->calculateTotalPayment() * VAT);
- 
+
         $this->view->display("cart/reviewPage.tpl");
     }
 }

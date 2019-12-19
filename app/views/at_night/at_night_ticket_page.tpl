@@ -1,12 +1,12 @@
 {include file="{$layout}\\header.tpl"}
 
 <section class=night-page>
-    <section style="margin-left: 1%;">
+    <section name=link-area>
             <a href="{$www}" class=link>Haarlem Festival</a>
             <p class=link-space>></p>
-            <a href="{$www}/night/" class=link style="margin-left: 3px;">Haarlem At Night</a>
+            <a href="{$www}/night/" class=link>Haarlem At Night</a>
             <p class=link-space>></p>
-            <a href="{$www}/night/getTourPageInfo/{$tour_page}" class=link style="margin-left: 3px;">{$tour_page}</a>
+            <a href="{$www}/night/getTourPageInfo/{$tour_page}" class=link>{$tour_page}</a>
             <p class=link-space>></p>
             <p class=link-current>Tickets</p>
     </section>
@@ -20,7 +20,7 @@
 			        <h3> Select your preferred language</h3>
 			    </header>
 
-                <section style="margin-top: 20px; margin-left:-2px;">
+                <section name=box>
                 <!--filters the ticket if the user selects a langauge-->
                     {foreach from=$language_images item=$image}
                         <section class=night-language-info>
@@ -50,7 +50,7 @@
                             {foreach from=$language_images item=$image}
                                 {if $image->getImageName() == print_r($tickets[$i]->getLanguage(), true)}
                                     <img src={$image->getImagePath()}>
-                                    <section style="margin-top: 3.6px;">{print_r($tickets[$i]->getLanguage(), true)}</section>
+                                    <section name=language>{print_r($tickets[$i]->getLanguage(), true)}</section>
                                 {/if}
                             {/foreach}                            
                         </section>
@@ -67,30 +67,30 @@
                     </section>
                     <!-- 'Select Ticket' button-->
                     <section class=night-ticket-select>                
-                        <button onclick="showDropDown({$i})" style="margin-left: 6%;"> Select Ticket </button>
-                        <script style="display: none;">{include file="js/showDropDownMenu.js"}</script>
+                        <button onclick="showDropDown({$i})"> Select Ticket </button>
+                        <script>{include file="js/showDropDownMenu.js"}</script>
                     </section>
                 </section> 
 
                 <!--Drop-down menu-->
-                <section id="showDropDown{$i}" style="display: none;">
+                <section id="showDropDown{$i}" name=hide-showDropDown>
                     <section class=night-dropdown-display>
-                        <section style="width: 60%; margin-top: -100px; display: inline-block">
+                        <section name=position>
                                 
                             <!--family ticket-->
                             <section class=family-ticket-selection>
                                 <p id=night-ticket-name>Family Ticket (4 people) €{number_format((float)print_r($tickets[$i]->getFamilyTicketPrice(), true), 2, '.', '')}</p>
-                                <button onclick="minus_family({$i})" id=night-ticket-button style="margin-left: 36px;">-</button>
+                                <button onclick="minus_family({$i})" id=night-ticket-button-minus>-</button>
                                     <input type=text disabled id="family_ticket{$i}" name=family value=0>
-                                <button onclick="add_family({$i})" id=night-ticket-button style=margin-left:0px;>+</button>
+                                <button onclick="add_family({$i})" id=night-ticket-button-plus>+</button>
                             </section>
 
                             <!--regular ticket-->
                             <section class=regular-ticket-selection>
                                 <p id=night-ticket-name>Regular Ticket (1 person) €{number_format((float)print_r($tickets[$i]->getRegularTicketPrice(), true), 2, '.', '')}</p>             
-                                <button onclick="minus_regular({$i})" id=night-ticket-button style="margin-left: 30px;">-</button>
+                                <button onclick="minus_regular({$i})" id=night-ticket-button-minus-bottom>-</button>
                                     <input type=text disabled id="regular_ticket{$i}" name=regular value=0>
-                                <button onclick="add_regular({$i})" id=night-ticket-button style="margin-left:0px;">+</button>                                  
+                                <button onclick="add_regular({$i})" id=night-ticket-button-plus>+</button>                                  
                                 <form method=POST>       
                                     <input type=hidden name=hidden_guide_name value='{print_r($tickets[$i]->getGuideName(), true)}'>
                                     <input type=hidden name=hidden_amount value='{print_r($tickets[$i]->getAmount(), true)}'>  
@@ -118,9 +118,9 @@
                            
                         </section>                          
                     </section> 
-                    <section style="width: auto; height: 15px;"></section>                
+                    <section name=night-ticket-first-space></section>                
                 </section>  
-                <section style="width: auto; height: 25px;"></section>                                    
+                <section name=night-ticket-second-space></section>                                    
             {/for}
         </section>
         
@@ -133,10 +133,10 @@
     </script>
         
     <!--this is used to update the total payment-->
-    <script style="display: none;">{include file="js/dropDownMenuButtons.js"}</script>
+    <script>{include file="js/dropDownMenuButtons.js"}</script>
 
-    </section>
+</section>
 
-<section style="width: 70%; height: 50px; display: block; margin-left: 15%; background-color: white;"></section>
+<section name=night-ticket-bottom-space></section>
 
 {include file="{$layout}\\footer.tpl"}

@@ -34,7 +34,7 @@ class NightController extends AppController
 
         foreach($this->at_night_pages as $page)
         {
-            if($page->getPageHeader() == "At Night - Haarlem Festival")
+            if(strpos($page->getPageHeader(), 'At Night') !== false)
             {
                 $this->view->assign("title", $page->getPageHeader());
                 $this->view->assign("page_title", $page->getPageName());
