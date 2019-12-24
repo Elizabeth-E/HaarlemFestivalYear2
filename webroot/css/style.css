@@ -1068,3 +1068,12 @@ section ul {
     color: #000;
     content: ">";
 }
+table td {
+    font-size: inherit;
+    font-weight: 300;
+}
+table th {
+    font-size: 1.2em;
+    font-weight: bold;
+
+}
