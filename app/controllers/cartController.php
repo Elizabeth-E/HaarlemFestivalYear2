@@ -88,7 +88,7 @@ class CartController extends AppController
         {
             $key = array_search($ticket, $_SESSION['shoppingCart']);
     
-            if(strpos($_POST['hidden_event_name'], 'Night') !== false && ((int)$_POST['hidden_amount'] - (($_SESSION['shoppingCart'][$key][4] + $ticket[4]) + (($_SESSION['shoppingCart'][$key][5] * 4) + ($ticket[5] * 4))) > 0))
+            if(strpos($_POST['hidden_event_name'], 'Night') !== false && ((int)$_POST['hidden_amount'] - (($_SESSION['shoppingCart'][$key][4] + $ticket[4]) + (($_SESSION['shoppingCart'][$key][5] * 4) + ($ticket[5] * 4))) >= 0))
             {
                 $_SESSION['shoppingCart'][$key][4] += $ticket[4];
                 $_SESSION['shoppingCart'][$key][5] += $ticket[5];
@@ -119,7 +119,7 @@ class CartController extends AppController
     private function isAvailable():bool
     {
         if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
-            if((int)$_POST['hidden_amount'] - (((int)$_POST['hidden_family_amount'] * 4)) + (int)$_POST['hidden_regular_amount'] > 0)
+            if((int)$_POST['hidden_amount'] - (((int)$_POST['hidden_family_amount'] * 4)) + (int)$_POST['hidden_regular_amount'] >= 0)
                 return true;
  
         return false;

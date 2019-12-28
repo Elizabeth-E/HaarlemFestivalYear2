@@ -1208,3 +1208,58 @@ section ul {
     color: #000;
     content: ">";
 }
+
+/*About page (Jan)*/
+.about-page
+{
+    background-color: #FFFFFF; 
+    width: 70%; 
+    margin-left: 220px;
+}
+
+.about-page h1
+{
+    text-align: center; 
+    font-family: Helvetica Neue; 
+    font-weight: 1;
+}
+
+.about-page article
+{
+    width: 90%; 
+    height: 100%; 
+    display: block; 
+    margin-left: 5%;
+}
+
+.about-page h2
+{
+    font-family: Helvetica Neue; 
+    font-weight: 1;
+    font-size: 22px;
+}
+
+p[name=about-page]
+{
+    height: 100px;
+}
+
+section[name=members]
+{
+    background-color: #FFCC99;
+}
+
+img[name=member]
+{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-left: 5%;
+}
+
+section[name=member-info]
+{
+    margin-left: 15%;
+    display: inline-block;
+}
