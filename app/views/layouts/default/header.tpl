@@ -24,3 +24,4 @@
 </head>
 <body class=maincontent>
 	{include file="{$layout}\\menu.tpl"}
+	{include file="{$layout}\\alert.tpl"}
