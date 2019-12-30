@@ -26,4 +26,39 @@ class CartModel extends AppModel
 
         return $pages;
     }
+
+    //retrieves the image for a specific page
+    public function retrieveImageForPage(int $page_id):array
+    {
+        $db = $this->database->prepare("SELECT * FROM picture_has_page WHERE `page_id` = ?");
+        $db->bind_param("i", $page_id);
+        $db->execute();
+        $result = $db->get_result();
+
+        $images_for_page = [];
+
+        while($row = mysqli_fetch_assoc($result))
+        {
+            $image = $this->retrieveImage($row['picture_id']);
+            $images_for_page[] = $image;
+        }
+        
+        $db->close();
+        return $images_for_page;
+    }
+
+    private function retrieveImage(int $picture_id)
+    {
+        $db = $this->database->prepare("SELECT * FROM picture WHERE `id` = ?");
+        $db->bind_param("i", $picture_id);
+        $db->execute();
+        $result = $db->get_result();
+
+        $image = null;
+
+        while($row = mysqli_fetch_assoc($result))
+            $image = new Picture($row['id'], $row['name'], $row['path']);
+
+        return $image;
+    }
 }
