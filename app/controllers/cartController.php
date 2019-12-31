@@ -8,6 +8,8 @@ const VAT = 0.21;
 class CartController extends AppController
 {
     protected $cartPages = [];
+    public $errorType = "";
+    public $errorMessage = ""; 
 
     public function __construct(string $action = NULL, array $params)
     {
@@ -73,34 +75,37 @@ class CartController extends AppController
         }
         catch(\Exception $e)
         {
-            //need to add this to alert thingy
-            echo $e->getMessage();
+            $this->errorType = "Warning";
+            $this->errorMessage = $e->getMessage();
+            $this->checkError();
         }     
     }
  
     //This is used to create a ticket. This method will also check if the user has selecting more than one ticket, and if the tickets are available.
     private function createTicket()
     {
-        if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
+        try{
+            if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
                 $ticket = array($_POST['hidden_language'], $_POST['hidden_guide_name'], strtotime($_POST['hidden_date']), 'Haarlem At Night - ' . $_POST['hidden_event_name'], (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount'], (float)$_POST['hidden_total_payment'], (float)$_POST['hidden_regular_price'], (float)$_POST['hidden_family_price']);
         
-        if($this->checkDuplicateTicket($ticket))
-        {
-            $key = array_search($ticket, $_SESSION['shoppingCart']);
+            if($this->checkDuplicateTicket($ticket)){
+                $key = array_search($ticket, $_SESSION['shoppingCart']);
     
-            if(strpos($_POST['hidden_event_name'], 'Night') !== false && ((int)$_POST['hidden_amount'] - (($_SESSION['shoppingCart'][$key][4] + $ticket[4]) + (($_SESSION['shoppingCart'][$key][5] * 4) + ($ticket[5] * 4))) >= 0))
-            {
-                $_SESSION['shoppingCart'][$key][4] += $ticket[4];
-                $_SESSION['shoppingCart'][$key][5] += $ticket[5];
-                $_SESSION['shoppingCart'][$key][6] += $ticket[6];
+                if(strpos($_POST['hidden_event_name'], 'Night') !== false && ((int)$_POST['hidden_amount'] - (($_SESSION['shoppingCart'][$key][4] + $ticket[4]) + (($_SESSION['shoppingCart'][$key][5] * 4) + ($ticket[5] * 4))) >= 0)){
+                    $_SESSION['shoppingCart'][$key][4] += $ticket[4];
+                    $_SESSION['shoppingCart'][$key][5] += $ticket[5];
+                    $_SESSION['shoppingCart'][$key][6] += $ticket[6];
+                }
+                else
+                    throw new \Exception("Only " . $_POST['hidden_amount'] . " people can be added to this activity");
             }
-            else {
-                echo "Only " . $_POST['hidden_amount'] . " people can be added to this activity";
-            }
+            else 
+                $_SESSION['shoppingCart'][] = $ticket;
         }
-        else 
-        {
-            $_SESSION['shoppingCart'][] = $ticket;
+        catch(\Exception $e){
+            $this->errorType = "Warning";
+            $this->errorMessage = $e->getMessage();
+            $this->checkError();
         }
     }
 
@@ -186,6 +191,15 @@ class CartController extends AppController
         $this->view->assign("cost_with_VAT", $this->calculateTotalPayment() * VAT);
 
         $this->view->display("cart/reviewPage.tpl");
+    }
+
+    //This is used to send the error messages to the alert template
+    public function checkError(): bool
+    {
+        if($this->errorType != null && $this->errorMessage != null)
+            return true;
+
+        return false;
     }
 }
 ?>

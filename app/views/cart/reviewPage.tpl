@@ -43,19 +43,25 @@
                             <section name=review-night-event-name>                           
                                 <!--event name and language-->
                                 <h3 name=event>{print_r($ticket[3], true)} ({print_r($ticket[0], true)})</h3>
+
+                                {* <!--this button is used to edit the number of people who are able to join an activity-->
+                                <button name=edit>Edit</button> *}
+
                                 <!--date and time-->
-                                <h3>{print_r(date('l jS F Y', $ticket[2]), true)} - {print_r(date('H:i', $ticket[2]), true)}</h3>                               
+                                <h3>{print_r(date('l jS F Y', $ticket[2]), true)} - {print_r(date('H:i', $ticket[2]), true)}</h3>    
+
                                 <!--guide-->
                                 <h3>Guide: {print_r($ticket[1], true)}</h3>  
+                                
                                 <!--regular-->
                                 <h3>Regular tickets: €{number_format(print_r($ticket[4] * $ticket[7], true), 2, '.', '')}</h3> 
+
                                 <!--family-->
                                 <h3>Family tickets: €{number_format(print_r($ticket[5] * $ticket[8], true), 2, '.', '')}</h3> 
                             </section>
  
                             <!--total-->
                             <h3 name=total>Total: €{number_format(print_r($ticket[6], true), 2, '.', '')}</h3>
- 
                         </section>                  
                     {/if}
                 </section>

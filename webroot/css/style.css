@@ -896,8 +896,8 @@ html, body {
 {
     font-size: 15px;
     font-weight: 1;
-    margin-left: 31%;
-    width: 65%;
+    margin-left: 10%;
+    width: 85%;
     border-top: 1px solid rgb(212, 205, 205);
     text-align: right;
     height: 15px;
@@ -905,14 +905,22 @@ html, body {
 
 .review-night-ticket section[name=review-night-event-name]
 {
-    display: block;
+    display: inline-block;
+    width: 70%;
 }
+
+/* button[name=edit]
+{
+    width: 20px;
+    background-color: none;
+    margin-left: -30%;
+} */
 
 .review-night-ticket section[name=review-night-event-name] h3
 {
     font-size: 15px;
     font-weight: 1;
-    margin-left: 31%;
+    margin-left: 7%;
 }
 
 .review-price-outline
