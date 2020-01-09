@@ -349,6 +349,12 @@ html, body {
     height: 40px;
   }
 
+  p[name=home-page-space]
+  {
+    display: block; 
+    height: 380px;
+  }
+
   p[name=space-after-get-ticket]
   {
     height: 5px;
@@ -909,13 +915,6 @@ html, body {
     width: 70%;
 }
 
-/* button[name=edit]
-{
-    width: 20px;
-    background-color: none;
-    margin-left: -30%;
-} */
-
 .review-night-ticket section[name=review-night-event-name] h3
 {
     font-size: 15px;
@@ -1138,5 +1137,50 @@ table td {
 table th {
     font-size: 1.2em;
     font-weight: bold;
+}
 
+/*Home*/
+img[name=home-image]
+{
+    height: 290px;
+    width: 290px;
+}
+
+section[name=home-image-position]
+{
+    float: left;
+    margin-left: 47px;
+    width: 27.5%;
+}
+
+article[name=home-page-article]
+{
+    height: 100%;
+    width: 100%;
+}
+
+button[name=home-image-name]
+{
+    background-color:#ED7D22;
+    border: none;
+    color: white;
+    width: 290px;
+    height: 40px;
+    font-size: 27px;
+}
+
+div[name=home-page]
+{
+    background-color: #FFFFFF; 
+    width: 70%;
+    height: 100%;
+    margin-left: 220px;
+}
+
+h1[name=home-page-heading]
+{
+    font-family: Helvetica Neue; 
+    font-weight: 1;
+    text-align: center; 
+    margin-top: -13px;
 }
