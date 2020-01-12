@@ -51,6 +51,10 @@ abstract class AppController
         $this->view->assign("cart_count", count($cartController->checkShoppingCart()));
         $this->view->assign("cart", $cartController->checkShoppingCart());
         $this->view->assign("total_payment", $cartController->calculateTotalPayment());
+
+        $this->view->assign("alert", $cartController->checkError());
+        $this->view->assign("alertType", $cartController->errorType);
+        $this->view->assign("alertMessage", $cartController->errorMessage);
         
         return $cartController;
     }

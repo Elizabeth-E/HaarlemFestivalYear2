@@ -8,10 +8,10 @@
         <section class=review-price-outline>
             <h1>Price outline</h1>
             {foreach from=$tickets item=$ticket}
-                {if strpos($ticket[3], 'Night') != false}
-                    <h6>{print_r($ticket[3], true)}</h6>
-                    <h6>{print_r($ticket[0], true)}....................................</h6>
-                    <h6 name=price>€{number_format(print_r($ticket[6], true), 2, '.', '')}</h6>
+                {if strpos($ticket[0], 'Night') != false}
+                    <h6>{print_r($ticket[0], true)}</h6><!--event name-->
+                    <h6>{print_r($ticket[3], true)}....................................</h6><!--language-->
+                    <h6 name=price>€{number_format(print_r($ticket[1], true), 2, '.', '')}</h6>
                 {/if}
                 <p></p>
             {/foreach}
@@ -38,24 +38,27 @@
               {foreach from=$tickets item=$ticket}                       
                 <p></p>
                 <section>
-                    {if strpos($ticket[3], 'Night') != false}
+                    {if strpos($ticket[0], 'Night') != false}
                         <section class=review-night-ticket>
                             <section name=review-night-event-name>                           
                                 <!--event name and language-->
-                                <h3 name=event>{print_r($ticket[3], true)} ({print_r($ticket[0], true)})</h3>
+                                <h3 name=event>{print_r($ticket[0], true)} ({print_r($ticket[3], true)})</h3>
+
                                 <!--date and time-->
-                                <h3>{print_r(date('l jS F Y', $ticket[2]), true)} - {print_r(date('H:i', $ticket[2]), true)}</h3>                               
+                                <h3>{print_r(date('l jS F Y', $ticket[2]), true)} - {print_r(date('H:i', $ticket[2]), true)}</h3>    
+
                                 <!--guide-->
-                                <h3>Guide: {print_r($ticket[1], true)}</h3>  
+                                <h3>Guide: {print_r($ticket[4], true)}</h3>  
+                                
                                 <!--regular-->
-                                <h3>Regular tickets: €{number_format(print_r($ticket[4] * $ticket[7], true), 2, '.', '')}</h3> 
+                                <h3>Regular tickets: €{number_format(print_r($ticket[5] * $ticket[7], true), 2, '.', '')}</h3> 
+
                                 <!--family-->
-                                <h3>Family tickets: €{number_format(print_r($ticket[5] * $ticket[8], true), 2, '.', '')}</h3> 
+                                <h3>Family tickets: €{number_format(print_r($ticket[6] * $ticket[8], true), 2, '.', '')}</h3> 
                             </section>
  
                             <!--total-->
-                            <h3 name=total>Total: €{number_format(print_r($ticket[6], true), 2, '.', '')}</h3>
- 
+                            <h3 name=total>Total: €{number_format(print_r($ticket[1], true), 2, '.', '')}</h3>
                         </section>                  
                     {/if}
                 </section>

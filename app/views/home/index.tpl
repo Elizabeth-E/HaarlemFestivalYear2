@@ -1,18 +1,29 @@
 {include file="{$layout}\\header.tpl"}
 
 <main>
-	<div class="container">
-		<h2 class="section-heading">Home Index</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac nisi at nisi vulputate auctor. Sed tincidunt at purus vitae porttitor. Aliquam id consectetur lectus, vel efficitur felis. Vivamus vel metus massa. Integer sit amet venenatis arcu, in pretium ligula. Proin pharetra ornare felis nec luctus. Suspendisse in ante eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mauris turpis, faucibus vel cursus ac, efficitur non quam. Donec ultricies leo eget nibh condimentum mollis. Pellentesque dictum nibh eu leo iaculis, id sagittis purus tristique. Aliquam egestas aliquam turpis quis volutpat. Nunc sed pharetra justo, nec laoreet lectus.</p>
+	<div name=home-page>
+	    <ol class="breadcrumb">
+            <li><a href="{$www}">Haarlem Festival</a></li>
+        </ol>
+		<h1 name=home-page-heading>{$page_title}</h1>
 
-<p>Donec id nunc interdum, ultricies risus eget, imperdiet dui. Nam non aliquam ante, eget rhoncus nulla. Integer a lectus tristique quam congue ullamcorper non in metus. Mauris mattis sed odio et varius. Nunc mattis libero eu purus cursus, nec aliquet augue hendrerit. Sed feugiat tortor sed turpis elementum, eu mollis justo rutrum. Integer vel luctus felis. Sed purus odio, semper non quam id, auctor placerat nisl. Suspendisse eleifend sit amet odio imperdiet tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam ultricies velit id molestie dictum.</p>
+		<article name=home-page-article">
+            <!--images for home page-->
+            {foreach from=$home_images item=$image}
+                <section name=home-image-position>           
+                    <img name=home-image src={$image->getImagePath()}>
 
-<p>Quisque tempor sit amet nulla eu feugiat. Mauris erat ipsum, cursus sit amet mollis et, commodo eu nulla. Duis molestie nunc nec lorem molestie, vitae imperdiet orci pellentesque. Suspendisse pharetra porttitor turpis, sit amet laoreet magna vestibulum quis. Aliquam et mauris finibus, tempor lacus a, condimentum lectus. Donec vitae leo sit amet ex volutpat blandit. Sed eu congue sem. Donec eu eleifend eros, at hendrerit urna. Aliquam erat volutpat. Integer consectetur vel lectus ac efficitur. Proin pharetra maximus feugiat. Donec at rhoncus sapien. Integer nisi diam, venenatis id iaculis ac, lobortis sodales metus.</p>
-
-<p>Phasellus finibus lorem id feugiat pulvinar. Morbi semper felis eu eros cursus molestie. Quisque tellus ex, pulvinar ac tortor in, tristique rhoncus est. Vestibulum interdum elementum ornare. Donec nibh turpis, sollicitudin vitae orci ac, finibus iaculis dui. Nam at ullamcorper ex. Morbi et varius orci, non ultrices nisl. Mauris eleifend augue non sapien fringilla ullamcorper. Phasellus sagittis ultricies tellus quis ullamcorper. Etiam posuere nisl dictum volutpat venenatis. Sed mattis egestas libero, ut hendrerit lectus semper at. Etiam et commodo erat. Vestibulum nec erat risus. In ac purus in magna dignissim luctus et et magna. Cras porttitor leo at mi varius mollis. Morbi ligula neque, vehicula nec elit sed, malesuada iaculis massa.</p>
-<p>Phasellus finibus lorem id feugiat pulvinar. Morbi semper felis eu eros cursus molestie. Quisque tellus ex, pulvinar ac tortor in, tristique rhoncus est. Vestibulum interdum elementum ornare. Donec nibh turpis, sollicitudin vitae orci ac, finibus iaculis dui. Nam at ullamcorper ex. Morbi et varius orci, non ultrices nisl. Mauris eleifend augue non sapien fringilla ullamcorper. Phasellus sagittis ultricies tellus quis ullamcorper. Etiam posuere nisl dictum volutpat venenatis. Sed mattis egestas libero, ut hendrerit lectus semper at. Etiam et commodo erat. Vestibulum nec erat risus. In ac purus in magna dignissim luctus et et magna. Cras porttitor leo at mi varius mollis. Morbi ligula neque, vehicula nec elit sed, malesuada iaculis massa.</p>
-<p>Phasellus finibus lorem id feugiat pulvinar. Morbi semper felis eu eros cursus molestie. Quisque tellus ex, pulvinar ac tortor in, tristique rhoncus est. Vestibulum interdum elementum ornare. Donec nibh turpis, sollicitudin vitae orci ac, finibus iaculis dui. Nam at ullamcorper ex. Morbi et varius orci, non ultrices nisl. Mauris eleifend augue non sapien fringilla ullamcorper. Phasellus sagittis ultricies tellus quis ullamcorper. Etiam posuere nisl dictum volutpat venenatis. Sed mattis egestas libero, ut hendrerit lectus semper at. Etiam et commodo erat. Vestibulum nec erat risus. In ac purus in magna dignissim luctus et et magna. Cras porttitor leo at mi varius mollis. Morbi ligula neque, vehicula nec elit sed, malesuada iaculis massa.</p>
-<p>Phasellus finibus lorem id feugiat pulvinar. Morbi semper felis eu eros cursus molestie. Quisque tellus ex, pulvinar ac tortor in, tristique rhoncus est. Vestibulum interdum elementum ornare. Donec nibh turpis, sollicitudin vitae orci ac, finibus iaculis dui. Nam at ullamcorper ex. Morbi et varius orci, non ultrices nisl. Mauris eleifend augue non sapien fringilla ullamcorper. Phasellus sagittis ultricies tellus quis ullamcorper. Etiam posuere nisl dictum volutpat venenatis. Sed mattis egestas libero, ut hendrerit lectus semper at. Etiam et commodo erat. Vestibulum nec erat risus. In ac purus in magna dignissim luctus et et magna. Cras porttitor leo at mi varius mollis. Morbi ligula neque, vehicula nec elit sed, malesuada iaculis massa.</p>
+					{if strpos($image->getImageName(), 'Night') != false}
+					    <a href="{$www}/night"><button name=home-image-name>{$image->getImageName()}</button></a>
+					{else}
+					    <a href="{$www}/{$image->getImageName()}"><button name=home-image-name>{$image->getImageName()}</button></a>
+					{/if}
+                </section>
+            {/foreach}
+			
+		</article>
+		
+		<p name=home-page-space></p>
 	</div>
 </main>
 
