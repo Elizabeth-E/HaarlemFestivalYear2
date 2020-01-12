@@ -14,6 +14,8 @@ class JazzController extends AppController
 
         $this->action = $action;
         $this->params = $params;
+
+        $this->getCart();
     }
 
     public function index(array $params)
