@@ -65,9 +65,10 @@ class NightController extends AppController
                 $this->view->assign("page_title_link", $param[0]);  
                 $this->view->assign("description", $page->getPageDescription());
                 $this->view->assign("tour_images", $this->model->retrieveImageForPage($page->getPageId()));
+                $this->view->assign("markers", $this->model->retrieveLocationForMap($page->getPageId()));
              }
          }
- 
+
          $this->view->display("at_night/at_night_tour_page.tpl");
      }
      

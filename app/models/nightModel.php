@@ -114,5 +114,39 @@ class NightModel extends AppModel
         
         return $price;
     }
+
+    //retrieves locations for a page
+    public function retrieveLocationForMap(int $pageId): array
+    {
+        $db = $this->database->prepare("SELECT * FROM page_has_map WHERE `page_id` = ?");
+        $db->bind_param("i", $pageId);
+        $db->execute();
+
+        $result = $db->get_result();
+
+        $locations = array();
+
+        while($row = $result->fetch_assoc())
+            $locations[] = $this->retrieveMapInfo($row['map_id']);
+
+        return $locations;
+    }
+
+    //retrieves information for a location
+    private function retrieveMapInfo(int $map_id)
+    {
+        $db = $this->database->prepare("SELECT * FROM map WHERE `location_id` = ?");
+        $db->bind_param('i', $map_id);
+        $db->execute();
+
+        $result = $db->get_result();
+
+        $mapInfo = null;
+
+        while($row = $result->fetch_assoc())
+            $mapInfo = new Map($row['location_Id'], $row['location_name'], $row['latitude'], $row['longitude']);
+
+        return $mapInfo;
+    }
 }
 ?>
