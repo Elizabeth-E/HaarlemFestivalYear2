@@ -188,8 +188,8 @@ class CartController extends AppController
         {
             if(strpos($page->getPageHeader(), 'Review') != false)
             {
-                $this->view->assign("title", $page->getPageHeader());
-                $this->view->assign("page_title", $page->getPageName());
+                $this->view->assign("title", "Review - Haarlem Festival");
+                $this->view->assign("page_title", "My tickets");
             }
         }
 

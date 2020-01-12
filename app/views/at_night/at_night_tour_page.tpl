@@ -38,12 +38,6 @@
                 lng: 4.6341281
             };
 
-            {* var groteMarkt = 
-            {
-                lat: 52.3813124, 
-                lng: 4.63482
-            }; *}
-
             var map = new google.maps.Map(document.getElementById('map'), 
             {
                 zoom: 15,
