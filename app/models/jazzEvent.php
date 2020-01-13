@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-class JazzEventModel extends AppModel
+class JazzEvent extends AppModel
 {
     private $date;
     private $day;
