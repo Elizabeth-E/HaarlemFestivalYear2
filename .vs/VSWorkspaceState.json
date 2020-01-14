@@ -5,8 +5,12 @@
     "\\app\\controllers",
     "\\app\\models",
     "\\app\\views",
-    "\\app\\views\\user"
+    "\\app\\views\\cart",
+    "\\app\\views\\food",
+    "\\app\\views\\jazz",
+    "\\app\\views\\user",
+    "\\config"
   ],
-  "SelectedNode": "\\app\\controllers\\userController.php",
+  "SelectedNode": "\\app\\views\\user\\reset_password.tpl",
   "PreviewInSolutionExplorer": false
 }
