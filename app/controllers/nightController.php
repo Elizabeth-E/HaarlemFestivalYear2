@@ -5,10 +5,10 @@ use App\Models;
 
 class NightController extends AppController
 {
-    protected $model = "";
+    private $model = "";
     protected $params = [];
-    protected $language = "";
-    protected $at_night_pages = [];
+    private $language = "";
+    private $at_night_pages = [];
 
     public function __construct(string $action = NULL, array $params)
     {

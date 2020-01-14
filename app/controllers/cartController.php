@@ -7,9 +7,9 @@ const VAT = 0.21;
  
 class CartController extends AppController
 {
-    protected $cartPages = [];
-    public $errorType = "";
-    public $errorMessage = ""; 
+    private $cartPages = [];
+    private $errorType = "";
+    private $errorMessage = ""; 
 
     public function __construct(string $action = NULL, array $params)
     {
@@ -87,20 +87,22 @@ class CartController extends AppController
         try{
             if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
                 $ticket = array('Haarlem At Night - ' . $_POST['hidden_event_name'], (float)$_POST['hidden_total_payment'], strtotime($_POST['hidden_date']), $_POST['hidden_language'], $_POST['hidden_guide_name'], (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount'], (float)$_POST['hidden_regular_price'], (float)$_POST['hidden_family_price']);
-        
-            if($this->checkDuplicateTicket($ticket)){
-                $key = array_search($ticket, $_SESSION['shoppingCart']);
-    
-                if(strpos($_POST['hidden_event_name'], 'Night') !== false && ((int)$_POST['hidden_amount'] - (($_SESSION['shoppingCart'][$key][5] + $ticket[5]) + (($_SESSION['shoppingCart'][$key][6] * 4) + ($ticket[6] * 4))) >= 0)){
-                    $_SESSION['shoppingCart'][$key][5] += $ticket[5];
-                    $_SESSION['shoppingCart'][$key][6] += $ticket[6];
+            
+            if($this->checkDuplicateTicket($ticket))
+            {
+                $key = $this->retrieveKey($ticket);
+
+                if(strpos($_SESSION['shoppingCart'][$key][0], 'Night') !== false && ((int)$_POST['hidden_amount'] - (($_SESSION['shoppingCart'][$key][5] + $ticket[5]) + (($_SESSION['shoppingCart'][$key][6] * 4) + ($ticket[6] * 4))) >= 0)){
                     $_SESSION['shoppingCart'][$key][1] += $ticket[1];
+                    $_SESSION['shoppingCart'][$key][5] += $ticket[5];
+                    $_SESSION['shoppingCart'][$key][6] += $ticket[6];          
                 }
                 else
                     throw new \Exception("Only " . $_POST['hidden_amount'] . " people can be added to this activity");
             }
-            else 
+            else
                 $_SESSION['shoppingCart'][] = $ticket;
+                
         }
         catch(\Exception $e){
             $this->errorType = "Warning";
@@ -109,17 +111,32 @@ class CartController extends AppController
         }
     }
 
-    //checks if there is a duplicate ticket inside the cart
-    private function checkDuplicateTicket(array $ticket):bool
+    //Returns a key from the shoppingCart array if the array contains the same ticket
+    private function retrieveKey(array $ticket):int
+    {
+        $key = 0;
+
+        foreach($_SESSION['shoppingCart'] as $value)
+            if(strpos($value[0], 'Night') !== false)
+            {
+                if($value[0] == $ticket[0] && $value[2] == $ticket[2] && $value[3] == $ticket[3] && $value[4] == $ticket[4]) //checks the event of the ticket, date, language, and guide
+                    $key = key($_SESSION['shoppingCart']);
+
+                next($_SESSION['shoppingCart']);
+            }                               
+
+        return $key;
+    }
+
+    //Checks if the ticket already exist in the shoppingCart array
+    private function checkDuplicateTicket(array $ticket): bool
     {
         if(isset($_SESSION['shoppingCart']))
             foreach($_SESSION['shoppingCart'] as $value)
-                if(strpos($value[0], 'Night') != false)
-                {
-                    if($value[0] == $ticket[0] && $value[2] == $ticket[2] && $value[3] == $ticket[3] && $value[4] == $ticket[4])
-                    return true;
-                }
-
+                if(strpos($value[0], 'Night') !== false)
+                    if($value[0] == $ticket[0] && $value[2] == $ticket[2] && $value[3] == $ticket[3] && $value[4] == $ticket[4]) //checks the event of the ticket, date, language, and guide
+                        return true;
+                    
         return false;
     }
  
@@ -155,7 +172,7 @@ class CartController extends AppController
         if(strpos($_POST['hidden_cart_event_name'], 'Night') !== false)
             $deleteTicket = array($_POST['hidden_cart_event_name'], $_POST['hidden_cart_total'], $_POST['hidden_cart_date'], $_POST['hidden_cart_language'], $_POST['hidden_cart_guide'], $_POST['hidden_cart_regular'], $_POST['hidden_cart_family'], $_POST['hidden_cart_regular_price'], $_POST['hidden_cart_family_price']);
  
-        $key = array_search($deleteTicket, $_SESSION['shoppingCart']);
+        $key = $this->retrieveKey($deleteTicket);
         unset($_SESSION['shoppingCart'][$key]);
     }
  
@@ -186,10 +203,10 @@ class CartController extends AppController
 
         foreach($this->cartPages as $page)
         {
-            if(strpos($page->getPageHeader(), 'Review') != false)
+            if(strpos($page->getPageHeader(), 'Review') !== false)
             {
-                $this->view->assign("title", "Review - Haarlem Festival");
-                $this->view->assign("page_title", "My tickets");
+                $this->view->assign("title", $page->getPageHeader());
+                $this->view->assign("page_title", $page->getPageName());
             }
         }
 
@@ -203,6 +220,18 @@ class CartController extends AppController
             return true;
 
         return false;
+    }
+
+    //returns error message
+    public function getErrorMessage(): string
+    {
+        return $this->errorMessage;
+    }
+
+    //returns error type
+    public function getErrorType(): string
+    {
+        return $this->errorType;
     }
 }
 ?>
