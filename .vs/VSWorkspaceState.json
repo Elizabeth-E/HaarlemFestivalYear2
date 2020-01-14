@@ -5,6 +5,7 @@
     "\\app\\controllers",
     "\\app\\models",
     "\\app\\views",
+<<<<<<< Updated upstream
     "\\app\\views\\cart",
     "\\app\\views\\food",
     "\\app\\views\\jazz",
@@ -12,5 +13,14 @@
     "\\config"
   ],
   "SelectedNode": "\\app\\views\\user\\reset_password.tpl",
+=======
+    "\\app\\views\\at_night",
+    "\\app\\views\\food",
+    "\\app\\views\\home",
+    "\\webroot",
+    "\\webroot\\img"
+  ],
+  "SelectedNode": "\\app\\models\\appModel.php",
+>>>>>>> Stashed changes
   "PreviewInSolutionExplorer": false
 }

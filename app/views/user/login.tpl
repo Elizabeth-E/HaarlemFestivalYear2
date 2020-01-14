@@ -1,121 +1,171 @@
 {include file="{$layout}\\header.tpl"}
 
+<body class=" registeration-form">
+	<div class="reg-container">
+		<h1 class="reg">Account Registeration</h1>
+			<div class="row_reg">
+				<div class="column_reg" style="background-color:aliceblue;">
+					<h5>Already a member?</h5>
+    
+				<form  method="post" id="signIn"  action="{$POST_URL}">
+					<label for="email">Email</label>
+					<input type="text" placeholder="Enter Email" name="email" required>
+					<label for="password">Password</label>
+					<input type="password" placeholder="Enter Password" name="password" required>
+					<button type="submit">Login</button>
+				</form>
+					<button  id="ghost1" onclick="signInForm()">SignIn</button>
+				</div>
+  
+			<div class="column_reg" style="background-color:lavender;">
+				<h5>Not a member?</h5>
+					<form method="post" id="signUp"  action="{$POST_URL}">
+						<label for="email">Email</label>
+						<input type="text" placeholder="Enter Email" name="email" required>
+						<label for="username">User Name</label>
+						<input type="text" placeholder="Enter Username" name="username" required>
+						
+						<label for="firstname">First Name</label>
+						<input type="text" placeholder="Enter Firstname" name="firstname" required>
+						<label for="lastname">Last Name</label>
+						<input type="text" placeholder="Enter Lastname" name="lastname" required>
+						<label for="password">Password</label>
+						<input type="password" placeholder="Enter Password" name="password" required>
+						<label for="password_confirmation"><b>Repeat Password</b></label>
+						<input type="password" placeholder="Repeat Password" name="password_confirmation" required>
+						<p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+						<button type="submit">Register</button>
+    </form>
+     <button  type="submit"   id="ghost2" onclick="signUpForm()">SignUp</button>
+  </div>
+  </div>
+  </div>
+<script>
+        var a = document.getElementById("signIn");
+        var b = document.getElementById("signUp");
+        var c = document.getElementById("ghost1");
+        var d = document.getElementById("ghost2");
 
+            a.style.display = "block";
+            b.style.display = "none";
+            c.style.display = "none";
+            d.style.display = "block";
 
-  <div class="wrapper">
-      <h3>Login</h3>
-      <form action="login" method="post">
-       <p>
-          <label for="email">Email</label>
-          <input type="text" placeholder="Enter Email" name="email" required>
-        </p>
-        <p>
-          <label for="password">Password</label>
-          <input type="password" placeholder="Enter Password" name="password" required>
-        </p>
-        <p>
-          <label>
-      <input type="checkbox" checked="checked" name="remember">Remember me
-    </label>
-  </p>
-        <p class="input-file-wrapper">
-          <label>Register Here</label>
-          <a href="register"><button type="button">Register Here</button>
-        </a>
-          </p>
-        <p>
-          <button type="submit">Login</button>
-        </p>
-      </form>
-    </div>
+        function signInForm()
+        {
+        if (a.style.display === "none") 
+        {
+            a.style.display = "block";
+            b.style.display = "none";
+            c.style.display = "none";
+            d.style.display = "block";
+        } 
+        }
 
+        function signUpForm()
+        {
+        if (b.style.display === "none") 
+        {
+            b.style.display = "block";
+            a.style.display = "none";
+            c.style.display = "block";
+            d.style.display = "none";
+        } 
+        }
+</script>
+</body>
+  
 {include file="{$layout}\\footer.tpl"}
-
 <style>
-* {
-  box-sizing: border-box;
+/*Registeration*/
+.registeration-form * {
+    box-sizing: border-box;
 }
 
-body {
-  padding-top: 1rem;
+/* Create two equal columns that floats next to each other */
+.column_reg {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 750px; /* Should be removed. Only for demonstration */
 }
 
-.wrapper {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 1em;
-  background: #f9f9f9;
-  border: 1px solid #c1c1c1;
+/* Clear floats after the columns */
+.row_reg:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
-h3 {
-  margin: 0;
+.reg {
+    text-align: center;
 }
 
-input:focus,
-textarea:focus {
-  outline: 3px solid gold;
+#signIn {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-input,
-textarea,
-button {
-  width: 100%;
-  border: 1px solid #000;
-}
-
-.wrapper > * {
-  padding: 1em;
-}
-
-form label {
-  display: block;
-}
-
-form p {
-  margin: 0;
-}
-
-button,
-input,
-textarea {
-  padding: 1em;
-}
-
-button {
-  background: lightgrey;
-  width: 100%;
-  border: 0;
-}
-button:hover, button:focus {
-  background: gold;
-  outline: 0;
-}
-
-form {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-gap: 20px;
-}
-form p {
-  grid-column: 1 / 2;
-}
-
-.input-file-wrapper {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-}
-
-a {
-  color: black;
-}
-footer {
-    background: url('../img/footer.png') repeat-x;
-    min-height: 12%;
-    position: sticky;
-    bottom: 0%;
+input {
     width: 100%;
-    /* margin: 0px; */
-    padding: 0px;
+    padding: 12px 15px;
+    margin: 2px 0;
+}
+
+button {
+    border-radius: 20px;
+    border: 1px;
+    background-color: orange;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: 50%;
+    margin-left: 15em;
+    margin-top: 2%;
+}
+
+.reg-container {
+    background-color: grey;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+    margin-left: 22%;
+}
+
+#ghost2 {
+    border-radius: 20px;
+    border: 1px;
+    background-color: orange;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: 100%;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+#ghost1 {
+    border-radius: 20px;
+    border: 1px;
+    background-color: orange;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: 100%;
+    margin-top: 2%;
+    margin-left: 2%;
 }
 </style>
