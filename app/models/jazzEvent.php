@@ -51,5 +51,18 @@ class JazzEvent extends AppModel
     {
         return $this->price;
     }
+
+    public function toArray()
+    {
+        return [
+            "date" => $this->getDate(),
+            "day" => $this->getDay(),
+            "time" => $this->getTime(),
+            "location" => $this->getLocation(),
+            "hall" => $this->getHall(),
+            "artist" => $this->getArtist(),
+            "price" => $this->getPrice()
+        ];
+    }
 }
 ?>
