@@ -60,6 +60,24 @@
 
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5NjCF0h6oSUfKx2FYza-1kxeLTcYUK1M&callback=initMap"></script>
         
+        <!--facrebook social media feed-->
+        <div id="fb-root"></div>
+            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+        <div class="fb-comments" data-href="{$smarty.server.HTTP_HOST}{$smarty.server.REQUEST_URI}" data-width="600" data-numposts="5"></div>
+
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId: 'your-app-id',
+                    autoLogAppEvents : true,
+                    xfbml : true,
+                    version : 'v3.2'
+                });
+            };
+        </script>
+
+        <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+
         <p name=night-tour-space></p>
            
     </article>
