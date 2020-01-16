@@ -9,6 +9,7 @@
 
 	<link href="{$www}/css/bootstrap.min.css" rel="stylesheet">
 	<link href="{$www}/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="shortcut icon" type="image/svg" href="{$www}/img/favicon.ico"/>
 
 	<!-- Load MD-Bootstrap and addons -->
 	<link href="{$www}/css/mdb.min.css" rel="stylesheet">
