@@ -1184,3 +1184,19 @@ h1[name=home-page-heading]
     text-align: center; 
     margin-top: -13px;
 }
+
+
+table.dataTable thead {
+    background-color: #000;
+    color: #fff;
+}
+/*Facebook API (Jan)*/
+.fb-comments
+{
+    margin-left: 10%;
+}
+h3{
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #FFCC99;
+}

@@ -14,6 +14,10 @@ class JazzController extends AppController
 
         $this->action = $action;
         $this->params = $params;
+
+        $this->model = new Models\JazzEventService();
+
+        $this->getCart();
     }
 
     public function index(array $params)
@@ -34,6 +38,15 @@ class JazzController extends AppController
     {   
         $this->view->assign("title", "Jazz");
 
+        $eventList = $this->model->getJazzEvent();
+
+        // Turn list of events to a nested array representation for Smarty templates
+        $timeTable = [];
+        foreach($eventList as $event)
+        {
+            $timeTable[] = $event->toArray();
+        }
+
         $this->view->display("jazz/tickets_ajax.tpl");
     }
 
@@ -41,6 +54,16 @@ class JazzController extends AppController
     {   
         $this->view->assign("title", "Jazz");
 
+        $eventList = $this->model->getJazzEvent();
+
+        // Turn list of events to a nested array representation for Smarty templates
+        $timeTable = [];
+        foreach($eventList as $event)
+        {
+            $timeTable[] = $event->toArray();
+        }
+
+        $this->view->assign("timeTable", $timeTable);
         $this->view->display("jazz/timetable_ajax.tpl");
     }
 }

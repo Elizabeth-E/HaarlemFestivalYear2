@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-class JazzTicket extends Ticket
+class JazzEventService extends AppModel
 {
     public $eventList = [];
 
@@ -11,17 +11,17 @@ class JazzTicket extends Ticket
 
     }
 
-    public function getJazzTickets()
+    public function getJazzEvent()
     {
         $dbHandle = $this->database->prepare("
-        SELECT  e.event_date, c.concert, e.price 
+        SELECT e.event, e.event_date, c.artist, e.price 
         FROM (
-            SELECT concert.concert_name as concert, concert.event_id as c_event_id
+            SELECT concert.concert_name as concert, concert.event_id as c_event_id, artist.artist_name as artist
             FROM ((concert INNER JOIN artist_has_concert ON concert.id = artist_has_concert.concert_id) 
             INNER JOIN artist ON artist_has_concert.artist_id = artist.id)
         ) as c
         INNER JOIN (
-            SELECT event.id as e_id, event.date as event_date, ticket_type.price as price
+            SELECT event.name as event, event.id as e_id, event.date as event_date, ticket_type.price as price
             FROM (((event INNER JOIN event_has_ticket ON event.id = event_has_ticket.event_id) 
                     INNER JOIN ticket ON event_has_ticket.ticket_id = ticket.id)
                     INNER JOIN ticket_type ON ticket.ticket_type_id = ticket_type.id)

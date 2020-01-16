@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-class JazzEventModel extends AppModel
+class JazzEvent extends AppModel
 {
     private $date;
     private $day;
@@ -50,6 +50,19 @@ class JazzEventModel extends AppModel
     public function getPrice()
     {
         return $this->price;
+    }
+
+    public function toArray()
+    {
+        return [
+            "date" => $this->getDate(),
+            "day" => $this->getDay(),
+            "time" => $this->getTime(),
+            "location" => $this->getLocation(),
+            "hall" => $this->getHall(),
+            "artist" => $this->getArtist(),
+            "price" => $this->getPrice()
+        ];
     }
 }
 ?>

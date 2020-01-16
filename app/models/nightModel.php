@@ -19,6 +19,7 @@ class NightModel extends AppModel
         $db->execute();
 
         $result = $db->get_result();
+        
         $event_pages = [];
 
         while($row = $result->fetch_assoc())
