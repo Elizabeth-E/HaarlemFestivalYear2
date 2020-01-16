@@ -265,9 +265,35 @@ html, body {
       position: fixed;
       bottom: 0%;
       width: 100%;
-      /* margin: 0px; */
-      padding: 0px;
+      padding: 0px;   
   }
+  footer ul {
+      list-style: none;
+  }
+  footer .copy-footer,
+  footer a {
+    font-family: 'Montserrat';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    color: #FFFFFF;
+  } footer a:hover {
+      color: #ed7d22;
+  }  
+  footer .copy-footer {
+    text-align: center;
+    padding: 1em;
+  }
+  footer .row {
+    margin-top: 4em;
+    margin-bottom: 1em;
+  }
+footer .icons {
+    text-align: right;
+}
+footer .icons img {
+    height: 3em;
+}
   
   a.payment 
   {
