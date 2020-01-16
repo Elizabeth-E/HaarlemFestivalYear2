@@ -1,60 +1,69 @@
 <?php
 namespace App\Models;
 
-class TourTicket extends Ticket
+class JazzTicket extends Ticket
 {
-    private $one_day_access_price;
-    private $three_day_access_price;
-    private $patronaat_main_price;
-    private $patronaat_second_third_price;
+    public $eventList = [];
 
-    public function __construct($language, $guide_name, $date, $event_name, $amount, $one_day_access_price, $three_day_access_price, $patronaat_main_price, $patronaat_second_third_price)
+    public function __construct()
     {
-        parent::__construct($language, $guide_name, $date, $event_name, $amount);
+        parent::__construct();
 
-        $this->one_day_access_price = $one_day_access_price;
-        $this->three_day_access_price = $three_day_access_price;
-        $this->patronaat_main_price = $patronaat_main_price;
-        $this->patronaat_second_third_price = $patronaat_second_third_price;
     }
 
-    public function setOneDayAccessPrice(int $one_day_access_price)
+    public function getJazzTickets()
     {
-        $this->one_day_access_price = $one_day_access_price;
-    }
+        $dbHandle = $this->database->prepare("
+        SELECT  e.event_date, c.concert, e.price 
+        FROM (
+            SELECT concert.concert_name as concert, concert.event_id as c_event_id
+            FROM ((concert INNER JOIN artist_has_concert ON concert.id = artist_has_concert.concert_id) 
+            INNER JOIN artist ON artist_has_concert.artist_id = artist.id)
+        ) as c
+        INNER JOIN (
+            SELECT event.id as e_id, event.date as event_date, ticket_type.price as price
+            FROM (((event INNER JOIN event_has_ticket ON event.id = event_has_ticket.event_id) 
+                    INNER JOIN ticket ON event_has_ticket.ticket_id = ticket.id)
+                    INNER JOIN ticket_type ON ticket.ticket_type_id = ticket_type.id)
 
-    public function setThreeDayAccessPrice(int $three_day_access_price)
-    {
-        $this->three_day_access_price = $three_day_access_price;
-    }
+        ) as e ON c.c_event_id = e.e_id");
+        
+        $dbHandle->execute();
+        $result = $dbHandle->get_result();
 
-    public function setPatronaatMainPrice()
-    {
-        $this->patronaat_main_price = $patronaat_main_price;
-    }
+        while($row = $result->fetch_assoc()) {
+            $explodedEvent = explode("_", $row["event"]);
 
-    public function setPatronaatSecondThirdPrice()
-    {
-        $this->patronaat_second_third_price = $patronaat_second_third_price;   
-    }
+            // Event time calculations
+            $startDate = strtotime($row["event_date"]);
+            $eventDate = date("d M", $startDate);
+            $eventStartTime = date("H:i", $startDate);
+            $eventEndTime = date("H:i", $startDate + 60 * 60); // Event time +1 hour
 
-    public function getOneDayAccessPrice()
-    {
-        return $this->one_day_access_price;
-    }
+            $eventData = [
+                'date' => $eventDate,
+                'time' => $eventStartTime.' - '.$eventEndTime,
+                'artist' => $row["artist"],
+                'price' => floatval($row["price"]),
+                'day' => $explodedEvent[1],
+                'location' => $explodedEvent[2],
+                'hall' => @$explodedEvent[3].' '.@$explodedEvent[4] // Ignore errors '@' 
+            ];
 
-    public function getThreeDayAccessPrice()
-    {
-        return $this->three_day_access_price;
-    }
+            // Add event to array
+            $eventList[] = new JazzEvent(
+                $eventData['date'],
+                $eventData['day'],
+                $eventData['time'],
+                $eventData['location'],
+                $eventData['hall'],
+                $eventData['artist'],
+                $eventData['price']
+            );                
+        }
 
-    public function getPatronaatMainPrice()
-    {
-        return $this->patronaat_main_price;
-
-    public function getPatronaatSecondThirdPrice()
-    {
-        return $this->patronaat_second_third_price;   
+        $dbHandle->close();
+        return $eventList;
     }
 }
 ?>

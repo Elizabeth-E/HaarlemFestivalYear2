@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-class TimetableJazz extends AppModel
+class JazzEventService extends AppModel
 {
     public $eventList = [];
 
@@ -11,7 +11,7 @@ class TimetableJazz extends AppModel
 
     }
 
-    public function getTimetableEvent()
+    public function getJazzEvent()
     {
         $dbHandle = $this->database->prepare("
         SELECT e.event, e.event_date, c.artist, e.price 
