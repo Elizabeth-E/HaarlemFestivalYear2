@@ -13,12 +13,9 @@
 	<!-- Load MD-Bootstrap and addons -->
 	<link href="{$www}/css/mdb.min.css" rel="stylesheet">
 	<link href="{$www}/css/addons/datatables.min.css" rel="stylesheet">
-
 	<link href="{$www}/css/style.css" rel="stylesheet">
-
+	
 	<script src="{$www}/js/jquery-3.3.1.min.js"></script>
-
-	{* <link href="{$www}/css/darktheme.css" rel="stylesheet"> *}
 
 	<title>{$title}</title>
 </head>

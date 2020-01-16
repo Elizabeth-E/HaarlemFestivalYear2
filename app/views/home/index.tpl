@@ -1,7 +1,7 @@
 {include file="{$layout}\\header.tpl"}
 
 <main>
-	<div name=home-page>
+	<div name=home-page class="container">
 	    <ol class="breadcrumb">
             <li><a href="{$www}">Haarlem Festival</a></li>
         </ol>
