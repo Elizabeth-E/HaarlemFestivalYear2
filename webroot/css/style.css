@@ -1190,3 +1190,8 @@ table.dataTable thead {
     background-color: #000;
     color: #fff;
 }
+/*Facebook API (Jan)*/
+.fb-comments
+{
+    margin-left: 10%;
+}

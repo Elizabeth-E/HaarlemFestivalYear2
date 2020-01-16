@@ -2,7 +2,7 @@
     {if !empty($cart)}       
         {foreach from=$cart item=$item}
             <!--the ticket is formated based on which event the user has selected the ticket from-->
-            {if strpos($item[0], 'Night') != false}
+            {if strpos($item[0], 'Night') !== false}
                 <!--tour name-->
                 <section class="cart-tour-name">
                     <h1>{print_r($item[0], true)}</h1>
