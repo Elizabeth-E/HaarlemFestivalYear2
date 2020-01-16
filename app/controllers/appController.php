@@ -9,8 +9,9 @@ abstract class AppController
     protected $action = "";
     protected $params = [];
 
-    // Default layout
+    // Default layout & background
     protected $layout = VIEWS . "layouts" . DS . "default" . DS;
+    protected $background = BASE_URL . "/img/backgrounds/home.jpg";
 
     public function __construct(string $action = "", array $params)
     {    
@@ -20,7 +21,10 @@ abstract class AppController
         $this->view = new TemplateEngine(); // Initiate template engine
 
         $this->view->assign("layout", $this->layout);
+        $this->view->assign("background", $this->background);
         $this->view->assign("www", BASE_URL);
+
+        $this->setBackground("home.jpg");
     }
 
     protected function setLayout(string $layout)
@@ -28,6 +32,12 @@ abstract class AppController
         // Change layout
         $this->layout = VIEWS . "layouts" . DS . $layout . DS;
         $this->view->assign("layout", $this->layout);
+    }
+
+    protected function setBackground(string $background)
+    {
+        $this->background = BASE_URL . "/img/backgrounds/" . $background;
+        $this->view->assign("background", $this->background);
     }
 
     protected function getUrlSelf() : string

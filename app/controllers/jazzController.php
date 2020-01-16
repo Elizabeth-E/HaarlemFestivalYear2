@@ -17,6 +17,8 @@ class JazzController extends AppController
 
         $this->model = new Models\JazzEventService();
 
+        $this->setBackground("jazz.jpg");
+
         $this->getCart();
     }
 
