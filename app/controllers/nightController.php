@@ -24,6 +24,8 @@ class NightController extends AppController
         $this->at_night_pages = $this->model->retrieveAtNightPages();
 
         $this->getCart();
+
+        $this->setBackground("jazz.jpg");
     }
 
     //This is used to retrieve information for the At Night home page
