@@ -45,11 +45,8 @@
                         Family Tickets: {print_r($item[6], true)}
                     </section>
                 </section>
-
-
            {else if strpos($item[0], 'Food') != false}
-
-		 <section class="cart-tour-name">
+		        <section class="cart-tour-name">
                     <h1>{print_r($item[0], true)}</h1>
                     <form method=POST>
                         <button name=delete_single>x</button>
@@ -90,7 +87,6 @@
             {/if}
             <br>
         {/foreach}
-
 
         <section class=cart-space></section>
         <section class=cart-submit-button>
