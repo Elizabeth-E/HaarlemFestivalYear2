@@ -16,6 +16,8 @@ class FoodController extends AppController
  
         $this->model = new Models\foodModel();
         $this->action = $action;
+
+		$this->getCart();
  
     }
 //ctrl + K + C to comment paragraph!!!
@@ -29,14 +31,14 @@ class FoodController extends AppController
         //display food home page
         $this->view->display("food/food_home.tpl");
     }
-    public function comment(array $params)
+
+	 public function foodReservation(array $param)
     {
-         //title home page
-         $this->view->assign("title", "Food - Haarlem Festival");
- 
-         $comment = $_POST["Comment"];
- 
-        $this->view->display("food/food_home.tpl");
+        //title home page
+        $this->view->assign("title", "Reservation");
+        //display food home page
+        $this->view->display("food/food_reservation.tpl");
     }
+
 }
 ?>

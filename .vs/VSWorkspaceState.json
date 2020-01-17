@@ -5,7 +5,9 @@
     "\\app\\controllers",
     "\\app\\models",
     "\\app\\views",
-    "\\app\\views\\user"
+    "\\app\\views\\at_night",
+    "\\app\\views\\layouts",
+    "\\app\\views\\layouts\\default"
   ],
   "SelectedNode": "\\app\\controllers\\userController.php",
   "PreviewInSolutionExplorer": false

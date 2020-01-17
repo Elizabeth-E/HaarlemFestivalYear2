@@ -17,6 +17,7 @@ class UserController extends AppController
 		$this->action = $action;
 		
 		$this->emailEngine = new EmailEngine(true);
+		$this->getCart();
 	}
 
 	public function login(array $params)
