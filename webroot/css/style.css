@@ -1311,7 +1311,7 @@ table.dataTable thead {
 {
     margin-left: 10%;
 }
-h3{
+section h3{
     font-weight: bold;
     font-size: 20px;
     background-color: #FFCC99;
@@ -1321,12 +1321,12 @@ h3{
 div.all-access{
     background-image: url('../img/accesspassbackground.png');
     background-repeat: no-repeat;
-
+}
 
 main {
     margin-top: 18%;
 }
-}
+
 p.all-access{
     color: #fff;
     font-weight: bold;

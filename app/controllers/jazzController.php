@@ -42,28 +42,34 @@ class JazzController extends AppController
 
         $eventList = $this->model->getJazzEvent();
 
-        // Turn list of events to a nested array representation for Smarty templates
-        $jul26 = [];
-        $jul27 = [];
-        $jul2 = [];
+        $eventsPerDate = [
+            "Thursday 26th July" => [],
+            "Friday 27th July" => [],
+            "Saturday 28th July" => [],
+            "Sunday 29th July" => []
+        ];
+
         foreach($eventList as $event)
         {
-            if(strcmp($event->getDay(), "thu")){
-                $jul26[] = $event->toArray();
+            switch(strtolower($event->getDay())) {
+                case "thu":
+                    $eventsPerDate["Thursday 26th July"][] = $event->toArray();
+                    break;
+                case "fri":
+                    $eventsPerDate["Friday 27th July"][] = $event->toArray();
+                    break;
+                case "sat":
+                    $eventsPerDate["Saturday 28th July"][] = $event->toArray();
+                    break;
+                case "sun":
+                    $eventsPerDate["Sunday 29th July"][] = $event->toArray();
+                    break;
+                default:
+                    break; 
             }
-            if(strcmp($event->getDay(), "fri")){
-                $jul27[] = $event->toArray();
-            }
-            else{
-                $jul28[] = $event->toArray(); 
-            }
-            
         }
 
-    
-        $this->view->assign("jul26", $jul26);
-        $this->view->assign("jul27", $jul27);
-        $this->view->assign("jul28", $jul28);
+        $this->view->assign("eventList", $eventsPerDate);
         $this->view->display("jazz/tickets_ajax.tpl");
     }
 
