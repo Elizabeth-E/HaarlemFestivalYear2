@@ -66,7 +66,7 @@
                             <h3 name=total>Total: €{number_format(print_r($ticket[1], true), 2, '.', '')}</h3>
                         </section> 
 						
-						{else if strpos($item[0], 'Food') != false}
+					{else if strpos($item[0], 'Food') != false}
 						<section class=review-night-ticket>
                             <section name=review-night-event-name>                           
                                 <!--event name-->
@@ -85,9 +85,8 @@
                             <!--total-->
                             <h3 name=total>Total: €{number_format(print_r($ticket[5], true), 2, '.', '')}</h3>
                         </section> 
+                        
                     {/if}
-
-
                 </section>
               {/foreach}
             {else}
