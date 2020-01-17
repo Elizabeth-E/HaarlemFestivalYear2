@@ -23,7 +23,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="{$www}/">Tickets</a></li>
-            <li><a href="{$www}/">About</a></li>
+            <li><a href="{$www}/about">About</a></li>
             <li><a href="{$www}/">FAQ</a></li>
             <li><a href="{$www}/user/login">Sign In</a></li>
             <li>{include file="cart/cartButton.tpl"}</li>
