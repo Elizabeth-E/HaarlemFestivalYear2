@@ -15,10 +15,7 @@
     <section>
 
     <section class="container jazz">
-        <ol class="breadcrumb">
-            <li><a href="#">Haarlem Festival</a></li>
-            <li><a href="#" class="active">Haarlem Jazz</a></li>
-        </ol>
+        
 
         <div id="tab-content"><!-- Will be filled by JS --></div>
 

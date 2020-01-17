@@ -1,4 +1,10 @@
 
+    <ol class="breadcrumb">
+        <li><a href="{$www}">Haarlem Festival</a></li>
+        <li><a href="{$www}/Jazz">Haarlem Jazz</a></li>
+        <li><a href="#" class="active">Timetable</a></li>
+    </ol>
+
 <h2>Timetable</h2><table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
   <thead>
     <tr>

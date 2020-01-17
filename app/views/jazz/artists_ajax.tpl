@@ -1,3 +1,9 @@
+        <ol class="breadcrumb">
+            <li><a href="{$www}">Haarlem Festival</a></li>
+            <li><a href="{$www}/Jazz">Haarlem Jazz</a></li>
+            <li><a href="{$www}/jazz" class="active">Artists</a></li>
+        </ol>
+        
         <h2 class="section-heading">Featured Artists</h2>
 
         <!-- TODO: All images need alternative text -->
