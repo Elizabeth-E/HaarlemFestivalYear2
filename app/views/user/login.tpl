@@ -12,13 +12,13 @@
 					<input type="text" placeholder="Enter Email" name="email" required>
 					<label for="password">Password</label>
 					<input type="password" placeholder="Enter Password" name="password" required>
-					<button type="submit">Login</button>
+					<button type="submit" name=login_user>Login</button>
 				</form>
 					<button  id="ghost1" onclick="signInForm()">SignIn</button>
 				</div>
   
-			<div class="column_reg" style="background-color:lavender;">
-				<h5>Not a member?</h5>
+			    <div class="column_reg" style="background-color:lavender;">
+				    <h5>Not a member?</h5>
 					<form method="post" id="signUp"  action="{$POST_URL}">
 						<label for="email">Email</label>
 						<input type="text" placeholder="Enter Email" name="email" required>
@@ -34,12 +34,12 @@
 						<label for="password_confirmation"><b>Repeat Password</b></label>
 						<input type="password" placeholder="Repeat Password" name="password_confirmation" required>
 						<p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-						<button type="submit">Register</button>
-    </form>
-     <button  type="submit"   id="ghost2" onclick="signUpForm()">SignUp</button>
-  </div>
-  </div>
-  </div>
+						<button type="submit" name=register_user>Register</button>
+                    </form>
+                    <button  type="submit"   id="ghost2" onclick="signUpForm()">SignUp</button>
+                </div>
+            </div>
+    </div>
 <script>
         var a = document.getElementById("signIn");
         var b = document.getElementById("signUp");

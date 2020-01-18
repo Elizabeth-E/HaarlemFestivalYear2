@@ -44,7 +44,7 @@
                 center: haarlem
             });
         
-           {foreach from=$markers item=$location}
+           {foreach from=$locations item=$location}
                 var marker = new google.maps.Marker({
                     position: 
                     {

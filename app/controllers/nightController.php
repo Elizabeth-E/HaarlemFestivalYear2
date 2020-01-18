@@ -67,7 +67,7 @@ class NightController extends AppController
                 $this->view->assign("page_title_link", $param[0]);  
                 $this->view->assign("description", $page->getPageDescription());
                 $this->view->assign("tour_images", $this->model->retrieveImageForPage($page->getPageId()));
-                $this->view->assign("markers", $this->model->retrieveLocationForMap($page->getPageId()));
+                $this->view->assign("locations", $this->model->retrieveLocationForMap($page->getPageId()));
              }
          }
 
@@ -93,17 +93,11 @@ class NightController extends AppController
                     $this->language = $_POST['language'];
 
                 $this->view->assign("language_images", $this->model->retrieveImageForPage($page->getPageId()));
-                $this->view->assign("tickets", $this->getTickets($tourType[4], $this->language));
+                $this->view->assign("tickets", $this->model->retrieveAtNightTickets($tourType[4], $this->language));
             }
         }
 
         $this->view->display("at_night/at_night_ticket_page.tpl");
-    }
-
-    //This is used to retrieve all tickets for the At Night events by using the name of the tour
-    private function getTickets(string $tour_name, string $language)
-    {
-        return $this->model->retrieveAtNightTickets($tour_name, $language);
     }
 }
 ?>

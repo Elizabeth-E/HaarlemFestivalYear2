@@ -28,7 +28,7 @@ class UserController extends AppController
 		$this->view->assign("title", "Login");
 		$this->view->assign("POST_URL", $this->getUrlSelf());
 
-		if (!empty($_POST))
+		if (isset($_POST['login_user']))
 		{
 			$alert = true;
 
@@ -54,10 +54,7 @@ class UserController extends AppController
 					$_SESSION["role"] = \Framework\CryptXOR($this->model->getRole());
 					
 					$this->view->assign("alertType", "success");
-					$this->view->assign("alertMessage", "Login successful!");
-				
-
-					header("Refresh:2; url=" . BASE_URL . "/user/profile", true, 200); 
+					$this->view->assign("alertMessage", "Login successful!");				
 				}
 				elseif (!$this->model->getActivationStatus())
 				{
@@ -68,8 +65,7 @@ class UserController extends AppController
 				{
 					$this->view->assign("alertType", "warning");
 					$this->view->assign("alertMessage", "Password/Username incorrect! Please try again");
-				}
-				
+				}			
 			}
 			else
 			{
@@ -77,6 +73,10 @@ class UserController extends AppController
 				$this->view->assign("alertMessage", "Please fill in the entire form!");
 			}
 		}
+		else if(isset($_POST['register_user']))
+		{
+			$this->register();
+		} 
 
 		// If remmeber me cookie exists, fill input field
 		$rememberMeCookie = \Framework\getCookie("remember_login");
@@ -90,13 +90,8 @@ class UserController extends AppController
 		$this->view->display("user/login.tpl");
 	}
 
-	public function register(array $params)
+	private function register()
 	{
-		$alert = false;
-
-		$this->view->assign("title", "register");
-		$this->view->assign("POST_URL", $this->getUrlSelf());
-
         // Check registration form stuff
         if (!empty($_POST))
         {
@@ -105,9 +100,8 @@ class UserController extends AppController
             $firstname = $_POST["firstname"];
             $lastname = $_POST["lastname"];
             $password = $_POST["password"];
-            $passwordConfirm = $_POST["password_confirmation"];
+			$passwordConfirm = $_POST["password_confirmation"];
             
-            // TODO: What happens if password is empty here?
             $passwordsMatch = $this->model->checkPassword($password, $passwordConfirm);
 
 			if (!empty($email) && !empty($password) && !empty($passwordConfirm) && !empty($username) && $passwordsMatch)
@@ -122,35 +116,11 @@ class UserController extends AppController
                 else
                 {
 					$validationToken = $this->model->generateValidationToken($email);
-					$is_activated = 0;
+					$is_activated = 1;
 					$this->model->register($username, $email, $password, $validationToken, $is_activated, $firstname, $lastname);
 
 					$this->view->assign("alertType", "success");
                     $this->view->assign("alertMessage", "await activation");
-                    // // TODO: Make error checking
-                    // $validationToken = $this->model->generateValidationToken($email);
-                    // $this->model->register($username, $email, $password, $validationToken, $firstname, $lastname);
-                    
-                    // // Send email
-                    // $this->emailEngine->addAddress($email, $username);
-                    
-                    // $subject = "Activation Email";
-                    // $body = "<h1>Welcome " . $username . ",</h1>
-                    //         <p>to activate your account please follow the link to our website:<br />
-                    //         <a href=" . BASE_URL . "/user/account_activation/" . $email . "/" . $validationToken . ">Activate account</a></p>";
-
-					// $emailSent = $this->emailEngine->sendEmail($subject, $body, true);
-
-					// if ($emailSent)
-					// {
-					// 	$this->view->assign("alertType", "success");
-					// 	$this->view->assign("alertMessage", "Check email for activation link!");
-					// }
-					// else
-					// {
-					// 	$this->view->assign("alertType", "warning");
-					// 	$this->view->assign("alertMessage", "You have been registered, but email could not be sent. Contact an administrator.");  
-					// }
 				}
 			}
 			else
@@ -161,9 +131,6 @@ class UserController extends AppController
 				$this->view->assign("alertMessage", "Please fill in the entire form!");
 			}
 		}
-
-		$this->view->assign("alert", $alert);
-		$this->view->display("user/register.tpl");
 	}
 
 	private function sendActivationLink(string $email) : bool
@@ -338,7 +305,6 @@ class UserController extends AppController
 		$this->view->display("home/index.tpl");
 	
 	}
-
     
     public function profile(array $params)
     {

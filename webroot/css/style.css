@@ -395,15 +395,15 @@ footer .icons img {
   
   #night-tour-images img
   {
-      width: 180px; 
-      height: 180px; 
+      width: 240px; 
+      height: 240px; 
       display: block;
   }
   
   #night-tour-images section p
   {
       text-align: center; 
-      width: 180px; 
+      width: 240px; 
       background-color: #ED7D22; 
       color: #FFFFFF; 
       border: none;
@@ -841,6 +841,7 @@ footer .icons img {
       display: none; 
       margin-left: 67%; 
       margin-top: -1%;
+      position: absolute;
   }
 
   .cart-tour-name
@@ -879,6 +880,7 @@ footer .icons img {
       border-radius: 40px; 
       border: none; 
       color: white;
+      background-color: red;
   }
   
   .cart-tour-data
