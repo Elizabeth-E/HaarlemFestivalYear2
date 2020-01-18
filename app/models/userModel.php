@@ -32,7 +32,7 @@ class UserModel extends AppModel
 		
 
 		$dbHandle = $this->database->prepare("INSERT INTO user (email, password, firstname, lastname, validation_token, is_activated, username) VALUES (?,?,?,?,?,?,?)");
-		$dbHandle->bind_param("sssssss",  $email, $password, $firstname, $lastname, $validationToken, $is_activated, $username);
+		$dbHandle->bind_param("sssssis",  $email, $password, $firstname, $lastname, $validationToken, $is_activated, $username);
 		$dbHandle->execute();
 		
 		$dbHandle->close();
@@ -80,13 +80,11 @@ class UserModel extends AppModel
 		}
 	}
 
-	Public function checkCredentials(string $email, string $password) : bool
+	public function checkCredentials(string $email, string $password) : bool
 	{
 		$password = sha1($password . $this->salt);
 
-		$dbHandle = $this->database->prepare("
-		SELECT user.email, user.is_activated, role.role
-		FROM user, user_roles AS role
+		$dbHandle = $this->database->prepare("SELECT user.id, user.username, user.email, user.is_activated, role.role FROM user, user_roles AS role
 		WHERE email = ? and password = ? AND role.id = user.user_roles_id");
 		$dbHandle->bind_param("ss", $email, $password);
 		$dbHandle->execute();

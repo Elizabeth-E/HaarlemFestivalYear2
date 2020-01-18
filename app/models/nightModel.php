@@ -128,26 +128,26 @@ class NightModel extends AppModel
         $locations = array();
 
         while($row = $result->fetch_assoc())
-            $locations[] = $this->retrieveMapInfo($row['map_id']);
+            $locations[] = $this->retrieveLocationInfo($row['map_id']);
 
         return $locations;
     }
 
     //retrieves information for a location
-    private function retrieveMapInfo(int $map_id)
+    private function retrieveLocationInfo(int $location_id)
     {
         $db = $this->database->prepare("SELECT * FROM map WHERE `location_id` = ?");
-        $db->bind_param('i', $map_id);
+        $db->bind_param('i', $location_id);
         $db->execute();
 
         $result = $db->get_result();
 
-        $mapInfo = null;
+        $location = null;
 
         while($row = $result->fetch_assoc())
-            $mapInfo = new Map($row['location_Id'], $row['location_name'], $row['latitude'], $row['longitude']);
+            $location = new Map($row['location_Id'], $row['location_name'], $row['latitude'], $row['longitude']);
 
-        return $mapInfo;
+        return $location;
     }
 }
 ?>
