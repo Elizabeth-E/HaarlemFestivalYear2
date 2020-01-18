@@ -41,7 +41,7 @@ class JazzController extends AppController
         $artistURL = "/jazz/artist_page_ajax/";
         $artistPage = $artistURL.$artistName;
 
-        // \Framework\debug($artistPage);
+        // \Framework\debug($artistName);
         // exit();
 
 
@@ -64,6 +64,7 @@ class JazzController extends AppController
         //     }
         // }
         $this->view->assign("title", "Jazz");
+        // $this->view->assign("artistPage", $artistPage);
         $this->view->assign("artistPage", $artistPage);
 
         $this->view->display("jazz/artist_page.tpl");
@@ -72,11 +73,10 @@ class JazzController extends AppController
     {   
         // $eventList = $this->model->getJazzEvent();
         $artistName = $params[0];
-
-        \Framework\debug($params[0]);
-        exit();
+        $artistName = str_replace("_"," ",$params[0]);
 
         $artistInfo = $this->model->getJazzArtist($artistName);
+        $artistInfo = $artistInfo->toArray();
 
 
         $this->view->assign("title", "Jazz");

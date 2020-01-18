@@ -8,7 +8,6 @@
             <li role="presentation" data-toggle="tab" id="tab-timetable"><a href="#">Timetable</a></li>
         </ul>
 
-
             <section class="container jazz">
                 <div id="tab-content"><!-- Will be filled by JS --></div>
             </section>
@@ -18,10 +17,10 @@
    <script>
 // Bypass Smartry Literal
 var baseUrl = '{$www}';
-var artistPage = "{$artistPage}";
-
+var param = "{$artistPage}";
 {literal}
-$('#tab-content').load(baseUrl + '/jazz/artist_page_ajax');
+
+$('#tab-content').load(baseUrl + param);
 
 //javascript for using tabs 
 $('#myTabs a').click(function (e) {
@@ -31,7 +30,7 @@ $('#myTabs a').click(function (e) {
 
     switch(tabId) {
         case 'tab-home':
-            $('#tab-content').load(baseUrl + artistPage);
+            $('#tab-content').load(baseUrl + param);
             break;
         case 'tab-tickets':
             $('#tab-content').load(baseUrl + '/jazz/tickets_ajax');
@@ -40,7 +39,7 @@ $('#myTabs a').click(function (e) {
             $('#tab-content').load(baseUrl + '/jazz/timetable_ajax');
             break;
         default:
-            $('#tab-content').load(baseUrl + '/jazz/artist_page_ajax/' + param);
+            $('#tab-content').load(baseUrl + param);
     }
     
     $(this).tab('show');

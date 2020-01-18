@@ -11,7 +11,7 @@ class JazzArtist extends AppModel
     public function __construct($artist, $description, $picture)
     {
         $this->artist = $artist;
-        $this->price = $description;
+        $this->description = $description;
         $this->picture = $picture;
 
     }
@@ -32,7 +32,7 @@ class JazzArtist extends AppModel
     {
         return [
             "artist" => $this->getArtist(),
-            "description" => $this->getPrice()
+            "description" => $this->getDescription(),
             "picture" => $this->getPicture()
         ];
     }

@@ -74,12 +74,13 @@ class JazzEventService extends AppModel
 
         while($dbArtist = $result->fetch_assoc()) {
         // Add event to array
-        $artistPageInfo[] = new JazzArtist(
+        $artistPageInfo = new JazzArtist(
             $dbArtist['artist_name'],
             $dbArtist['artist_info'],
-            $dbArtist['picture'] 
+            $dbArtist['artist_picture'] 
         );  
         }
+        return $artistPageInfo;
 
 
 

@@ -19,7 +19,7 @@
 				</div>
 			</div> *}
 
-            <div>{$artistInfo.description}</div>
+            <p>{$artistInfo.description}</p>
             <div>{$artistInfo.picture}</div>
     
     </section>
