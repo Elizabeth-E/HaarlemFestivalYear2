@@ -17,8 +17,8 @@
 					<button  id="ghost1" onclick="signInForm()">SignIn</button>
 				</div>
   
-			<div class="column_reg" style="background-color:lavender;">
-				<h5>Not a member?</h5>
+			    <div class="column_reg" style="background-color:lavender;">
+				    <h5>Not a member?</h5>
 					<form method="post" id="signUp"  action="{$POST_URL}">
 						<label for="email">Email</label>
 						<input type="text" placeholder="Enter Email" name="email" required>
@@ -36,10 +36,10 @@
 						<p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 						<button type="submit" name=register_user>Register</button>
                     </form>
-     <button  type="submit"   id="ghost2" onclick="signUpForm()">SignUp</button>
-  </div>
-  </div>
-  </div>
+                    <button  type="submit"   id="ghost2" onclick="signUpForm()">SignUp</button>
+                </div>
+            </div>
+    </div>
 <script>
         var a = document.getElementById("signIn");
         var b = document.getElementById("signUp");

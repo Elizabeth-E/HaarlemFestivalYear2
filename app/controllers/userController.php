@@ -54,10 +54,7 @@ class UserController extends AppController
 					$_SESSION["role"] = \Framework\CryptXOR($this->model->getRole());
 					
 					$this->view->assign("alertType", "success");
-					$this->view->assign("alertMessage", "Login successful!");
-				
-
-					header("Refresh:2; url=" . BASE_URL . "/user/profile", true, 200); 
+					$this->view->assign("alertMessage", "Login successful!");				
 				}
 				elseif (!$this->model->getActivationStatus())
 				{
@@ -68,8 +65,7 @@ class UserController extends AppController
 				{
 					$this->view->assign("alertType", "warning");
 					$this->view->assign("alertMessage", "Password/Username incorrect! Please try again");
-				}
-				
+				}			
 			}
 			else
 			{
@@ -96,11 +92,6 @@ class UserController extends AppController
 
 	private function register()
 	{
-		$alert = false;
-
-		$this->view->assign("title", "register");
-		$this->view->assign("POST_URL", $this->getUrlSelf());
-
         // Check registration form stuff
         if (!empty($_POST))
         {
@@ -125,7 +116,7 @@ class UserController extends AppController
                 else
                 {
 					$validationToken = $this->model->generateValidationToken($email);
-					$is_activated = 0;
+					$is_activated = 1;
 					$this->model->register($username, $email, $password, $validationToken, $is_activated, $firstname, $lastname);
 
 					$this->view->assign("alertType", "success");
@@ -314,7 +305,6 @@ class UserController extends AppController
 		$this->view->display("home/index.tpl");
 	
 	}
-
     
     public function profile(array $params)
     {

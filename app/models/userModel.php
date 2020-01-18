@@ -29,7 +29,6 @@ class UserModel extends AppModel
 		string $validationToken, int $is_activated, string $firstname, string $lastname)
 	{
 		$password = sha1($password . $this->salt);
-		
 
 		$dbHandle = $this->database->prepare("INSERT INTO user (email, password, firstname, lastname, validation_token, is_activated, username) VALUES (?,?,?,?,?,?,?)");
 		$dbHandle->bind_param("sssssis",  $email, $password, $firstname, $lastname, $validationToken, $is_activated, $username);
@@ -159,7 +158,6 @@ class UserModel extends AppModel
 		$dbHandle->execute();
 		$dbHandle->close();
 	}
-
 
 	public function getUsername() : string
 	{
