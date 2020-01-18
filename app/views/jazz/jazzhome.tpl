@@ -2,16 +2,11 @@
 
 <main>
 	<section class="container">
-        {* <ul class="nav nav-tabs" id="myTabs">
-            <li role="presentation" class="active" data-toggle="tab"><a href="#" >Artists</a></li>
-            <li role="presentation" data-toggle="tab"><a href="#" >Tickets</a></li>
-            <li role="presentation" data-toggle="tab"><a href="#" >Timetable</a></li>
-        </ul> *}
-<ul class="nav nav-tabs" id="myTabs">
-  <li role="presentation" data-toggle="tab" id="tab-home" class="active"><a href="#">Home</a></li>
-  <li role="presentation" data-toggle="tab" id="tab-tickets"><a href="#">Tickets</a></li>
-  <li role="presentation" data-toggle="tab" id="tab-timetable"><a href="#">Timetable</a></li>
-</ul>
+        <ul class="nav nav-tabs" id="myTabs">
+        <li role="presentation" data-toggle="tab" id="tab-home" class="active"><a href="#">Home</a></li>
+        <li role="presentation" data-toggle="tab" id="tab-tickets"><a href="#">Tickets</a></li>
+        <li role="presentation" data-toggle="tab" id="tab-timetable"><a href="#">Timetable</a></li>
+        </ul>
     <section>
 
     <section class="container jazz">

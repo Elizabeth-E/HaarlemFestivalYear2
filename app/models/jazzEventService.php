@@ -65,5 +65,24 @@ class JazzEventService extends AppModel
         $dbHandle->close();
         return $eventList;
     }
+    public function getJazzArtist($artist)
+    {
+        $dbHandle = $this->database->prepare("SELECT * FROM artist WHERE artist.artist_name = ?");
+        $dbHandle->bind_param("s", $artist);
+        $dbHandle->execute();
+        $result = $dbHandle->get_result();
+
+        while($dbArtist = $result->fetch_assoc()) {
+        // Add event to array
+        $artistPageInfo[] = new JazzArtist(
+            $dbArtist['artist_name'],
+            $dbArtist['artist_info'],
+            $dbArtist['picture'] 
+        );  
+        }
+
+
+
+    }
 }
 ?>
