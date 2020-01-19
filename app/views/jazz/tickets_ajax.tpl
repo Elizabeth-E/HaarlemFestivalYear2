@@ -11,31 +11,31 @@
 <div class="row">
 		<div class="container col-lg-3">
 			<div class="all-access">
-				<p class="allpass"> Thursday</p>
+				<p class="allpass" data-day="Thursday"> Thursday</p>
 				<p class="allpass"> 26th July</p>
 				<p class="allpass"> Pass</p>
-				<p class="allpass"> &euro;35,-</p>
-				<button type="button" class="btn btn-lg jazz" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+				<p class="allpass" data-price="35"> &euro;35,-</p>
+				<button type="button" class="btn btn-lg jazz" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
 				<p class="fineprint"> Access to all events on this day</p>
 			</div>
 		</div>
 		<div class="container col-lg-3">
 			<div class="all-access">
-				<p class="allpass"> Friday</p>
+				<p class="allpass" data-day="Friday"> Friday</p>
 				<p class="allpass"> 27th July</p>
 				<p class="allpass"> Pass</p>
-				<p class="allpass"> &euro;35,-</p>
-				<button type="button" class="btn btn-lg jazz" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+				<p class="allpass" data-price="35"> &euro;35,-</p>
+				<button type="button" class="btn btn-lg jazz" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
 				<p class="fineprint"> Access to all events on this day</p>
 			</div>
 		</div>
 		<div class="container col-lg-3">
 			<div class="all-access">
-				<p class="allpass"> Saturday</p>
+				<p class="allpass" data-day="Saturday"> Saturday</p>
 				<p class="allpass"> 28th July</p>
 				<p class="allpass"> Pass</p>
-				<p class="allpass"> &euro;35,-</p>
-				<button type="button" class="btn btn-lg jazz" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+				<p class="allpass" data-price="35"> &euro;35,-</p>
+				<button type="button" class="btn btn-lg jazz" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
 				<p class="fineprint"> Access to all events on this day</p>
 			</div>
 		</div>
@@ -43,9 +43,9 @@
 			<div class="all-access">
 				<p class="allpass"> All Access</p>
 				<p class="allpass"> Pass</p>
-				<p class="allpass"> Thu, Fri, Sat</p>
-				<p class="allpass"> &euro;80,-</p>
-				<button type="button" class="btn btn-lg jazz" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+				<p class="allpass" data-day="All Weekend"> Thu, Fri, Sat</p>
+				<p class="allpass" data-price="80"> &euro;80,-</p>
+				<button type="button" class="btn btn-lg jazz" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
 				<p class="fineprint"> Access to all events on this day</p>
 			</div>
 		</div>
@@ -60,13 +60,13 @@
 			<div class="container jazzticket col-lg-12">
 			<img src="{$www}{$event.picture|escape}" alt="{$event.artist|escape}" class="ticketpicture col-lg-2">
 				<div class="jazzticket col-lg-8">
-					<p class="jazzticketartist">{$event.artist|escape}</p>
-					<p class="jazzticketp">{$event.location|escape}-{$event.hall|escape}</p>
-					<p class="jazzticketp">{$event.time}</p>
+					<p class="jazzticketartist" data-artist="{$event.artist|escape}">{$event.artist|escape}</p>
+					<p class="jazzticketp" id="artist-location">{$event.location|escape}-{$event.hall|escape}</p>
+					<p class="jazzticketp" id="artist-time">{$event.time}</p>
 				</div>
 				<div class="jazzticket col-lg-2">
-					<p class="jazzticketp">&euro; {$event.price}</p>
-					<button type="button" class="btn btn-lg jazz" data-toggle="modal" data-target="#basicExampleModal">Select Ticket</button>
+					<p class="jazzticketp" data-price="{$event.price}">&euro; {$event.price}</p>
+					<button type="button" class="btn btn-lg jazz" data-ticket-type="event" data-toggle="modal" data-target="#basicExampleModal">Select Ticket</button>
 				</div>
 			</div>
 			{/foreach}
@@ -84,20 +84,125 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
+				<h3>Add Tickets for &quot;<span id="artist-name"><!-- Filled by JS --></span>&quot;</h3>
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-xs-8"></div>
+					<div class="col-xs-8">
+						<div class="row">
+							<section class="regular-ticket-selection">
+								<p id="night-ticket-name">Regular Ticket(s) - &euro; <span id="artist-price"><!-- Filled by JS --></span></span></p>             
+								<button id="night-ticket-button-minus-bottom">-</button>
+								<input type="text" id="regular_ticketx" name="regular" value="0" disabled>
+								<button id="night-ticket-button-plus">+</button>
+							</section>
+						</div>
+						<div class="row" style="border-top: 1px solid #000; padding-top: 1em;">
+							<p>Total Amount &euro;: <span id="total-amount">0.0</span></p>
+						</div>
+					</div>
 					<div class="col-xs-4">
 						<p class="fineprintmodal"> Items added to cart are reserved for 24 hours</p>
-						<button type="button" class="btn btn-lg jazz" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-lg jazz">Add to Cart</button>
+						<button type="button" class="btn btn-lg jazz" id="add-to-cart">Add to Cart</button>
 					</div>
 				</div>
-			</div>
-			<div class="modal-footer">
-				
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+{literal}
+let ticketPrice = 0.0;
+
+// Add ticket to order
+$('#night-ticket-button-plus').click(function(e) {
+	// Update tickets
+	let $ticketElm = $('#regular_ticketx');
+	let ticketCount = $ticketElm.val();
+
+	ticketCount = parseInt(ticketCount) + 1;
+	$ticketElm.val(ticketCount.toString());
+
+	// Update total price
+	let $priceElm = $('#total-amount');
+	let price = $priceElm.text();
+
+	console.log($priceElm);
+	console.log(ticketPrice);
+
+	price = parseInt(price) + ticketPrice;
+	$priceElm.text(price.toString());
+});
+
+// Subtract ticket from order
+$('#night-ticket-button-minus-bottom').click(function(e) {
+	// Update tickets
+	let $ticketElm = $('#regular_ticketx');
+	let ticketCount = $ticketElm.val();
+	
+	if (ticketCount > 0) {
+		ticketCount = parseInt(ticketCount) - 1;
+		$ticketElm.val(ticketCount.toString());
+
+		// Update total price
+		let $priceElm = $('#total-amount');
+		let price = $priceElm.text();
+
+		price = parseInt(price) - ticketPrice;
+		$priceElm.text(price.toString());
+	}
+});
+
+// When add EVENT ticket is selected
+$('[data-ticket-type="event"]').click(function(e) {
+	// Reset ticket values
+	$('#regular_ticketx').val('0.0');
+	$('#total-amount').text('0.0');
+
+	// Clear old data
+	$('#artist-name').text("");
+	$('#artist-price').text("0");
+	ticketPrice = 0.0;
+
+	// Update modal with ticket data
+	let $ticketElm = $(this).parent().parent();
+	let price = $ticketElm.find('[data-price]').data('price');
+	let name = $ticketElm.find('[data-artist]').data('artist');
+
+	$('#artist-name').text(name);
+	$('#artist-price').text(price);
+
+	ticketPrice = parseInt(price);
+});
+
+// When add ALL DAY ACCES ticket is selected
+$('[data-ticket-type="all-access"]').click(function(e) {;
+	// Reset ticket values
+	$('#regular_ticketx').val('0.0');
+	$('#total-amount').text('0.0');
+
+	// Clear old data
+	$('#artist-day').text("");
+	$('#artist-price').text("0");
+	ticketPrice = 0.0;
+
+	// Update modal with ticket data
+	let $ticketElm = $(this).parent().parent();
+	let price = $ticketElm.find('[data-price]').data('price');
+	let day = $ticketElm.find('[data-day]').data('day');
+
+	console.log(price);
+	console.log(day);
+
+	$('#artist-name').text(day);
+	$('#artist-price').text(price);
+
+	ticketPrice = parseInt(price);
+});
+
+$('#add-to-cart').click(function() {
+	console.log('Not yet done!');
+});
+</script>
+{/literal}
