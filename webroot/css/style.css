@@ -1389,3 +1389,22 @@ img.artistpichome{
     height: 300px; 
     width: 300px; 
 }
+a.artistlabel{
+    color: #fff;
+    font-family: 'Montserrat Bold', 'Montserrat';
+    font-weight: 700;
+    font-size: 18px;
+    color: #fff;
+} a.artistlabel:hover {
+    color: #ED7D22;
+}
+.artist-img.footer {
+    margin-top: 0px;
+    background-color: #000;
+    height: 3em;
+    margin-right: 4.05em;
+    padding-top: .8em; 
+    width: 300px; 
+} .artist-img.footer div {
+    text-align: center;
+}

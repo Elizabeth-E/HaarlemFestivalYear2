@@ -14,11 +14,18 @@
             {/if}
                 {assign var=counter value=$counter +1}
                 <div class="col-lg-4">
-                    <a href="{$www}/jazz/artist_page/{$artist.urlSafeArtistName}">
-                        <img src="{$www}{$artist.picture}" alt="{$artist.artist}" class="artistpichome">
+                    <a class="artistlabel" href="{$www}/jazz/artist_page/{$artist.urlSafeArtistName}">
+                        <div class="row">
+                            <img src="{$www}{$artist.picture}" alt="{$artist.artist}" class="artistpichome">
+                            </div>
+                            <div class="row artist-img footer">
+                                <div class="col-lg-12">
+                                {$artist.artist}
+                                </div>
+                            </div>
+                        </div>
                     </a>
-                </div>
-            {if $counter == 3}
+                {if $counter == 3}
             </div>
                 {$counter = 0}
             {/if}
