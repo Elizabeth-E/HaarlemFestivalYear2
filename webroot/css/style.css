@@ -3,6 +3,7 @@ html, body {
     height: 100%;
     width: 100%;
     font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #F2F2F2;
   }
 
   /* MENU - CENTER LOGO */
@@ -111,14 +112,10 @@ html, body {
   h2 {
       font-size: 30px;
   }
-  h3 {
-      font-size: 24px;
-       color: #333;
-  }
   p {
     font-size: 16px;
     line-height: 1.5;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
   a {
       color: #3498db;
@@ -1320,13 +1317,65 @@ table.dataTable thead {
 {
     margin-left: 10%;
 }
-h3{
+h3.datesection{
     font-weight: bold;
     font-size: 20px;
-    background-color: #FFCC99;
-}
+    display: inline-block;
 
+    background-color: #FFCC99;
+    padding: 0em;
+    margin-bottom: 10px;
+}
+div.all-access{
+    background-image: url('../img/accesspassbackground.png');
+    background-repeat: no-repeat;
+    height: 7%;
+    padding: 1em;
+    justify-content: center;
+}
 
 main {
     margin-top: 18%;
+}
+
+p.allpass{
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center;
+}
+p.fineprint{
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    font-size: 10px;
+}
+p.fineprintmodal{
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+    font-size: 10px;
+}
+button.btn-lg.jazz{
+    background-color: #ED7D22;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1em;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+div.container.jazzticket{
+    background-color: #F2F2F2 !important;
+    margin-bottom: 1em;
+    padding: 0em;
+}
+p.jazzticketartist{
+    font-weight: bold;
+}
+section.crossselling{
+    background-color: #FFCC99;
 }
