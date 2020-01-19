@@ -81,7 +81,8 @@ class CartController extends AppController
         }     
     }
  
-    //This is used to create a ticket. This method will also check if the user has selecting more than one ticket, and if the tickets are available.
+    /*This is used to create a ticket. This method will also check if the user has selecting more than one ticket, and 
+    if the tickets are still available.*/
     private function createTicket()
     {
         try{
@@ -156,7 +157,7 @@ class CartController extends AppController
         return false;
     }
  
-    //Checks if the user has selected a ticket type
+    //Checks if the user has selected a ticket.
     private function userSelectedTickets():bool
     {
         if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
@@ -169,13 +170,14 @@ class CartController extends AppController
         return false;
     }
  
-    //Deletes the tickets inside the cart
+    //Deletes all tickets inside the shoppingCart session.
     private function deleteAllTickets()
     {
         unset($_SESSION['shoppingCart']);
     }
  
-    //Search the array to find and delete the ticket which the user has selected
+    /*This method will first check which event the selected ticket belongs to and put the variables in an array. The array will be send to
+    the retrieveKey method and returns the position in the shoppingCart session which the user wants to delete*/
     private function deleteSingleTicket()
     {
         if(strpos($_POST['hidden_cart_event_name'], 'Night') !== false)
@@ -187,7 +189,7 @@ class CartController extends AppController
         unset($_SESSION['shoppingCart'][$key]);
     }
  
-    //Deletes the tickets after 24 hours
+    //If the shoppingCart session exist for 24 hours, it will be deleted by using the deleteAllTickets method.
     private function checkShoppingCartTimer()
     {
         if(!empty($_SESSION['shoppingCart']))
@@ -220,7 +222,8 @@ class CartController extends AppController
                 $this->view->assign("page_title", $page->getPageName());
             }
         }
-
+        
+        $this->setBackground("reviewBackground.jpg");
         $this->view->display("cart/reviewPage.tpl");
     }
 
@@ -243,6 +246,16 @@ class CartController extends AppController
     public function getErrorType(): string
     {
         return $this->errorType;
+    }
+
+    /*checks if the user has already logged in in order to checkout. If they have, they will be redirected to the payment view.
+     Else, they will need to login first*/
+    public function checkout()
+    {
+        if(isset($_SESSION['userId']))
+            header("Refresh:0; url=" . BASE_URL . "/checkout", true, 200);  
+        else 
+            header("Refresh:0; url=" . BASE_URL . "/user/login", true, 200);  
     }
 }
 ?>

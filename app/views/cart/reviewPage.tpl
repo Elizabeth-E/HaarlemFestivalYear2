@@ -32,8 +32,9 @@
             <!--total with vat-->
             <h6>Total with VAT: </h6>
             <h6 name=price>€{number_format(print_r($cost + $cost_with_VAT, true), 2, '.', '')}</h6>
- 
-            <button name=checkout-btn>Checkout</button>
+            
+            <a href='{$www}/cart/checkout'><button name=checkout-btn>Checkout</button></a>
+
             <p></p>
         </section>
  

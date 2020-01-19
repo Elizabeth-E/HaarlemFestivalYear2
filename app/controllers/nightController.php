@@ -25,7 +25,7 @@ class NightController extends AppController
 
         $this->getCart();
 
-        $this->setBackground("jazz.jpg");
+        $this->setBackground("night.jpg");
     }
 
     //This is used to retrieve information for the At Night home page
@@ -55,16 +55,15 @@ class NightController extends AppController
     }
 
      //This is used to get information for the At Night tour pages
-     public function getTourPageInfo($param)
+     public function getTourPageInfo(array $params)
      {
          foreach($this->at_night_pages as $page)
          {
-             if($page->getPageName() == ('Haarlem At Night' . ' - ' . $param[0]))
+             if($page->getPageName() == ('Haarlem At Night' . ' - ' . $params[0]))
              {
                 $this->view->assign("title", $page->getPageHeader());
-                $this->view->assign("page_id", $page->getPageId());
                 $this->view->assign("page_title", $page->getPageName());    
-                $this->view->assign("page_title_link", $param[0]);  
+                $this->view->assign("page_title_link", $params[0]);  
                 $this->view->assign("description", $page->getPageDescription());
                 $this->view->assign("tour_images", $this->model->retrieveImageForPage($page->getPageId()));
                 $this->view->assign("locations", $this->model->retrieveLocationForMap($page->getPageId()));
@@ -75,19 +74,18 @@ class NightController extends AppController
      }
      
     //This is used to get information for the At Night ticket pages
-    public function getTicketPageInfo($param)
+    public function getTicketPageInfo(array $params)
     {
-        $tour_name = explode(' - ', $param[0]);
+        $tour_name = explode(' - ', $params[0]);
 
         foreach($this->at_night_pages as $page)
         {
-            if($page->getPageName() == ($param[0] . " Tickets"))
+            if($page->getPageName() == ($params[0] . " Tickets"))
             {
                 $this->view->assign("title", $page->getPageHeader());
                 $this->view->assign("page_title", $page->getPageName());
-                $this->view->assign("page_id", $page->getPageId());
                 $this->view->assign("tour_page", $tour_name[1]);
-                $tourType = explode(" ", $param[0]);
+                $tourType = explode(" ", $params[0]);
 
                 if(isset($_POST['language']))
                     $this->language = $_POST['language'];
