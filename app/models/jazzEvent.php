@@ -10,8 +10,9 @@ class JazzEvent extends AppModel
     private $hall;
     private $artist;
     private $price;
+    private $picture;
 
-    public function __construct($date, $day, $time, $location, $hall, $artist, $price)
+    public function __construct($date, $day, $time, $location, $hall, $artist, $price, $picture)
     {
         $this->date = $date;
         $this->day = $day;
@@ -20,6 +21,7 @@ class JazzEvent extends AppModel
         $this->hall = $hall;
         $this->artist = $artist;
         $this->price = $price;
+        $this->picture = $picture;
 
     }
 
@@ -51,6 +53,10 @@ class JazzEvent extends AppModel
     {
         return $this->price;
     }
+    public function getPicture()
+    {
+        return $this->picture;
+    }
 
     public function toArray()
     {
@@ -61,7 +67,8 @@ class JazzEvent extends AppModel
             "location" => $this->getLocation(),
             "hall" => $this->getHall(),
             "artist" => $this->getArtist(),
-            "price" => $this->getPrice()
+            "price" => $this->getPrice(),
+            "picture" => $this->getPicture()
         ];
     }
 }

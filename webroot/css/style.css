@@ -1379,3 +1379,13 @@ p.jazzticketartist{
 section.crossselling{
     background-color: #FFCC99;
 }
+img.ticketpicture{
+    height: auto; 
+    width: auto; 
+    max-width: 15%; 
+    max-height: 15%;
+}
+img.artistpichome{
+    height: 300px; 
+    width: 300px; 
+}

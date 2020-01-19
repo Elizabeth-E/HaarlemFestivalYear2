@@ -6,7 +6,7 @@ class JazzArtist extends AppModel
     private $artist;
     private $description;
     private $picture;
-
+    private $urlSafeArtistName;
 
     public function __construct($artist, $description, $picture)
     {
@@ -28,12 +28,17 @@ class JazzArtist extends AppModel
         return $this->picture;
     }
 
+    public function getUrlSafeArtistName() {
+        return str_replace(" ", "_", $this->artist);
+    }
+
     public function toArray()
     {
         return [
             "artist" => $this->getArtist(),
             "description" => $this->getDescription(),
-            "picture" => $this->getPicture()
+            "picture" => $this->getPicture(),
+            "urlSafeArtistName" => $this->getUrlSafeArtistName()
         ];
     }
 }

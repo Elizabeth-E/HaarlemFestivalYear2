@@ -31,8 +31,18 @@ class JazzController extends AppController
 
     public function artists_ajax(array $params)
     {   
-        $this->view->assign("title", "Jazz");
 
+        $allArtists = $this->model->getAllJazzArtists();
+
+        foreach($allArtists as $artist)
+        {
+            // print_r($artist->toArray());
+            // exit();
+            $artists[] = $artist->toArray();
+        }
+
+        $this->view->assign("title", "Jazz");
+        $this->view->assign("artists", $artists);
         $this->view->display("jazz/artists_ajax.tpl");
     }
     public function artist_page(array $params)
@@ -41,8 +51,8 @@ class JazzController extends AppController
         $artistURL = "/jazz/artist_page_ajax/";
         $artistPage = $artistURL.$artistName;
 
-        // \Framework\debug($artistName);
-        // exit();
+        $eventList = $this->model->getJazzEvents();
+
 
 
         // // Turn list of events to a nested array representation for Smarty templates
@@ -89,7 +99,7 @@ class JazzController extends AppController
     {   
         $this->view->assign("title", "Jazz");
 
-        $eventList = $this->model->getJazzEvent();
+        $eventList = $this->model->getJazzEvents();
 
         $eventsPerDate = [
             "Thursday 26th July" => [],

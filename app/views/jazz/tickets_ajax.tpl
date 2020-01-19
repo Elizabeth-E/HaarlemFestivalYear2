@@ -58,7 +58,8 @@
 			<h3 class="datesection">{$date}</h3>
 			{foreach from=$eventList[$date] item=event}
 			<div class="container jazzticket col-lg-12">
-				<div class="jazzticket col-lg-10">
+			<img src="{$www}{$event.picture|escape}" alt="{$event.artist|escape}" class="ticketpicture col-lg-2">
+				<div class="jazzticket col-lg-8">
 					<p class="jazzticketartist">{$event.artist|escape}</p>
 					<p class="jazzticketp">{$event.location|escape}-{$event.hall|escape}</p>
 					<p class="jazzticketp">{$event.time}</p>
