@@ -16,7 +16,7 @@
                 <div class="col-lg-4">
                     <a class="artistlabel" href="{$www}/jazz/artist_page/{$artist.urlSafeArtistName}">
                         <div class="row">
-                            <img src="{$www}{$artist.picture}" alt="{$artist.artist}" class="artistpichome">
+                                <img src="{$www}{$artist.picture}" alt="{$artist.artist}" class="artistpichome">
                             </div>
                             <div class="row artist-img footer">
                                 <div class="col-lg-12">
@@ -32,7 +32,7 @@
         {/foreach}
 
         <div class="row">
-            <div class="col-lg-offset-4 col-lg-4">
-                <button type="button" class="btn btn-primary btn-lg" id="tickets-button">Find Tickets</button>
+            <div class="col-lg-offset-2 col-lg-4">
+                <button type="button" class="btn btn-lg" id="tickets-button">Find Tickets</button>
             </div>
         </div>

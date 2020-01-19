@@ -1,31 +1,61 @@
 
 {include file="{$layout}\\header.tpl"}
-
-<body>
-<section class="container maincontent">
 <main>
+<section class="container jazz">
 	<div class="container">
+
+
   
 		<h2 class="section-heading">Checkout page</h2>
-            <p>Phasellus finibus lorem id feugiat pulvinar. Morbi semper felis eu eros cursus molestie.
-            Quisque tellus ex, pulvinar ac tortor in, tristique rhoncus est. Vestibulum interdum elementum ornare. 
-            Donec nibh turpis, sollicitudin vitae orci ac, finibus iaculis dui. Nam at ullamcorper ex. Morbi et varius orci,
-            non ultrices nisl. Mauris eleifend augue non sapien fringilla ullamcorper. Phasellus sagittis ultricies tellus 
-            quis ullamcorper. Etiam posuere nisl dictum volutpat venenatis. Sed mattis egestas libero, ut hendrerit lectus
-            semper at. Etiam et commodo erat. Vestibulum nec erat risus. In ac purus in magna dignissim luctus et et magna. 
-            Cras porttitor leo at mi varius mollis. Morbi ligula neque, vehicula nec elit sed, malesuada iaculis massa.</p>
-            
-            <p>Phasellus finibus lorem id feugiat pulvinar. Morbi semper felis eu eros cursus molestie. Quisque tellus ex,
-            pulvinar ac tortor in, tristique rhoncus est. Vestibulum interdum elementum ornare. Donec nibh turpis, sollicitudin
-            vitae orci ac, finibus iaculis dui. Nam at ullamcorper ex. Morbi et varius orci, non ultrices nisl. Mauris eleifend
-            augue non sapien fringilla ullamcorper. Phasellus sagittis ultricies tellus quis ullamcorper. Etiam posuere nisl
-                dictum volutpat venenatis. Sed mattis egestas libero, ut hendrerit lectus semper at. Etiam et commodo erat.
-                Vestibulum nec erat risus. In ac purus in magna dignissim luctus et et magna. Cras porttitor leo at mi varius 
-                mollis. Morbi ligula neque, vehicula nec elit sed, malesuada iaculis massa.</p>
 
     <button onclick="creditForm()">credit card</button>
     <button onclick="idealForm()">ideal</button>
-    <a href="{$www}/checkout/dummy" class="payment">PayPal</a>
+   <div id="paypal-button"></div>
+
+
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+var totalAmount = parseFloat('{$totalPayment}').toFixed(2);
+{literal}
+  paypal.Button.render({
+    // Configure environment
+    env: 'sandbox',
+    client: {
+      sandbox: 'demo_sandbox_client_id',
+      production: 'demo_production_client_id'
+    },
+    // Customize button (optional)
+    locale: 'en_US',
+    style: {
+      size: 'small',
+      color: 'gold',
+      shape: 'pill',
+    },
+
+    // Enable Pay Now checkout flow (optional)
+    commit: true,
+
+    // Set up a payment
+    payment: function(data, actions) {
+      return actions.payment.create({
+        transactions: [{
+          amount: {
+            total: totalAmount,
+            currency: 'EUR'
+          }
+        }]
+      });
+    },
+    // Execute the payment
+    onAuthorize: function(data, actions) {
+      return actions.payment.execute().then(function() {
+        // Show a confirmation message to the buyer
+        window.alert('Thank you for your purchase!');
+      });
+    }
+  }, '#paypal-button');
+{/literal}
+</script>
     <a href="{$www}/checkout/dummy" class="payment">Bitcoin</a>
 	</div>
 
@@ -81,6 +111,8 @@
         <button type="submit" class="btn btn-default">continue</button>
     </form>
 
+ 
+
     <script>
         var a = document.getElementById("credit");
         var b = document.getElementById("ideal");
@@ -106,8 +138,7 @@
         } 
         }
 </script>
-</main>
 </section>
-</body>
+</main>
 
 {include file="{$layout}\\footer.tpl"}

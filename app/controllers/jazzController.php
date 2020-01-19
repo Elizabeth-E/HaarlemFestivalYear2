@@ -88,9 +88,36 @@ class JazzController extends AppController
         $artistInfo = $this->model->getJazzArtist($artistName);
         $artistInfo = $artistInfo->toArray();
 
+        $artistTicket = $this->model->getArtistSpecificTicket($artistName);
+
+        foreach($artistTicket as $ticket)
+        {
+            if($ticket->getLocation() == "Patronaat")
+            {
+                $artistMainTicket = $ticket->toArray();
+                continue;
+            }
+            //TODO:mitchel help
+            else{
+                if(!empty($ticket))
+                {
+                    $artistOtherTicket = $ticket->toArray();
+                }
+                else{
+                    $artistOtherTicket = "Not Playing elsewhere";
+                }
+            }
+
+        }
+
+        // \Framework\debug($artistMainTicket);
+        // exit();
+
 
         $this->view->assign("title", "Jazz");
         $this->view->assign("artistInfo", $artistInfo);
+        $this->view->assign("artistTicket", $artistMainTicket);
+        $this->view->assign("artistOther", $artistOtherTicket );
 
         $this->view->display("jazz/artist_page_ajax.tpl");
     }
@@ -136,7 +163,7 @@ class JazzController extends AppController
     {   
         $this->view->assign("title", "Jazz");
 
-        $eventList = $this->model->getJazzEvent();
+        $eventList = $this->model->getJazzEvents();
 
         // Turn list of events to a nested array representation for Smarty templates
         $timeTable = [];

@@ -1144,8 +1144,9 @@ img.jazzhome{
     color: #fff;
     background-color: #ED7D22;
     border: none;
-    width: 100%;
+    width: 200%;
     font-weight: bold;
+    font-size: 1.5em;
 }
 #section-break {
     border-color: #000;
@@ -1367,6 +1368,17 @@ button.btn-lg.jazz{
     margin-bottom: 1em;
     padding: 1em;
 }
+button.btn-lg.jazzhome{
+    background-color: #ED7D22;
+    color: #fff;
+    font-weight: bold;
+    font-size: 2em;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 1em;
+}
 
 div.container.jazzticket{
     background-color: #F2F2F2 !important;
@@ -1386,8 +1398,8 @@ img.ticketpicture{
     max-height: 15%;
 }
 img.artistpichome{
-    height: 300px; 
-    width: 300px; 
+    height: 350px; 
+    width: 350px; 
 }
 a.artistlabel{
     color: #fff;
@@ -1395,7 +1407,8 @@ a.artistlabel{
     font-weight: 700;
     font-size: 18px;
     color: #fff;
-} a.artistlabel:hover {
+}
+ a.artistlabel:hover {
     color: #ED7D22;
 }
 .artist-img.footer {
@@ -1404,7 +1417,8 @@ a.artistlabel{
     height: 3em;
     margin-right: 4.05em;
     padding-top: .8em; 
-    width: 300px; 
-} .artist-img.footer div {
+    width: 350px; 
+}
+ .artist-img.footer div {
     text-align: center;
 }

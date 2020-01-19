@@ -66,7 +66,7 @@
 				</div>
 				<div class="jazzticket col-lg-2">
 					<p class="jazzticketp">&euro; {$event.price}</p>
-					<button type="button" class="btn btn-lg jazz" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+					<button type="button" class="btn btn-lg jazzhome" data-toggle="modal" data-target="#basicExampleModal">Select Ticket</button>
 				</div>
 			</div>
 			{/foreach}

@@ -7,17 +7,23 @@
     <section>
     <h2>{$artistInfo.artist}</h2>
     <h3>Tickets for {$artistInfo.artist}</h3>
-    {* <div class="container jazzticket col-lg-12">
-				<div class="jazzticket col-lg-10">
-					<p class="jazzticketartist">{$event.artist|escape}</p>
-					<p class="jazzticketp">{$event.location|escape}-{$event.hall|escape}</p>
-					<p class="jazzticketp">{$event.time}</p>
-				</div>
-				<div class="jazzticket col-lg-2">
-					<p class="jazzticketp">&euro; {$event.price}</p>
-					<button type="button" class="btn btn-lg jazz" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
-				</div>
-			</div> *}
+
+            <div class="row">
+                <div class="container jazzticket col-lg-12">
+                    <img src="{$www}{$artistTicket.picture|escape}" alt="{$artistTicket.artist|escape}" class="ticketpicture col-lg-2">
+                        <div class="jazzticket col-lg-8">
+                            <p class="jazzticketartist">{$artistTicket.artist|escape}</p>
+                            <p class="jazzticketp">{$artistTicket.location|escape}-{$artistTicket.hall|escape}</p>
+                            <p class="jazzticketp">{$artistTicket.time}</p>
+                        </div>
+
+                        <div class="jazzticket col-lg-2">
+                            <p class="jazzticketp">&euro; {$artistTicket.price}</p>
+                            <button type="button" class="btn btn-lg jazz" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+                        </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-lg-6">
                     <img src="{$www}{$artistInfo.picture}" alt="Gumbo Kings" class="img-responsive img-thumbnail">

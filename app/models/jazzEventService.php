@@ -120,12 +120,13 @@ class JazzEventService extends AppModel
                     INNER JOIN ticket_type ON ticket.ticket_type_id = ticket_type.id)
 
         ) as e ON c.c_event_id = e.e_id
-        WHERE c.artist =?");
+        WHERE c.artist = ?");
         $dbHandle->bind_param("s", $artist);
         $dbHandle->execute();
         $result = $dbHandle->get_result();
 
-        while($row = $result->fetch_assoc()) {
+        while($row = $result->fetch_assoc()) 
+        {
             $explodedEvent = explode("_", $row["event"]);
 
             // Event time calculations
@@ -142,7 +143,7 @@ class JazzEventService extends AppModel
                 'day' => $explodedEvent[1],
                 'location' => $explodedEvent[2],
                 'hall' => @$explodedEvent[3].' '.@$explodedEvent[4], // Ignore errors '@' 
-                'picture' => $row["artist_picture"]
+                'picture' => $row["picture"]
             ];
 
             // Add event to array
@@ -156,7 +157,9 @@ class JazzEventService extends AppModel
                 $eventData['price'],
                 $eventData['picture']
             );   
-        }             
+        }  
+        $dbHandle->close();
+        return $eventList;           
     }
 
 }
