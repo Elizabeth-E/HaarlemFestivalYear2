@@ -60,8 +60,11 @@ class NightModel extends AppModel
 
         $image = null;
 
-        while($row = mysqli_fetch_assoc($result))
-            $image = new Picture($row['id'], $row['name'], $row['path']);
+        if($result->num_rows > 0)
+        {
+            $data = $result->fetch_assoc();
+            $image = new Picture($data['id'], $data['name'], $data['path']);
+        }
 
         return $image;
     }
@@ -110,9 +113,12 @@ class NightModel extends AppModel
 
         $result = $db->get_result();
 
-        while($row = $result->fetch_assoc())
-            $price = $row['price'];
-        
+        if($result->num_rows > 0)
+        {
+            $data = $result->fetch_assoc();
+            $price = $data['price'];
+        }
+
         return $price;
     }
 
@@ -144,8 +150,11 @@ class NightModel extends AppModel
 
         $location = null;
 
-        while($row = $result->fetch_assoc())
-            $location = new Map($row['location_Id'], $row['location_name'], $row['latitude'], $row['longitude']);
+        if($result->num_rows > 0)
+        {
+            $data = $result->fetch_assoc();
+            $location = new Map($data['location_Id'], $data['location_name'], $data['latitude'], $data['longitude']);
+        }
 
         return $location;
     }
