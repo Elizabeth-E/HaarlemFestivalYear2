@@ -28,7 +28,7 @@ abstract class AppModel
         }
         else
         {
-            throw new Exception('Unable to connect to database [' . $database->connect_error . ']');
+            throw new \Exception('Unable to connect to database [' . $database->connect_error . ']');
             return null;
         }
     }
