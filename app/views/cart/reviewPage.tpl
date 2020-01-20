@@ -10,10 +10,10 @@
             {foreach from=$tickets item=$ticket}
                 {if isset($ticket['eventType']) && $ticket['eventType'] == 'jazz'}
                     <h6>{$ticket.event|escape}</h6>
-                    <h6 name=price>&euro; {$ticket.price|escape}</h6>
+                    <h6 name=price>&euro; {$ticket.totalPrice|escape}</h6>
                 {else if isset($ticket['eventType']) && $ticket['eventType'] == 'allday'}
                     <h6>{$ticket.event|escape}</h6>
-                    <h6 name=price>&euro; {$ticket.price|escape}</h6>
+                    <h6 name=price>&euro; {$ticket.totalPrice|escape}</h6>
                 {else if isset($ticket[0]) && strpos($ticket[0], 'Night') != false}
                     <h6>{print_r($ticket[0], true)}</h6><!--event name-->
                     <h6>{print_r($ticket[3], true)}....................................</h6><!--language-->
@@ -53,25 +53,23 @@
                     <section class=review-night-ticket>
                         <section name=review-night-event-name>                           
                             <h3 name=event>{$ticket.event|escape}</h3>
-                            <h3>23-11-1992 (dummy)</h3>
-                            <h3>location (dummy)</h3>
-                            <h3>time (dummy)</h3>
-                            <h3>Regular tickets: (€ dummy): x{$ticket.tickets|escape}</h3> 
+                            <h3>{$ticket.location|escape}</h3>
+                            <h3>{$ticket.day|escape}</h3>
+                            <h3>{$ticket.time|escape}</h3>
+                            <h3>Regular tickets: (€ {$ticket.price|escape}): x{$ticket.tickets|escape}</h3> 
                         </section>
 
-                        <h3 name=total>Total: € {$ticket.price|escape}</h3>
+                        <h3 name=total>Total: € {$ticket.totalPrice|escape}</h3>
                     </section>
                     {else if isset($ticket['eventType']) && $ticket['eventType'] == 'allday'}
                     <section class=review-night-ticket>
                         <section name=review-night-event-name>                           
                             <h3 name=event>{$ticket.event|escape}</h3>
-                            <h3>23-11-1992 (dummy)</h3>
-                            <h3>location (dummy)</h3>
-                            <h3>time (dummy)</h3>
-                            <h3>Regular tickets: (€ dummy): x{$ticket.tickets|escape}</h3> 
+                            <h3>{$ticket.day|escape}</h3>
+                            <h3>Regular tickets: (€ {$ticket.price|escape}): x{$ticket.tickets|escape}</h3> 
                         </section>
 
-                        <h3 name=total>Total: € {$ticket.price|escape}</h3>
+                        <h3 name=total>Total: € {$ticket.totalPrice|escape}</h3>
                     </section> 
                     {else if isset($ticket[0]) && strpos($ticket[0], 'Night') != false}
                         <section class=review-night-ticket>

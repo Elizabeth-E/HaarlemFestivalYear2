@@ -278,7 +278,6 @@ class CartController extends AppController
     public function confirmTickets()
     {     
         $this->getCart();
-        \Framework\debug($_SESSION['shoppingCart']);
 
         if(isset($_SESSION['shoppingCart']))
             $this->view->assign("tickets", $_SESSION['shoppingCart']);
