@@ -23,7 +23,6 @@ class CheckoutController extends AppController
 
     public function index(array $params)
     {   
-        \Framework\debug($_SESSION);
         $preTotal = $this->calculateTotalPayment();
         $totalPayment = $preTotal + ($preTotal * VAT);
 
