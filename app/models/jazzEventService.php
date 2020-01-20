@@ -77,6 +77,7 @@ class JazzEventService extends AppModel
         while($dbArtist = $result->fetch_assoc()) {
         // Add event to array
         $artistPageInfo = new JazzArtist(
+            $dbArtist['id'],
             $dbArtist['artist_name'],
             $dbArtist['artist_info'],
             $dbArtist['artist_picture'] 
@@ -96,6 +97,7 @@ class JazzEventService extends AppModel
         while($dbArtist = $result->fetch_assoc()) {
         // Add event to array
         $allArtists[] = new JazzArtist(
+            $dbArtist['id'],
             $dbArtist['artist_name'],
             $dbArtist['artist_info'],
             $dbArtist['artist_picture'] 
@@ -107,9 +109,9 @@ class JazzEventService extends AppModel
     public function getArtistSpecificTicket($artist)
     {
         $dbHandle = $this->database->prepare("
-        SELECT e.event, e.event_date, c.artist, e.price, c.picture 
+        SELECT e.event, e.event_date, c.artist, e.price, c.picture
         FROM (
-            SELECT concert.concert_name as concert, concert.event_id as c_event_id, artist.artist_name as artist, artist.artist_picture as picture
+            SELECT concert.concert_name as concert, concert.event_id as c_event_id, artist.artist_name as artist, artist.artist_picture as picture 
             FROM ((concert INNER JOIN artist_has_concert ON concert.id = artist_has_concert.concert_id) 
             INNER JOIN artist ON artist_has_concert.artist_id = artist.id)
         ) as c

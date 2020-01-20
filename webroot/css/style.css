@@ -108,9 +108,12 @@ html, body {
   }
   h1 {
       font-size: 36px;
+      text-align: center;
+      margin-top: 1em;
   }
   h2 {
       font-size: 30px;
+      text-align: left;
   }
   p {
     font-size: 16px;
@@ -1161,7 +1164,8 @@ section.jazz {
     background-color: #fff;
     padding-left: 3em;
     padding-right: 3em;
-    padding-bottom: 3em;
+    padding-bottom: 10em;
+    margin-bottom: 5em;
 }
 section.jazz h2 {
     text-align: center;
@@ -1421,4 +1425,8 @@ a.artistlabel{
 }
  .artist-img.footer div {
     text-align: center;
+}
+div.paypal{
+    padding-top: 4em;
+
 }

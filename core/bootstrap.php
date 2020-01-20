@@ -154,11 +154,13 @@ function autoload($class)
 
 		$vendorLibs = [
 			"smarty" => TEMPLATING_ENGINE . $className . ".class.php",
-			"phpmailer" => PHP_MAILER . $className . ".php"
+			"phpmailer" => PHP_MAILER . $className . ".php",
+			"fpdf" => FPDF . $className . ".php"
 		];
 
 		foreach ($vendorLibs as $lib)
 		{
+			//\Framework\debug($className);
 			if (file_exists($lib))
 			{
 				require_once $lib;
