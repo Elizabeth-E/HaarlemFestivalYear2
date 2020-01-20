@@ -8,12 +8,14 @@
         <section class=review-price-outline>
             <h1>Price outline</h1>
             {foreach from=$tickets item=$ticket}
-                {if strpos($ticket[0], 'Night') != false}
+                {if isset($ticket['eventType']) && $ticket['eventType'] == 'jazz'}
+                    <h6>{$ticket.event|escape}</h6>
+                    <h6 name=price>&euro; {$ticket.tickets|escape}</h6>
+                {else if isset($ticket[0]) && strpos($ticket[0], 'Night') != false}
                     <h6>{print_r($ticket[0], true)}</h6><!--event name-->
                     <h6>{print_r($ticket[3], true)}....................................</h6><!--language-->
                     <h6 name=price>€{number_format(print_r($ticket[1], true), 2, '.', '')}</h6>
-
-				{else if strpos($ticket[0], 'Food') != false}
+				{else if isset($ticket[0]) && strpos($ticket[0], 'Food') != false}
                     <h6>{print_r($ticket[0], true)}</h6><!--event name-->
                     <h6>{print_r($ticket[5], true)}................</h6> <!--maybe restaurant name-->
 				    <h6 name=price>€{number_format(print_r($ticket[5], true), 2, '.', '')}</h6> <!--reservation price-->
@@ -44,7 +46,7 @@
               {foreach from=$tickets item=$ticket}                       
                 <p></p>
                 <section>
-                    {if strpos($ticket[0], 'Night') != false}
+                    {if isset($ticket[0]) && strpos($ticket[0], 'Night') != false}
                         <section class=review-night-ticket>
                             <section name=review-night-event-name>                           
                                 <!--event name and language-->
@@ -67,7 +69,7 @@
                             <h3 name=total>Total: €{number_format(print_r($ticket[1], true), 2, '.', '')}</h3>
                         </section> 
 						
-					{else if strpos($item[0], 'Food') != false}
+					{else if  isset($ticket[0]) && strpos($item[0], 'Food') != false}
 						<section class=review-night-ticket>
                             <section name=review-night-event-name>                           
                                 <!--event name-->
