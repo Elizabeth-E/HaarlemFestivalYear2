@@ -15,12 +15,15 @@ class CheckoutController extends AppController
 
         $this->action = $action;
         $this->params = $params;
+
+        $this->model = new Models\CheckoutService();
+
         $this->getCart();
     }
 
     public function index(array $params)
     {   
-        //\Framework\debug($_SESSION);
+        \Framework\debug($_SESSION);
         $preTotal = $this->calculateTotalPayment();
         $totalPayment = $preTotal + ($preTotal * VAT);
 
@@ -110,6 +113,19 @@ class CheckoutController extends AppController
             }
     
         }
+    }
+
+    public function process_order(array $params)
+    {
+        if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email'])) {
+            $this->model->addUser($_POST['firstName'], $_POST['lastName'], $_POST['email']);
+            exit();
+        }
+
+        // TODO: add ticket for user
+        // [totalPrice] => 80
+        // [tickets] => 1
+        // [ticketid] => 3
     }
 
 }
