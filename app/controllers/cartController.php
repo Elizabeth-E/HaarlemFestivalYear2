@@ -82,11 +82,15 @@ class CartController extends AppController
     }
 
     // TODO: Check for duplicates
-    // TODO: Do not add requests without atleast one ticket
     public function add_to_cart(array $params) {
         // Create ticket
         try {
             if (isset($_POST['event']) && isset($_POST['amount']) && isset($_POST['tickets']) && isset($_POST['type'])) {
+                // Make sure at least one ticket has been submitted
+                if ( ! intval($_POST['tickets']) >= 0) {
+                    throw new \Exception("Please select at least one ticket.");    
+                }
+
                 $_SESSION['shoppingCart'][] = [
                     $_POST['event'],
                     $_POST['amount'],

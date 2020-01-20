@@ -117,7 +117,6 @@
 </div>
 
 <script>
-// let baseUrl = '{$www}';
 {literal}
 $('#alert').hide();
 
@@ -203,7 +202,6 @@ $('[data-ticket-type="all-access"]').click(function(e) {;
 	ticketPrice = parseInt(price);
 });
 
-// TODO: Make sure you can not send ZERO tickets to the server
 // Add ticket to cart
 $('#add-to-cart').click(function() {
 	let url = baseUrl + '/cart/add_to_cart';
@@ -214,27 +212,41 @@ $('#add-to-cart').click(function() {
 		event: 'Haarlem Jazz - ' + $('#artist-name').text()
 	};
 	
-	// Send request and handle response
-	$.post(url, data, function(response) {
-		if (response.search('success') == -1) { // Fail
-			$('#alert-type').text('Error');
-			$('#alert-message').text(response);
-
-			$('#alert').removeClass('alert-success');
-			$('#alert').addClass('alert-danger');
-			$('#alert').show();
-		} 
-		else { // Success
-			let message = response.substring(9, response.length);
-
-			$('#alert-type').text('Success');
-			$('#alert-message').text(message);
+	if (parseInt(data.amount) <= 0) {
+		$('#alert-type').text('Error');
+			$('#alert-message').text('Please select at least one ticket.');
 
 			$('#alert').removeClass('alert-danger');
-			$('#alert').addClass('alert-success');
+			$('#alert').removeClass('alert-success');
+			$('#alert').addClass('alert-warning');
 			$('#alert').show();
-		}
-	});
+	} else {
+		// Send request and handle response
+		$.post(url, data, function(response) {
+			if (response.search('success') == -1) { // Fail
+				$('#alert-type').text('Error');
+				$('#alert-message').text(response);
+
+				$('#alert').removeClass('alert-warning');
+				$('#alert').removeClass('alert-success');
+				$('#alert').addClass('alert-danger');
+				$('#alert').show();
+			} 
+			else { // Success
+				let message = response.substring(9, response.length);
+
+				$('#alert-type').text('Success');
+				$('#alert-message').text(message);
+
+				$('#alert').removeClass('alert-danger');
+				$('#alert').removeClass('alert-warning');
+				$('#alert').removeClass('alert-success');
+				$('#alert').addClass('alert-success');
+				$('#alert').show();
+			}
+		});
+	}
+
 });
 </script>
 {/literal}
