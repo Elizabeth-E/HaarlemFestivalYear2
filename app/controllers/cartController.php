@@ -14,6 +14,8 @@ class CartController extends AppController
     public function __construct(string $action = NULL, array $params)
     {
         parent::__construct($action, $params);
+
+        // \Framework\debug($_SESSION);
  
         $this->action = $action;
         $this->params = $params;
@@ -108,21 +110,31 @@ class CartController extends AppController
 
     public function add_to_cart(array $params) {
         try {
-            // See if required info is there
-            if (isset($_POST['event']) && isset($_POST['amount']) && isset($_POST['tickets']) && isset($_POST['type'])) {
+            // See if minimal required info is there
+            if (isset($_POST['event']) && isset($_POST['amount']) && isset($_POST['tickets']) && isset($_POST['type']) && isset($_POST['amount'])) {
 
                 // Make sure at least one ticket has been submitted
                 if (intval($_POST['tickets']) <= 0) {
                     throw new \Exception("Please select at least one ticket.");    
                 }
 
-                // Create ticket array
+                // Fill base ticket
                 $ticket = [
                     "event" => $_POST['event'],
-                    "price" => $_POST['amount'],
-                    "tickets" => $_POST['tickets'],
-                    "eventType" => $_POST['type']   
+                    "eventType" => $_POST['type'],
+                    "day" => $_POST['day'],
+                    "price" => $_POST['price'],
+                    "totalPrice" => $_POST['amount'],
+                    "tickets" => $_POST['tickets']
                 ];
+
+                // Add Jazz specific data
+                if ($ticket["eventType"] == "jazz") {
+                    $ticket["time"] = $_POST['time'];
+                    $ticket["img"] = $_POST['img'];
+                    $ticket["location"] = $_POST['location'];
+                    $ticket["artist"] = $_POST['name'];
+                }
 
                 // Update existing ticket with new price
                 $ticketIndex = $this->isInCart($ticket);

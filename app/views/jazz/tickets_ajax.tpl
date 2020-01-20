@@ -172,7 +172,7 @@ $('[data-ticket-type="event"]').click(function(e) {
 	// Update modal with ticket data
 	let $ticketElm = $(this).parent().parent();
 	window.ticket = {
-		event: 'Haarlem Jazz - ' + $('#artist-name').text(),
+		event: 'Haarlem Jazz - ' + $ticketElm.find('[data-artist]').data('artist'),
 		price: $ticketElm.find('[data-price]').data('price'),
 		name: $ticketElm.find('[data-artist]').data('artist'),
 		day: $ticketElm.parent().find('[data-day]').data('day'),
