@@ -78,8 +78,11 @@ abstract class AppController
 
     protected function getLanguage()
     {
+        $allowedLangs = ["nl", "en"];
         $cookieValue = \Framework\getCookie("lang");
-		if ( ! empty($cookieValue))
+
+        // Only accept allowed cookie language
+		if ( ! empty($cookieValue) && in_array($cookieValue, $allowedLangs))
 		{
 			$this->lang = $cookieValue;
         }
