@@ -87,7 +87,7 @@ class CartController extends AppController
         try {
             if (isset($_POST['event']) && isset($_POST['amount']) && isset($_POST['tickets']) && isset($_POST['type'])) {
                 // Make sure at least one ticket has been submitted
-                if ( ! intval($_POST['tickets']) >= 0) {
+                if (intval($_POST['tickets']) <= 0) {
                     throw new \Exception("Please select at least one ticket.");    
                 }
 
