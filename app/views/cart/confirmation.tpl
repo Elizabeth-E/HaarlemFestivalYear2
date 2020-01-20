@@ -6,14 +6,14 @@
 <h2>Payment Confirmed!</h2>
 <p>Redirecting to home page!</p>
 
-<script>
+{* <script>
 var baseUrl = "{$www}"
 {literal}
 setTimeout(function(){
 window.location.href = baseUrl;
 }, 5000);
 {/literal}
-</script>
+</script> *}
 
 </section>
 </main>

@@ -10,15 +10,30 @@
         <div class = "col-lg-3">
             <button class="btn btn-lg jazzhome" onclick="idealForm()">ideal</button>
         </div>
-        <div class = "col-lg-3 paypal">
-        <div id="paypal-button" ></div>
+        <div class = "col-lg-3">
+            <button class="btn btn-lg jazzhome" onclick="paypalForm()">PayPal</button>
         </div>
         <div class = "col-lg-3">
             <button class="btn btn-lg jazzhome" >Bitcoin</button>
         </div>
     </div>
     <div class = "row">
-    <form class = "col-lg-12" method="post" id="credit"  action="{$POST_URL}">
+    <form class = "col-lg-6" method="post" id="credit"  action="{$POST_URL}">
+    <h3>Enter Information for Ticket</h3>
+            <div class="form-group owner">
+                <label for="Name on card">First Name</label>
+                <input type="text" class="form-control" id="name on card">
+            </div>
+            <div class="form-group owner">
+                <label for="Name on card">Last Name</label>
+                <input type="text" class="form-control" id="name on card">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <h3>Enter Card Information</h3>
             <div class="form-group owner">
                 <label for="Name on card">Name on Card</label>
                 <input type="text" class="form-control" id="name on card">
@@ -40,8 +55,22 @@
             </div>
     </form>
 
-    <form class = "col-lg-12" method="post" id="ideal"  action="{$POST_URL}">
-         <p>Select your bank and click continue</p>
+    <form class = "col-lg-6" method="post" id="ideal"  action="{$POST_URL}">
+    <h3>Enter Information for Ticket</h3>
+            <div class="form-group owner">
+                <label for="Name on card">First Name</label>
+                <input type="text" class="form-control" id="name on card">
+            </div>
+            <div class="form-group owner">
+                <label for="Name on card">Last Name</label>
+                <input type="text" class="form-control" id="name on card">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+         <h3>Select your bank and click continue</h3>
             <div class="idealpulldown">
                 <div class="pulldown_form">
                     <label class="pulldown_form">
@@ -65,8 +94,30 @@
 
         <button type="submit" class="btn btn-lg jazz">continue</button>
     </form>
+
+<form class = "col-lg-6" method="post" id="paypal"  action="{$POST_URL}">
+    <h3>Enter Information for Ticket</h3>
+            <div class="form-group owner">
+                <label for="Name on card">First Name</label>
+                <input type="text" class="form-control" id="name on card">
+            </div>
+            <div class="form-group owner">
+                <label for="Name on card">Last Name</label>
+                <input type="text" class="form-control" id="name on card">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class = "paypal">
+            <div id="paypal-button" ></div>
+            </div>
     </div>
+    </form>
+
 </section>
+
  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
 var totalAmount = parseFloat('{$totalPayment}').toFixed(2);
@@ -81,7 +132,7 @@ var totalAmount = parseFloat('{$totalPayment}').toFixed(2);
     // Customize button (optional)
     locale: 'en_US',
     style: {
-      size: 'medium',
+      size: 'large',
       color: 'black',
       shape: 'rect',
     },
@@ -112,12 +163,14 @@ var totalAmount = parseFloat('{$totalPayment}').toFixed(2);
 </script>
 
 
-    <script>
+<script>
         var a = document.getElementById("credit");
         var b = document.getElementById("ideal");
+        var c = document.getElementById("paypal");
 
             a.style.display = "block";
             b.style.display = "none";
+            c.style.display = "none";
 
         function creditForm()
         {
@@ -125,6 +178,7 @@ var totalAmount = parseFloat('{$totalPayment}').toFixed(2);
         {
             a.style.display = "block";
             b.style.display = "none";
+            c.style.display = "none";
         } 
         }
 
@@ -133,6 +187,17 @@ var totalAmount = parseFloat('{$totalPayment}').toFixed(2);
         if (b.style.display === "none") 
         {
             b.style.display = "block";
+            a.style.display = "none";
+            c.style.display = "none";
+        } 
+        }
+
+        function paypalForm()
+        {
+        if (c.style.display === "none") 
+        {
+            c.style.display = "block";
+            b.style.display = "none";
             a.style.display = "none";
         } 
         }
