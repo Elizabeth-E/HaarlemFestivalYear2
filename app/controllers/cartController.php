@@ -15,8 +15,6 @@ class CartController extends AppController
     {
         parent::__construct($action, $params);
 
-        // \Framework\debug($_SESSION);
- 
         $this->action = $action;
         $this->params = $params;
  
@@ -45,7 +43,7 @@ class CartController extends AppController
         if(isset($_SESSION['shoppingCart']) != null) {
             foreach($_SESSION['shoppingCart'] as $ticket) {
                 // Handle jazz tickets
-                if (isset($ticket['eventType']) && $ticket['eventType'] == 'jazz') {
+                if (isset($ticket['eventType']) && ($ticket['eventType'] == 'jazz' || $ticket['eventType'] == 'allday')) {
                     $total += $ticket['price'];
                 }
                 else {

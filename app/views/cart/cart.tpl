@@ -15,6 +15,19 @@
                         Price: &euro; {$item.price|escape}
                     </section>
                 </section>
+            {else if isset($item['eventType']) && $item['eventType'] == 'allday'}
+                <section class="cart-tour-name">
+                    <h1>{$item.event|escape}</h1>
+                    <button name="delete_single">x</button>
+                </section>
+                <section class="cart-tour-tickets">
+                    <section id=ticket style="border-right: 2px solid #F2F2F2;">
+                        Tickets: {$item.tickets|escape}
+                    </section>
+                    <section id=ticket>
+                        Price: &euro; {$item.price|escape}
+                    </section>
+                </section>
             {else if isset($item[0]) && strpos($item[0], 'Night') !== false}
                 <!--tour name-->
                 <section class="cart-tour-name">
