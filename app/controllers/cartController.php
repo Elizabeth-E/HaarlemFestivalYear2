@@ -44,7 +44,7 @@ class CartController extends AppController
             foreach($_SESSION['shoppingCart'] as $ticket) {
                 // Handle jazz tickets
                 if (isset($ticket['eventType']) && ($ticket['eventType'] == 'jazz' || $ticket['eventType'] == 'allday')) {
-                    $total += $ticket['price'];
+                    $total += $ticket['price'] * $ticket["tickets"];
                 }
                 else {
                     $total += $ticket[1];
@@ -283,6 +283,7 @@ class CartController extends AppController
     public function confirmTickets()
     {     
         $this->getCart();
+        \Framework\debug($_SESSION['shoppingCart']);
 
         if(isset($_SESSION['shoppingCart']))
             $this->view->assign("tickets", $_SESSION['shoppingCart']);
