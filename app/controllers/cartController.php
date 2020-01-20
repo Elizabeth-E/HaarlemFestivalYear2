@@ -80,6 +80,27 @@ class CartController extends AppController
             $this->checkError();
         }     
     }
+
+    // TODO: Check for duplicates
+    // TODO: Do not add requests without atleast one ticket
+    public function add_to_cart(array $params) {
+        // Create ticket
+        try {
+            if (isset($_POST['event']) && isset($_POST['amount']) && isset($_POST['tickets']) && isset($_POST['type'])) {
+                $_SESSION['shoppingCart'][] = [
+                    $_POST['event'],
+                    $_POST['amount'],
+                    $_POST['tickets'],
+                    $_POST['type']
+                ];
+                exit("[success]Ticket has been created!");
+            } else {
+                throw new \Exception("Not all ticket data is supplied!");
+            }
+        } catch(\Exception $e){
+            exit($e->getMessage());
+        }
+    }
  
     /*This is used to create a ticket. This method will also check if the user has selecting more than one ticket, and 
     if the tickets are still available.*/

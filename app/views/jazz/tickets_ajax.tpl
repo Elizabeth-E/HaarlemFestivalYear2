@@ -1,8 +1,8 @@
-	<ol class="breadcrumb">
-        <li><a href="{$www}">Haarlem Festival</a></li>
-        <li><a href="{$www}/Jazz">Haarlem Jazz</a></li>
-        <li><a href="#" class="active">Tickets</a></li>
-    </ol>
+<ol class="breadcrumb">
+	<li><a href="{$www}">Haarlem Festival</a></li>
+	<li><a href="{$www}/Jazz">Haarlem Jazz</a></li>
+	<li><a href="#" class="active">Tickets</a></li>
+</ol>
 
 <section>
 	<h1>Tickets</h1>
@@ -87,6 +87,11 @@
 				<h3>Add Tickets for &quot;<span id="artist-name"><!-- Filled by JS --></span>&quot;</h3>
 			</div>
 			<div class="modal-body">
+				<div class="alert alert-danger alert-dismissible" role="alert" id="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<strong id="alert-type"></strong> <span id="alert-message"></span>
+				</div>
+				
 				<div class="row">
 					<div class="col-xs-8">
 						<div class="row">
@@ -112,7 +117,10 @@
 </div>
 
 <script>
+// let baseUrl = '{$www}';
 {literal}
+$('#alert').hide();
+
 let ticketPrice = 0.0;
 
 // Add ticket to order
@@ -127,9 +135,6 @@ $('#night-ticket-button-plus').click(function(e) {
 	// Update total price
 	let $priceElm = $('#total-amount');
 	let price = $priceElm.text();
-
-	console.log($priceElm);
-	console.log(ticketPrice);
 
 	price = parseInt(price) + ticketPrice;
 	$priceElm.text(price.toString());
@@ -157,7 +162,7 @@ $('#night-ticket-button-minus-bottom').click(function(e) {
 // When add EVENT ticket is selected
 $('[data-ticket-type="event"]').click(function(e) {
 	// Reset ticket values
-	$('#regular_ticketx').val('0.0');
+	$('#regular_ticketx').val('0');
 	$('#total-amount').text('0.0');
 
 	// Clear old data
@@ -179,7 +184,7 @@ $('[data-ticket-type="event"]').click(function(e) {
 // When add ALL DAY ACCES ticket is selected
 $('[data-ticket-type="all-access"]').click(function(e) {;
 	// Reset ticket values
-	$('#regular_ticketx').val('0.0');
+	$('#regular_ticketx').val('0');
 	$('#total-amount').text('0.0');
 
 	// Clear old data
@@ -192,17 +197,44 @@ $('[data-ticket-type="all-access"]').click(function(e) {;
 	let price = $ticketElm.find('[data-price]').data('price');
 	let day = $ticketElm.find('[data-day]').data('day');
 
-	console.log(price);
-	console.log(day);
-
 	$('#artist-name').text(day);
 	$('#artist-price').text(price);
 
 	ticketPrice = parseInt(price);
 });
 
+// TODO: Make sure you can not send ZERO tickets to the server
+// Add ticket to cart
 $('#add-to-cart').click(function() {
-	console.log('Not yet done!');
+	let url = baseUrl + '/cart/add_to_cart';
+	let data = {
+		type: 'jazz',
+		amount: $('#total-amount').text(),
+		tickets: $('#regular_ticketx').val(),
+		event: 'Haarlem Jazz - ' + $('#artist-name').text()
+	};
+	
+	// Send request and handle response
+	$.post(url, data, function(response) {
+		if (response.search('success') == -1) { // Fail
+			$('#alert-type').text('Error');
+			$('#alert-message').text(response);
+
+			$('#alert').removeClass('alert-success');
+			$('#alert').addClass('alert-danger');
+			$('#alert').show();
+		} 
+		else { // Success
+			let message = response.substring(9, response.length);
+
+			$('#alert-type').text('Success');
+			$('#alert-message').text(message);
+
+			$('#alert').removeClass('alert-danger');
+			$('#alert').addClass('alert-success');
+			$('#alert').show();
+		}
+	});
 });
 </script>
 {/literal}
