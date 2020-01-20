@@ -37,9 +37,9 @@ class HomeModel extends AppModel
     }
 
     //This is used to retrieve information from all pages that belongs to the At Night event
-    public function retrieveHomePage():array
+    public function retrieveHomePage($lang):array
     {
-        $db = $this->database->prepare("SELECT page.id, page.page_name, page.page_description, page.header_title FROM page 
+        $db = $this->database->prepare("SELECT * FROM page 
         WHERE page.header_title LIKE '%Home%'");
         $db->execute();
 
@@ -48,7 +48,10 @@ class HomeModel extends AppModel
 
         while($row = $result->fetch_assoc())
         {
-            $event_page = new Page($row['id'], $row['page_name'], $row['page_description'], $row['header_title']);
+            $pageName = $row['page_name_'.$lang]; 
+            $pageDescription = $row['page_description_'.$lang];
+
+            $event_page = new Page($row['id'], $pageName, $pageDescription, $row['header_title']);
             $event_pages[] = $event_page;
         }
 

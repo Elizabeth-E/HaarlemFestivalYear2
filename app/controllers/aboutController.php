@@ -13,7 +13,8 @@ class AboutController extends AppController
         parent::__construct($action, $params);
         
         $this->model = new Models\cartModel();
-        $this->pages = $this->model->retrieveCartPages();
+        $lang = $this->getLanguage();
+        $this->pages = $this->model->retrieveCartPages($lang);
 
         $this->getCart();
     }

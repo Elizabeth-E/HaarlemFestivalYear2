@@ -37,8 +37,9 @@
     </section>
     <section class="crossselling">
     <h2>Suggested Artist</h2>
+    <div class="row">
     {foreach from=$crossSelling key=i item=artist}
-            <div class="row">
+            
                 <div class="col-lg-4">
                     <a class="artistlabel" href="{$www}/jazz/artist_page/{$artist.urlSafeArtistName}">
                         <div class="row">
@@ -51,6 +52,6 @@
                         </div>
                     </a>
                 </div>   
-            </div>
         {/foreach}
+        </div>
     </section>

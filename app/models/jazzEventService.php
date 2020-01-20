@@ -67,19 +67,21 @@ class JazzEventService extends AppModel
         $dbHandle->close();
         return $eventList;
     }
-    public function getJazzArtist($artist)
+    public function getJazzArtist($artist, $lang)
     {
+
         $dbHandle = $this->database->prepare("SELECT * FROM artist WHERE artist.artist_name = ?");
         $dbHandle->bind_param("s", $artist);
         $dbHandle->execute();
         $result = $dbHandle->get_result();
 
         while($dbArtist = $result->fetch_assoc()) {
+      
         // Add event to array
         $artistPageInfo = new JazzArtist(
             $dbArtist['id'],
             $dbArtist['artist_name'],
-            $dbArtist['artist_info'],
+            $dbArtist['artist_info_'.$lang],
             $dbArtist['artist_picture'] 
         );  
         }
@@ -95,13 +97,14 @@ class JazzEventService extends AppModel
         $result = $dbHandle->get_result();
 
         while($dbArtist = $result->fetch_assoc()) {
-        // Add event to array
-        $allArtists[] = new JazzArtist(
-            $dbArtist['id'],
-            $dbArtist['artist_name'],
-            $dbArtist['artist_info'],
-            $dbArtist['artist_picture'] 
-        );  
+        
+            // Add event to array
+            $allArtists[] = new JazzArtist(
+                $dbArtist['id'],
+                $dbArtist['artist_name'],
+                $dbArtist['artist_info'] = "",
+                $dbArtist['artist_picture'] 
+            );  
         }
         return $allArtists;
 

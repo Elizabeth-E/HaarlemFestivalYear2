@@ -66,7 +66,8 @@ class JazzController extends AppController
         $artistName = str_replace("_"," ",$params[0]);
 
         //Gets the artist info for a specific artist and casts it to an array
-        $artistInfo = $this->model->getJazzArtist($artistName);
+        $lang = $this->getLanguage();
+        $artistInfo = $this->model->getJazzArtist($artistName, $lang);
         $artistInfo = $artistInfo->toArray();
 
         $artistTicket = $this->model->getArtistSpecificTicket($artistName);

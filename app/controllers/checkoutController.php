@@ -46,11 +46,18 @@ class CheckoutController extends AppController
     public function calculateTotalPayment(): float
     {
         $total = 0.00;
- 
-        if(isset($_SESSION['shoppingCart']) != null)
-            foreach($_SESSION['shoppingCart'] as $ticket)     
-                $total += $ticket[1];
- 
+        if(isset($_SESSION['shoppingCart']) != null) {
+            foreach($_SESSION['shoppingCart'] as $ticket) {
+                // Handle jazz tickets
+                if (isset($ticket['eventType']) && ($ticket['eventType'] == 'jazz' || $ticket['eventType'] == 'allday')) {
+                    $total += $ticket['price'] * $ticket["tickets"];
+                }
+                else {
+                    $total += $ticket[1];
+                }
+            }
+        }
+
         return $total;
     }
     public function generate()

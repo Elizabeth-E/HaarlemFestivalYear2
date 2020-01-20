@@ -9,13 +9,13 @@ class NightModel extends AppModel
     }
 
     //This is used to retrieve information from all pages that belongs to the At Night event
-    public function retrieveAtNightPages():array
+    public function retrieveAtNightPages($lang):array
     {
-        $db = $this->database->prepare("SELECT page.id, page.page_name, page.page_description, page.header_title FROM page 
-        WHERE page.page_name LIKE '%Night%' 
-        OR page.page_name LIKE '%Beer%' 
-        OR page.page_name LIKE '%Cocktail%'
-        OR page.page_name LIKE '%Hookah%'");
+        $db = $this->database->prepare("SELECT * FROM page 
+        WHERE page.page_name_en LIKE '%Night%' 
+        OR page.page_name_en LIKE '%Beer%' 
+        OR page.page_name_en LIKE '%Cocktail%'
+        OR page.page_name_en LIKE '%Hookah%'");
         $db->execute();
 
         $result = $db->get_result();
@@ -24,7 +24,7 @@ class NightModel extends AppModel
 
         while($row = $result->fetch_assoc())
         {
-            $event_page = new Page($row['id'], $row['page_name'], $row['page_description'], $row['header_title']);
+            $event_page = new Page($row['id'], $row['page_name_'.$lang], $row['page_description_'.$lang], $row['header_title']);
             $event_pages[] = $event_page;
         }
 

@@ -31,7 +31,7 @@
                 <li><a href="{$www}/user/logout">Logout</a></li>
             {/if}
             <li>{include file="cart/cartButton.tpl"}</li>
-            <li><a href="{$www}">EN/NL</a></li>         
+            <li><a href="{$www}/home/translate">EN/NL</a></li>         
         </ul>
     </div>
 </nav>

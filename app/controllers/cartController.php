@@ -19,7 +19,8 @@ class CartController extends AppController
         $this->params = $params;
  
         $this->model = new Models\cartModel();
-        $this->cartPages = $this->model->retrieveCartPages();
+        $lang = $this->getLanguage();
+        $this->cartPages = $this->model->retrieveCartPages($lang);
         
         $this->cartButtons();
         $this->checkShoppingCartTimer();
