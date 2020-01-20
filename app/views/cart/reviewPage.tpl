@@ -1,5 +1,5 @@
 {include file="{$layout}\\header.tpl"}
- 
+
 <section class=night-page>
     <h1 name=review-page-name>{$page_title}</h1>
     <article name=review-page>
@@ -51,20 +51,27 @@
                 <section>
                     {if isset($ticket['eventType']) && $ticket['eventType'] == 'jazz'}
                     <section class=review-night-ticket>
-                        <section name=review-night-event-name>                           
-                            <h3 name=event>{$ticket.event|escape}</h3>
-                            <h3>{$ticket.location|escape}</h3>
-                            <h3>{$ticket.day|escape}</h3>
-                            <h3>{$ticket.time|escape}</h3>
-                            <h3>Regular tickets: (€ {$ticket.price|escape}): x{$ticket.tickets|escape}</h3> 
-                        </section>
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <img src="{$www}/{$ticket.img}" alt="{$ticket.artist}" class="artist-img" />
+                            </div>
+                            <div class="col-lg-10">
+                                <section name="review-night-event-name">
+                                    <h3 name="event" class="event-text">{$ticket.event|escape}</h3>
+                                    <h3>{$ticket.location|escape}</h3>
+                                    <h3>{$ticket.day|escape}</h3>
+                                    <h3>{$ticket.time|escape}</h3>
+                                    <h3>Regular tickets: (€ {$ticket.price|escape}): x{$ticket.tickets|escape}</h3> 
+                                </section>
 
-                        <h3 name=total>Total: € {$ticket.totalPrice|escape}</h3>
+                                <h3 name=total>Total: € {$ticket.totalPrice|escape}</h3>    
+                            </div>
+                        </div>
                     </section>
                     {else if isset($ticket['eventType']) && $ticket['eventType'] == 'allday'}
                     <section class=review-night-ticket>
                         <section name=review-night-event-name>                           
-                            <h3 name=event>{$ticket.event|escape}</h3>
+                            <h3 name="event" class="event-text">{$ticket.event|escape}</h3>
                             <h3>{$ticket.day|escape}</h3>
                             <h3>Regular tickets: (€ {$ticket.price|escape}): x{$ticket.tickets|escape}</h3> 
                         </section>
