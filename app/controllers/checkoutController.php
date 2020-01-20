@@ -43,7 +43,7 @@ class CheckoutController extends AppController
 
         $this->view->display("cart/dummypage.tpl");
     }
-    public function calculateTotalPayment(): float
+    public function calculateTotalPayment(array $params): float
     {
         $total = 0.00;
         if(isset($_SESSION['shoppingCart']) != null) {
@@ -60,7 +60,8 @@ class CheckoutController extends AppController
 
         return $total;
     }
-    public function generate()
+
+    public function generate(array $params)
     {
 
         $pdf = new \FPDF('P','mm','A4');
@@ -71,7 +72,8 @@ class CheckoutController extends AppController
         $pdf->Output();
 
     }
-    public function send_pdf_to_user(){
+
+    public function send_pdf_to_user(array $params){
         if(
             $_REQUEST['action'] == 'pdf_invoice' ){
             require('html2pdf.php');
@@ -112,5 +114,18 @@ class CheckoutController extends AppController
         }
     }
 
+    public function transaction_callback(array $params) {
+        // CRONJOB fake API call
+        // curl -d "secret=SuperSecretKey" -X POST http://192.168.1.5/haarlemfestivalyear2/checkout/transaction_callback/dummy
+
+        // Only trust my own dummy call with trusted key
+        $secret = \Framework\getConfig("xorCryptKey");
+
+        if ($params[0] !== "dummy" || ! isset($_POST["secret"]) || $_POST["secret"] !== $secret ) {
+            exit('fail');
+        } else {
+            exit('pass');
+        }
+    }
 }
 ?>
