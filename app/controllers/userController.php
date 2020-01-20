@@ -52,9 +52,9 @@ class UserController extends AppController
 					$_SESSION["username"] = \Framework\CryptXOR($this->model->getUsername());
 					$_SESSION["email"] = \Framework\CryptXOR($this->model->getEmail());
 					$_SESSION["role"] = \Framework\CryptXOR($this->model->getRole());
-					
+
 					$this->view->assign("alertType", "success");
-					$this->view->assign("alertMessage", "Login successful!");				
+					$this->view->assign("alertMessage", "Login successful!");			
 				}
 				elseif (!$this->model->getActivationStatus())
 				{
@@ -74,9 +74,9 @@ class UserController extends AppController
 			}
 		}
 		else if(isset($_POST['register_user']))
-		{
 			$this->register();
-		} 
+		else if(isset($_POST['logout']))
+		    $this->logout();
 
 		// If remmeber me cookie exists, fill input field
 		$rememberMeCookie = \Framework\getCookie("remember_login");
@@ -247,7 +247,6 @@ class UserController extends AppController
 					$this->view->assign("alertType", "danger");
 					$this->view->assign("alertMessage", "Token or email-address was invalid!"); 
 				}
-
 			}
 			else
 			{
@@ -287,8 +286,7 @@ class UserController extends AppController
             $email = $_POST["email"];
             $firstname = $_POST["firstName"];
             $lastname = $_POST["lastName"];
-           
-    
+              
             $this->model->updateProfile($email, $firstname, $lastname);
             header("Refresh:0; url=" . BASE_URL . "/user/profile", true, 200); 
 		}
@@ -301,9 +299,7 @@ class UserController extends AppController
 	public function logout(array $params)
 	{
 		session_destroy(); 
-		$this->view->assign("title", "Logout");
-		$this->view->display("home/index.tpl");
-	
+		header("Refresh:0; url=" . BASE_URL, true, 200); 
 	}
     
     public function profile(array $params)

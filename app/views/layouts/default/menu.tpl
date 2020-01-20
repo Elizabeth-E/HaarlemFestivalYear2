@@ -25,11 +25,14 @@
             <li><a href="{$www}/">Tickets</a></li>
             <li><a href="{$www}/about">About</a></li>
             <li><a href="{$www}/">FAQ</a></li>
-            <li><a href="{$www}/user/login">Sign In</a></li>
+            {if $userId == null}
+                <li><a href="{$www}/user/login">Sign In</a></li>
+            {else}
+                <li><a href="{$www}/user/logout">Logout</a></li>
+            {/if}
             <li>{include file="cart/cartButton.tpl"}</li>
-            <li><a href="{$www}">EN/NL</a></li>
+            <li><a href="{$www}">EN/NL</a></li>         
         </ul>
     </div>
-
 </nav>
 <section id="showCart" class=cart-position>{include file="cart/cart.tpl"}</section>
