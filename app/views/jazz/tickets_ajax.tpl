@@ -163,6 +163,7 @@ $('[data-ticket-type="event"]').click(function(e) {
 	// Reset ticket values
 	$('#regular_ticketx').val('0');
 	$('#total-amount').text('0.0');
+	$('#alert').hide();
 
 	// Clear old data
 	$('#artist-name').text("");
@@ -193,6 +194,7 @@ $('[data-ticket-type="all-access"]').click(function(e) {;
 	// Reset ticket values
 	$('#regular_ticketx').val('0');
 	$('#total-amount').text('0.0');
+	$('#alert').hide();
 
 	// Clear old data
 	$('#artist-day').text("");
