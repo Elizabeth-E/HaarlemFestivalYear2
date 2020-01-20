@@ -55,14 +55,14 @@
 		<h2>Single Tickets</h2>
 		{foreach from=$eventList key=date item=events}
 		<section>
-			<h3 class="datesection">{$date}</h3>
+			<h3 data-day="{$date}" class="datesection">{$date}</h3>
 			{foreach from=$eventList[$date] item=event}
 			<div class="container jazzticket col-lg-12">
-			<img src="{$www}{$event.picture|escape}" alt="{$event.artist|escape}" class="ticketpicture col-lg-2">
+			<img data-img="{$event.picture|escape}" src="{$www}{$event.picture|escape}" alt="{$event.artist|escape}" class="ticketpicture col-lg-2">
 				<div class="jazzticket col-lg-8">
 					<p class="jazzticketartist" data-artist="{$event.artist|escape}">{$event.artist|escape}</p>
-					<p class="jazzticketp" id="artist-location">{$event.location|escape}-{$event.hall|escape}</p>
-					<p class="jazzticketp" id="artist-time">{$event.time}</p>
+					<p class="jazzticketp" data-location="{$event.location|escape}-{$event.hall|escape}" id="artist-location">{$event.location|escape}-{$event.hall|escape}</p>
+					<p class="jazzticketp" data-time="{$event.time}" id="artist-time">{$event.time}</p>
 				</div>
 				<div class="jazzticket col-lg-2">
 					<p class="jazzticketp" data-price="{$event.price}">&euro; {$event.price}</p>
@@ -171,13 +171,21 @@ $('[data-ticket-type="event"]').click(function(e) {
 
 	// Update modal with ticket data
 	let $ticketElm = $(this).parent().parent();
-	let price = $ticketElm.find('[data-price]').data('price');
-	let name = $ticketElm.find('[data-artist]').data('artist');
+	window.ticket = {
+		event: 'Haarlem Jazz - ' + $('#artist-name').text(),
+		price: $ticketElm.find('[data-price]').data('price'),
+		name: $ticketElm.find('[data-artist]').data('artist'),
+		day: $ticketElm.parent().find('[data-day]').data('day'),
+		location: $ticketElm.find('[data-location]').data('location'),
+		time: $ticketElm.find('[data-time]').data('time'),
+		img: $ticketElm.find('[data-img]').data('img'),
+		type: 'jazz'
+	};
 
-	$('#artist-name').text(name);
-	$('#artist-price').text(price);
+	$('#artist-name').text(window.ticket.name);
+	$('#artist-price').text(window.ticket.price);
 
-	ticketPrice = parseInt(price);
+	ticketPrice = parseInt(window.ticket.price);
 });
 
 // When add ALL DAY ACCES ticket is selected
@@ -193,26 +201,27 @@ $('[data-ticket-type="all-access"]').click(function(e) {;
 
 	// Update modal with ticket data
 	let $ticketElm = $(this).parent().parent();
-	let price = $ticketElm.find('[data-price]').data('price');
-	let day = $ticketElm.find('[data-day]').data('day');
+	window.ticket = {
+		event: 'Haarlem Jazz - All Day (' + $ticketElm.find('[data-day]').data('day') + ')',
+		price: $ticketElm.find('[data-price]').data('price'),
+		day: $ticketElm.find('[data-day]').data('day'),
+		type: 'allday'
+	};
 
-	$('#artist-name').text(day);
-	$('#artist-price').text(price);
+	$('#artist-name').text(window.ticket.day);
+	$('#artist-price').text(window.ticket.price);
 
-	ticketPrice = parseInt(price);
+	ticketPrice = parseInt(window.ticket.price);
 });
 
 // Add ticket to cart
 $('#add-to-cart').click(function() {
 	let url = baseUrl + '/cart/add_to_cart';
-	let data = {
-		type: 'jazz',
-		amount: $('#total-amount').text(),
-		tickets: $('#regular_ticketx').val(),
-		event: 'Haarlem Jazz - ' + $('#artist-name').text()
-	};
-	
-	if (parseInt(data.amount) <= 0) {
+
+	window.ticket.amount = $('#total-amount').text();
+	window.ticket.tickets = $('#regular_ticketx').val();
+
+	if (parseInt(window.ticket.amount) <= 0) {
 		$('#alert-type').text('Error');
 			$('#alert-message').text('Please select at least one ticket.');
 
@@ -222,7 +231,7 @@ $('#add-to-cart').click(function() {
 			$('#alert').show();
 	} else {
 		// Send request and handle response
-		$.post(url, data, function(response) {
+		$.post(url, window.ticket, function(response) {
 			if (response.search('success') == -1) { // Fail
 				$('#alert-type').text('Error');
 				$('#alert-message').text(response);
