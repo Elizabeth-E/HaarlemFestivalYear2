@@ -14,7 +14,7 @@ class CartController extends AppController
     public function __construct(string $action = NULL, array $params)
     {
         parent::__construct($action, $params);
- 
+
         $this->action = $action;
         $this->params = $params;
  
@@ -40,11 +40,18 @@ class CartController extends AppController
     public function calculateTotalPayment(): float
     {
         $total = 0.00;
- 
-        if(isset($_SESSION['shoppingCart']) != null)
-            foreach($_SESSION['shoppingCart'] as $ticket)     
-                $total += $ticket[1];
- 
+        if(isset($_SESSION['shoppingCart']) != null) {
+            foreach($_SESSION['shoppingCart'] as $ticket) {
+                // Handle jazz tickets
+                if (isset($ticket['eventType']) && ($ticket['eventType'] == 'jazz' || $ticket['eventType'] == 'allday')) {
+                    $total += $ticket['price'] * $ticket["tickets"];
+                }
+                else {
+                    $total += $ticket[1];
+                }
+            }
+        }
+
         return $total;
     }
  
@@ -79,6 +86,72 @@ class CartController extends AppController
             $this->errorMessage = $e->getMessage();
             $this->checkError();
         }     
+    }
+
+    private function isInCart(array $ticket) : int {
+        // See if there are items in the shopping cart
+        if ( ! isset($_SESSION['shoppingCart']) || count($_SESSION['shoppingCart']) == 0) {
+            return -1;
+        }
+
+        // Look for tickets
+        foreach ($_SESSION['shoppingCart'] as $key => $item) {
+            // Only needed untill we all use the better ticket format
+            if (isset($item['eventType']) && $item['eventType'] == 'jazz') {
+                if ($item['event'] == $ticket['event']) {
+                    return $key;
+                }
+            }
+        }
+        return -1;        
+    }
+
+    public function add_to_cart(array $params) {
+        try {
+            // See if minimal required info is there
+            if (isset($_POST['event']) && isset($_POST['amount']) && isset($_POST['tickets']) && isset($_POST['type']) && isset($_POST['amount'])) {
+
+                // Make sure at least one ticket has been submitted
+                if (intval($_POST['tickets']) <= 0) {
+                    throw new \Exception("Please select at least one ticket.");    
+                }
+
+                // Fill base ticket
+                $ticket = [
+                    "event" => $_POST['event'],
+                    "eventType" => $_POST['type'],
+                    "day" => $_POST['day'],
+                    "price" => $_POST['price'],
+                    "totalPrice" => $_POST['amount'],
+                    "tickets" => $_POST['tickets']
+                ];
+
+                // Add Jazz specific data
+                if ($ticket["eventType"] == "jazz") {
+                    $ticket["time"] = $_POST['time'];
+                    $ticket["img"] = $_POST['img'];
+                    $ticket["location"] = $_POST['location'];
+                    $ticket["artist"] = $_POST['name'];
+                }
+
+                // Update existing ticket with new price
+                $ticketIndex = $this->isInCart($ticket);
+                if ($ticketIndex >= 0) {
+                    $_SESSION['shoppingCart'][$ticketIndex]['price'] += $ticket['price'];
+                    $_SESSION['shoppingCart'][$ticketIndex]['tickets'] += $ticket['tickets'];
+                } 
+                else  // Add new ticket
+                {
+                    $_SESSION['shoppingCart'][] = $ticket;
+                }
+
+                exit("[success]Ticket has been created!");
+            } else {
+                throw new \Exception("Not all ticket data is supplied!");
+            }
+        } catch(\Exception $e){
+            exit($e->getMessage());
+        }
     }
  
     /*This is used to create a ticket. This method will also check if the user has selecting more than one ticket, and 
