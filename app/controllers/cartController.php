@@ -81,22 +81,57 @@ class CartController extends AppController
         }     
     }
 
-    // TODO: Check for duplicates
+    private function isInCart(array $ticket) : int {
+        // See if there are items in the shopping cart
+        if ( ! isset($_SESSION['shoppingCart']) || count($_SESSION['shoppingCart']) == 0) {
+            return -1;
+        }
+
+        // Look for tickets
+        foreach ($_SESSION['shoppingCart'] as $key => $item) {
+            // Only needed untill we all use the better ticket format
+            if (isset($item['eventType']) && $item['eventType'] == 'jazz') {
+                if ($item['event'] == $ticket['event']) {
+                    return $key;
+                }
+            }
+        }
+        return -1;        
+    }
+
     public function add_to_cart(array $params) {
-        // Create ticket
         try {
+            // See if required info is there
             if (isset($_POST['event']) && isset($_POST['amount']) && isset($_POST['tickets']) && isset($_POST['type'])) {
+
                 // Make sure at least one ticket has been submitted
                 if (intval($_POST['tickets']) <= 0) {
                     throw new \Exception("Please select at least one ticket.");    
                 }
 
-                $_SESSION['shoppingCart'][] = [
+                // Create ticket array
+                $ticket = [
                     "event" => $_POST['event'],
                     "price" => $_POST['amount'],
                     "tickets" => $_POST['tickets'],
-                    "eventType" => $_POST['type']
+                    "eventType" => $_POST['type']   
                 ];
+
+                // Update existing ticket with new price
+                $ticketIndex = $this->isInCart($ticket);
+                if ($ticketIndex >= 0) {
+                    $_SESSION['shoppingCart'][$ticketIndex]['price'] += $ticket['price'];
+                    $_SESSION['shoppingCart'][$ticketIndex]['tickets'] += $ticket['tickets'];
+                } 
+                else  // Add new ticket
+                {
+                    $_SESSION['shoppingCart'][] = [
+                        "event" => $_POST['event'],
+                        "price" => $_POST['amount'],
+                        "tickets" => $_POST['tickets'],
+                        "eventType" => $_POST['type']
+                    ];
+                }
 
                 exit("[success]Ticket has been created!");
             } else {
