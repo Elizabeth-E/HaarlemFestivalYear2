@@ -15,8 +15,7 @@
                         Price: &euro; {$item.price|escape}
                     </section>
                 </section>
-            {/if}
-            {if isset($item[0]) && strpos($item[0], 'Night') !== false}
+            {else if isset($item[0]) && strpos($item[0], 'Night') !== false}
                 <!--tour name-->
                 <section class="cart-tour-name">
                     <h1>{print_r($item[0], true)}</h1>

@@ -46,7 +46,19 @@
               {foreach from=$tickets item=$ticket}                       
                 <p></p>
                 <section>
-                    {if isset($ticket[0]) && strpos($ticket[0], 'Night') != false}
+                    {if isset($ticket['eventType']) && $ticket['eventType'] == 'jazz'}
+                    <section class=review-night-ticket>
+                        <section name=review-night-event-name>                           
+                            <h3 name=event>{$ticket.event|escape}</h3>
+                            <h3>23-11-1992 (dummy)</h3>
+                            <h3>location (dummy)</h3>
+                            <h3>time (dummy)</h3>
+                            <h3>Regular tickets: (€ dummy): x{$ticket.tickets|escape}</h3> 
+                        </section>
+
+                        <h3 name=total>Total: € {$ticket.price|escape}</h3>
+                    </section> 
+                    {else if isset($ticket[0]) && strpos($ticket[0], 'Night') != false}
                         <section class=review-night-ticket>
                             <section name=review-night-event-name>                           
                                 <!--event name and language-->
