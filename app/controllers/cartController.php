@@ -110,7 +110,8 @@ class CartController extends AppController
     public function add_to_cart(array $params) {
         try {
             // See if minimal required info is there
-            if (isset($_POST['event']) && isset($_POST['amount']) && isset($_POST['tickets']) && isset($_POST['type']) && isset($_POST['amount'])) {
+            if ( isset($_POST['ticketid']) && isset($_POST['event']) && isset($_POST['amount']) && 
+                isset($_POST['tickets']) && isset($_POST['type']) && isset($_POST['amount']) ) {
 
                 // Make sure at least one ticket has been submitted
                 if (intval($_POST['tickets']) <= 0) {
@@ -124,7 +125,8 @@ class CartController extends AppController
                     "day" => $_POST['day'],
                     "price" => $_POST['price'],
                     "totalPrice" => $_POST['amount'],
-                    "tickets" => $_POST['tickets']
+                    "tickets" => $_POST['tickets'],
+                    "ticketid" => $_POST['ticketid'],
                 ];
 
                 // Add Jazz specific data

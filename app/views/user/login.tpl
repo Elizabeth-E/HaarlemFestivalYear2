@@ -37,6 +37,8 @@
 						<button type="submit" name=register_user id=log_btn>Register</button>
                     </form>
                     <button  type="submit" id="ghost2" onclick="signUpForm()">SignUp</button>
+
+                    <a href="{$www}/checkout"><button type="submit" id="ghost3">Skip Registration</button></a>
                 </div>
             </div>
     </div>
@@ -139,6 +141,20 @@ button[id=log_btn] {
     margin-left: 22%;
 }
 
+#ghost3 {
+    border-radius: 20px;
+    border: 1px;
+    background-color: orange;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: 100%;
+    margin-top: 2%;
+    margin-left: 2%;
+}
 #ghost2 {
     border-radius: 20px;
     border: 1px;

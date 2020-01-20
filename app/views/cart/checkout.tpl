@@ -99,17 +99,23 @@
     <h3>Enter Information for Ticket</h3>
             <div class="form-group owner">
                 <label for="Name on card">First Name</label>
-                <input type="text" class="form-control" id="name on card">
+                <input type="text" class="form-control" id="firstname">
             </div>
             <div class="form-group owner">
                 <label for="Name on card">Last Name</label>
-                <input type="text" class="form-control" id="name on card">
+                <input type="text" class="form-control" id="lastname">
             </div>
             <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              <label for="email123">Email address</label>
+              <input type="email" class="form-control" id="email123" aria-describedby="emailHelp" placeholder="Enter email">
               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
+                      <!-- Remember me -->
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="paypal-checked">
+            <label class="form-check-label" for="paypal-checked">Remember me</label>
+          </div>
+        
             <div class = "paypal">
             <div id="paypal-button" ></div>
             </div>
@@ -121,7 +127,24 @@
  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
 var totalAmount = parseFloat('{$totalPayment}').toFixed(2);
+let url = '{$www}/checkout/process_order';
 {literal}
+$('#paypal-checked').change(function() {
+    if ( ! this.checked) {
+        alert('not checked');
+    }
+
+    let data = {
+        firstName: $('#firstname').val(),
+        lastName: $('#lastname').val(),
+        email: $('#email123').val(),
+    };
+    
+    $.post(url, data, function(response) { 
+        console.log(response);
+    });
+
+});
   paypal.Button.render({
     // Configure environment
     env: 'sandbox',
