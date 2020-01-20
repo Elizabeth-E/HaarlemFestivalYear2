@@ -142,12 +142,7 @@ class CartController extends AppController
                 } 
                 else  // Add new ticket
                 {
-                    $_SESSION['shoppingCart'][] = [
-                        "event" => $_POST['event'],
-                        "price" => $_POST['amount'],
-                        "tickets" => $_POST['tickets'],
-                        "eventType" => $_POST['type']
-                    ];
+                    $_SESSION['shoppingCart'][] = $ticket;
                 }
 
                 exit("[success]Ticket has been created!");
