@@ -15,7 +15,7 @@
 				<p class="allpass"> 26th July</p>
 				<p class="allpass"> Pass</p>
 				<p class="allpass" data-price="35"> &euro;35,-</p>
-				<button type="button" class="btn btn-lg jazz" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+				<button type="button" class="btn btn-lg jazz" data-ticketid="6" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
 				<p class="fineprint"> Access to all events on this day</p>
 			</div>
 		</div>
@@ -25,7 +25,7 @@
 				<p class="allpass"> 27th July</p>
 				<p class="allpass"> Pass</p>
 				<p class="allpass" data-price="35"> &euro;35,-</p>
-				<button type="button" class="btn btn-lg jazz" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+				<button type="button" class="btn btn-lg jazz" data-ticketid="6" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
 				<p class="fineprint"> Access to all events on this day</p>
 			</div>
 		</div>
@@ -35,7 +35,7 @@
 				<p class="allpass"> 28th July</p>
 				<p class="allpass"> Pass</p>
 				<p class="allpass" data-price="35"> &euro;35,-</p>
-				<button type="button" class="btn btn-lg jazz" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+				<button type="button" class="btn btn-lg jazz" data-ticketid="6" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
 				<p class="fineprint"> Access to all events on this day</p>
 			</div>
 		</div>
@@ -45,7 +45,7 @@
 				<p class="allpass"> Pass</p>
 				<p class="allpass" data-day="All Weekend"> Thu, Fri, Sat</p>
 				<p class="allpass" data-price="80"> &euro;80,-</p>
-				<button type="button" class="btn btn-lg jazz" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+				<button type="button" class="btn btn-lg jazz" data-ticketid="3" data-ticket-type="all-access" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
 				<p class="fineprint"> Access to all events on this day</p>
 			</div>
 		</div>
@@ -58,7 +58,7 @@
 			<h3 data-day="{$date}" class="datesection">{$date}</h3>
 			{foreach from=$eventList[$date] item=event}
 			<div class="container jazzticket col-lg-12">
-			<img data-img="{$event.picture|escape}" src="{$www}{$event.picture|escape}" alt="{$event.artist|escape}" class="ticketpicture col-lg-2">
+			<img data-img="{$event.picture|escape}" data-ticketid="{$event.ticketid}" src="{$www}{$event.picture|escape}" alt="{$event.artist|escape}" class="ticketpicture col-lg-2">
 				<div class="jazzticket col-lg-8">
 					<p class="jazzticketartist" data-artist="{$event.artist|escape}">{$event.artist|escape}</p>
 					<p class="jazzticketp" data-location="{$event.location|escape}-{$event.hall|escape}" id="artist-location">{$event.location|escape}-{$event.hall|escape}</p>
@@ -173,6 +173,7 @@ $('[data-ticket-type="event"]').click(function(e) {
 	// Update modal with ticket data
 	let $ticketElm = $(this).parent().parent();
 	window.ticket = {
+		ticketid: $ticketElm.find('[data-ticketid]').data('ticketid'),
 		event: 'Haarlem Jazz - ' + $ticketElm.find('[data-artist]').data('artist'),
 		price: $ticketElm.find('[data-price]').data('price'),
 		name: $ticketElm.find('[data-artist]').data('artist'),
@@ -204,6 +205,7 @@ $('[data-ticket-type="all-access"]').click(function(e) {;
 	// Update modal with ticket data
 	let $ticketElm = $(this).parent().parent();
 	window.ticket = {
+		ticketid: $ticketElm.find('[data-ticketid]').data('ticketid'),
 		event: 'Haarlem Jazz - All Day (' + $ticketElm.find('[data-day]').data('day') + ')',
 		price: $ticketElm.find('[data-price]').data('price'),
 		day: $ticketElm.find('[data-day]').data('day'),

@@ -3,6 +3,7 @@ namespace App\Models;
 
 class JazzEvent extends AppModel
 {
+    private $ticketid;
     private $date;
     private $day;
     private $time;
@@ -11,9 +12,11 @@ class JazzEvent extends AppModel
     private $artist;
     private $price;
     private $picture;
+    
 
-    public function __construct($date, $day, $time, $location, $hall, $artist, $price, $picture)
+    public function __construct($ticketid, $date, $day, $time, $location, $hall, $artist, $price, $picture)
     {
+        $this->ticketid = $ticketid;
         $this->date = $date;
         $this->day = $day;
         $this->time = $time;
@@ -22,6 +25,7 @@ class JazzEvent extends AppModel
         $this->artist = $artist;
         $this->price = $price;
         $this->picture = $picture;
+       
 
     }
 
@@ -57,10 +61,15 @@ class JazzEvent extends AppModel
     {
         return $this->picture;
     }
+    public function getTicketid()
+    {
+        return $this->ticketid;
+    }
 
     public function toArray()
     {
         return [
+            "ticketid" => $this->getTicketid(),
             "date" => $this->getDate(),
             "day" => $this->getDay(),
             "time" => $this->getTime(),
