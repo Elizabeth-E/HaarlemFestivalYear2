@@ -19,7 +19,7 @@
 
                         <div class="jazzticket col-lg-2">
                             <p class="jazzticketp">&euro; {$artistTicket.price}</p>
-                            <button type="button" class="btn btn-lg jazz" data-toggle="modal" data-target="#basicExampleModal">Select Ticket </button>
+                            <button type="button" class="btn btn-lg jazz" data-toggle="modal" id="not-yet-done" data-target="#basicExampleModal">Select Ticket </button>
                         </div>
                 </div>
             </div>
@@ -39,7 +39,6 @@
     <h2>Suggested Artist</h2>
     <div class="row">
     {foreach from=$crossSelling key=i item=artist}
-            
                 <div class="col-lg-4">
                     <a class="artistlabel" href="{$www}/jazz/artist_page/{$artist.urlSafeArtistName}">
                         <div class="row">
@@ -55,3 +54,12 @@
         {/foreach}
         </div>
     </section>
+{literal}
+<script>
+// TODO: Finish this
+// Go to tickets tab for now
+$('#not-yet-done').click(function() {
+    $('#tab-tickets a').click();
+});
+</script>
+{/literal}
