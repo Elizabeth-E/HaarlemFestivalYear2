@@ -121,9 +121,6 @@ class JazzController extends AppController
                 case "sat":
                     $eventsPerDate["Saturday 28th July"][] = $event->toArray();
                     break;
-                case "sun":
-                    $eventsPerDate["Sunday 29th July"][] = $event->toArray();
-                    break;
                 default:
                     break; 
             }
