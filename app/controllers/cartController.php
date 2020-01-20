@@ -92,11 +92,12 @@ class CartController extends AppController
                 }
 
                 $_SESSION['shoppingCart'][] = [
-                    $_POST['event'],
-                    $_POST['amount'],
-                    $_POST['tickets'],
-                    $_POST['type']
+                    "event" => $_POST['event'],
+                    "price" => $_POST['amount'],
+                    "tickets" => $_POST['tickets'],
+                    "eventType" => $_POST['type']
                 ];
+
                 exit("[success]Ticket has been created!");
             } else {
                 throw new \Exception("Not all ticket data is supplied!");
