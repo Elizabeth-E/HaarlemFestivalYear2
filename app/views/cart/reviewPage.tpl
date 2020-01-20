@@ -10,7 +10,7 @@
             {foreach from=$tickets item=$ticket}
                 {if isset($ticket['eventType']) && $ticket['eventType'] == 'jazz'}
                     <h6>{$ticket.event|escape}</h6>
-                    <h6 name=price>&euro; {$ticket.tickets|escape}</h6>
+                    <h6 name=price>&euro; {$ticket.price|escape}</h6>
                 {else if isset($ticket[0]) && strpos($ticket[0], 'Night') != false}
                     <h6>{print_r($ticket[0], true)}</h6><!--event name-->
                     <h6>{print_r($ticket[3], true)}....................................</h6><!--language-->
