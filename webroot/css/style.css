@@ -401,6 +401,7 @@ footer .icons img {
       width: 240px; 
       height: 240px; 
       display: block;
+      margin-top: 10px;
   }
   
   #night-tour-images section p
@@ -1429,4 +1430,16 @@ a.artistlabel{
 div.paypal{
     padding-top: 4em;
 
+}
+
+
+/* SHOPPING CART */
+h3.event-text {
+    font-size: 23px !important;
+}
+img.artist-img {
+    width: 9.5em;
+    height: auto;
+    padding-left: .35em;
+    padding-bottom: 1em;
 }

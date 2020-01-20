@@ -24,6 +24,12 @@ abstract class AppController
         $this->view->assign("background", $this->background);
         $this->view->assign("www", BASE_URL);
 
+        //checks if the userId exist. If so, the logout function will appear.
+        if(isset($_SESSION['userId']))
+            $this->view->assign("userId", $_SESSION["userId"]);
+        else
+            $this->view->assign("userId", null);
+
         $this->setBackground("home.jpg");
     }
 
@@ -65,7 +71,7 @@ abstract class AppController
         $this->view->assign("alert", $cartController->checkError());
         $this->view->assign("alertType", $cartController->getErrorType());
         $this->view->assign("alertMessage", $cartController->getErrorMessage());
-        
+
         return $cartController;
     }
 }
