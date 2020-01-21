@@ -61,10 +61,7 @@ function getCookie(string $cookieName) : string
 {
 	if(isset($_COOKIE[$cookieName]))
 	{
-		$value = $_COOKIE[$cookieName];
-		$value = \Framework\CryptXOR($value);
-
-		return $value;
+		return $_COOKIE[$cookieName];
 	}
 	else
 	{
@@ -72,10 +69,10 @@ function getCookie(string $cookieName) : string
 	}
 }
 
-function createCookie(string $name, string $value, int $expires)
+function createCookie(string $name, string $value)
 {
-	$value = \Framework\CryptXOR($value);
-	setcookie($name, $value, $expires);
+	$expires =  time() + (86400 * 30); // 1 day
+	setCookie($name, $value, $expires, "/");
 }
 
 /*
@@ -154,11 +151,13 @@ function autoload($class)
 
 		$vendorLibs = [
 			"smarty" => TEMPLATING_ENGINE . $className . ".class.php",
-			"phpmailer" => PHP_MAILER . $className . ".php"
+			"phpmailer" => PHP_MAILER . $className . ".php",
+			"fpdf" => FPDF . $className . ".php"
 		];
 
 		foreach ($vendorLibs as $lib)
 		{
+			//\Framework\debug($className);
 			if (file_exists($lib))
 			{
 				require_once $lib;

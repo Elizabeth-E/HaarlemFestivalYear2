@@ -8,6 +8,9 @@
 
 namespace Config;
 
+if(!isset($_SESSION['shoppingCart']))
+	$_SESSION['shoppingCart'] = array();
+	
 // Load base components
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "paths.php";
 

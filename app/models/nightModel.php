@@ -8,61 +8,155 @@ class NightModel extends AppModel
         parent::__construct();
     }
 
-    //This is used to retrieve information from an event by using the event_Id to retrieve the data.
-    public function retrieveEventInfoById(int $eventId)
+    //This is used to retrieve information from all pages that belongs to the At Night event
+    public function retrieveAtNightPages($lang):array
     {
-        $db = $this->database->prepare("SELECT page.id, page.page_name, page.page_description, page.header_title FROM page WHERE page.id = ?");
-        $db->bind_param("i", $eventId);
+        $db = $this->database->prepare("SELECT * FROM page 
+        WHERE page.page_name_en LIKE '%Night%' 
+        OR page.page_name_en LIKE '%Beer%' 
+        OR page.page_name_en LIKE '%Cocktail%'
+        OR page.page_name_en LIKE '%Hookah%'");
         $db->execute();
 
         $result = $db->get_result();
-        $eventInfo = null;
+        
+        $event_pages = [];
 
         while($row = $result->fetch_assoc())
-            $eventInfo = new Page($row['id'], $row['page_name'], $row['page_description'], $row['header_title']);
+        {
+            $event_page = new Page($row['id'], $row['page_name_'.$lang], $row['page_description_'.$lang], $row['header_title']);
+            $event_pages[] = $event_page;
+        }
 
-        return $eventInfo;
+        return $event_pages;
     }
 
-    //retrieves all images that belongs to the At Night event
-    public function retrieveAtNightImages():array
+    //retrieves the image for a specific page
+    public function retrieveImageForPage(int $page_id):array
     {
-        $db = $this->database->prepare("SELECT * FROM picture WHERE `path` LIKE '%night%' ");
+        $db = $this->database->prepare("SELECT * FROM picture_has_page WHERE `page_id` = ?");
+        $db->bind_param("i", $page_id);
         $db->execute();
         $result = $db->get_result();
 
-        //an array of pictures for the At Night event
-        $images = array();
-
-        while($row = mysqli_fetch_assoc($result))
-            $images[] = $row;
-        
-        $db->close();
-        return $images;
-    }
-
-    //retrieves tickets for the At Night event by using the name of a specific tour
-    public function retrieveAtNightTickets($tour_name):array
-    {
-        $tickets = array();
-
-        $db = $this->database->prepare("SELECT tour.tour_language, event.date, guides.name, event.amount FROM tour 
-        INNER JOIN event
-        ON tour.event_id = event.id
-        INNER JOIN guides 
-        ON tour.guides_id = guides.id 
-        WHERE `tour_name` LIKE '%$tour_name%'
-        ORDER BY event.date ASC");
-        $db->execute();
-        $result = $db->get_result();
+        $images_for_page = [];
 
         while($row = mysqli_fetch_assoc($result))
         {
-            $ticket = new Ticket(0, 0, $row['tour_language'], $row['name'], $row['date'], $tour_name . ' Tour', $row['amount']);
+            $image = $this->retrieveImage($row['picture_id']);
+            $images_for_page[] = $image;
+        }
+        
+        $db->close();
+        return $images_for_page;
+    }
+
+    private function retrieveImage(int $picture_id)
+    {
+        $db = $this->database->prepare("SELECT * FROM picture WHERE `id` = ?");
+        $db->bind_param("i", $picture_id);
+        $db->execute();
+        $result = $db->get_result();
+
+        $image = null;
+
+        if($result->num_rows > 0)
+        {
+            $data = $result->fetch_assoc();
+            $image = new Picture($data['id'], $data['name'], $data['path']);
+        }
+
+        return $image;
+    }
+
+    //retrieves tickets for the At Night event by using the name of a specific tour
+    public function retrieveAtNightTickets(string $tour_name, string $language):array
+    {
+        $tickets = array();
+        $sql = "";
+
+        if($language == 'Dutch' || $language == 'English' || $language == 'Chinese'){
+            $sql = "SELECT tour.tour_language, event.date, guides.name, event.amount FROM tour 
+            INNER JOIN event ON tour.event_id = event.id
+            INNER JOIN guides ON tour.guides_id = guides.id 
+            WHERE `tour_name` LIKE '%$tour_name%' AND `tour_language` = '$language'
+            ORDER BY event.date ASC";            
+        }
+        else{
+            $sql = "SELECT tour.tour_language, event.date, guides.name, event.amount FROM tour 
+            INNER JOIN event ON tour.event_id = event.id
+            INNER JOIN guides ON tour.guides_id = guides.id 
+            WHERE `tour_name` LIKE '%$tour_name%'
+            ORDER BY event.date ASC";   
+        }
+        
+        $db = $this->database->prepare($sql);       
+        $db->execute();
+        $result = $db->get_result();       
+
+        while($row = mysqli_fetch_assoc($result)){
+            $ticket = new TourTicket($row['tour_language'], $row['name'], $row['date'], $tour_name . ' Tour', $row['amount'], $this->retrieveTicketPrice(2), $this->retrieveTicketPrice(1));
             $tickets[] = $ticket;
         }
 
         return $tickets;
+    }
+
+    //This is used to retrieve the price of a ticket type
+    private function retrieveTicketPrice(int $ticket_Id)
+    {
+        $price = 0;
+
+        $db = $this->database->prepare("SELECT price FROM ticket_type WHERE id=?");
+        $db->bind_param("i", $ticket_Id);
+        $db->execute();
+
+        $result = $db->get_result();
+
+        if($result->num_rows > 0)
+        {
+            $data = $result->fetch_assoc();
+            $price = $data['price'];
+        }
+
+        return $price;
+    }
+
+    //retrieves locations for a page
+    public function retrieveLocationForMap(int $pageId): array
+    {
+        $db = $this->database->prepare("SELECT * FROM page_has_map WHERE `page_id` = ?");
+        $db->bind_param("i", $pageId);
+        $db->execute();
+
+        $result = $db->get_result();
+
+        $locations = array();
+
+        while($row = $result->fetch_assoc())
+            $locations[] = $this->retrieveLocationInfo($row['map_id']);
+
+        return $locations;
+    }
+
+    //retrieves information for a location
+    private function retrieveLocationInfo(int $location_id)
+    {
+        $db = $this->database->prepare("SELECT * FROM map WHERE `location_id` = ?");
+        $db->bind_param('i', $location_id);
+        $db->execute();
+
+        $result = $db->get_result();
+
+        $location = null;
+
+        if($result->num_rows > 0)
+        {
+            $data = $result->fetch_assoc();
+            $location = new Map($data['location_Id'], $data['location_name'], $data['latitude'], $data['longitude']);
+        }
+
+        return $location;
     }
 }
 ?>
