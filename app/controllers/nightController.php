@@ -63,7 +63,7 @@ class NightController extends AppController
              if($page->getPageName() == ('Haarlem At Night' . ' - ' . $params[0]))
              {
                 $this->view->assign("title", $page->getPageHeader());
-                $this->view->assign("page_title", $page->getPageName());    
+                $this->view->assign("page_title", str_replace(" ", "_", $page->getPageName()));    
                 $this->view->assign("page_title_link", $params[0]);  
                 $this->view->assign("description", $page->getPageDescription());
                 $this->view->assign("tour_images", $this->model->retrieveImageForPage($page->getPageId()));
@@ -77,16 +77,17 @@ class NightController extends AppController
     //This is used to get information for the At Night ticket pages
     public function getTicketPageInfo(array $params)
     {
-        $tour_name = explode(' - ', $params[0]);
+        $something = str_replace("_", " ", $params[0]);
+        $tour_name = explode(' - ', $something);
 
         foreach($this->at_night_pages as $page)
         {
-            if($page->getPageName() == ($params[0] . " Tickets"))
+            if($page->getPageName() == ($something . " Tickets"))
             {
                 $this->view->assign("title", $page->getPageHeader());
                 $this->view->assign("page_title", $page->getPageName());
                 $this->view->assign("tour_page", $tour_name[1]);
-                $tourType = explode(" ", $params[0]);
+                $tourType = explode(" ", $something);
 
                 if(isset($_POST['language']))
                     $this->language = $_POST['language'];
