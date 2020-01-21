@@ -81,7 +81,7 @@ class JazzEventService extends AppModel
         $result = $dbHandle->get_result();
 
         while($dbArtist = $result->fetch_assoc()) {
-            if($row["artist"] != "All"){
+            if($dbArtist["artist"] != "All"){
         // Add event to array
         $artistPageInfo = new JazzArtist(
             $dbArtist['id'],
