@@ -32,6 +32,7 @@ class JazzEventService extends AppModel
         $result = $dbHandle->get_result();
 
         while($row = $result->fetch_assoc()) {
+            if($row["artist"] != "All"){
             $explodedEvent = explode("_", $row["event"]);
 
             // Event time calculations
@@ -63,8 +64,10 @@ class JazzEventService extends AppModel
                 $eventData['artist'],
                 $eventData['price'],
                 $eventData['picture']
-            );                
+            );    
+                            
         }
+    }
 
         $dbHandle->close();
         return $eventList;
@@ -78,7 +81,7 @@ class JazzEventService extends AppModel
         $result = $dbHandle->get_result();
 
         while($dbArtist = $result->fetch_assoc()) {
-      
+            if($row["artist"] != "All"){
         // Add event to array
         $artistPageInfo = new JazzArtist(
             $dbArtist['id'],
@@ -86,6 +89,7 @@ class JazzEventService extends AppModel
             $dbArtist['artist_info_'.$lang],
             $dbArtist['artist_picture'] 
         );  
+        }
         }
         return $artistPageInfo;
 
@@ -99,7 +103,7 @@ class JazzEventService extends AppModel
         $result = $dbHandle->get_result();
 
         while($dbArtist = $result->fetch_assoc()) {
-        
+            if($dbArtist["artist_name"] != "All"){
             // Add event to array
             $allArtists[] = new JazzArtist(
                 $dbArtist['id'],
@@ -107,6 +111,7 @@ class JazzEventService extends AppModel
                 $dbArtist['artist_info'] = "",
                 $dbArtist['artist_picture'] 
             );  
+        }
         }
         return $allArtists;
 
@@ -132,40 +137,46 @@ class JazzEventService extends AppModel
         $dbHandle->execute();
         $result = $dbHandle->get_result();
 
+        
+
         while($row = $result->fetch_assoc()) 
         {
-            $explodedEvent = explode("_", $row["event"]);
+            if($row["artist"] != "All"){
+                $explodedEvent = explode("_", $row["event"]);
 
-            // Event time calculations
-            $startDate = strtotime($row["event_date"]);
-            $eventDate = date("d M", $startDate);
-            $eventStartTime = date("H:i", $startDate);
-            $eventEndTime = date("H:i", $startDate + 60 * 60); // Event time +1 hour
+                // Event time calculations
+                $startDate = strtotime($row["event_date"]);
+                $eventDate = date("d M", $startDate);
+                $eventStartTime = date("H:i", $startDate);
+                $eventEndTime = date("H:i", $startDate + 60 * 60); // Event time +1 hour
+    
+                $eventData = [
+                    'ticketid' => $row["ticketid"],
+                    'date' => $eventDate,
+                    'time' => $eventStartTime.' - '.$eventEndTime,
+                    'artist' => $row["artist"],
+                    'price' => floatval($row["price"]),
+                    'day' => $explodedEvent[1],
+                    'location' => $explodedEvent[2],
+                    'hall' => @$explodedEvent[3].' '.@$explodedEvent[4], // Ignore errors '@' 
+                    'picture' => $row["picture"]
+                ];
+    
+                // Add event to array
+                $eventList[] = new JazzEvent(
+                    $eventData['ticketid'],
+                    $eventData['date'],
+                    $eventData['day'],
+                    $eventData['time'],
+                    $eventData['location'],
+                    $eventData['hall'],
+                    $eventData['artist'],
+                    $eventData['price'],
+                    $eventData['picture']
+                );   
 
-            $eventData = [
-                'ticketid' => $row["ticketid"],
-                'date' => $eventDate,
-                'time' => $eventStartTime.' - '.$eventEndTime,
-                'artist' => $row["artist"],
-                'price' => floatval($row["price"]),
-                'day' => $explodedEvent[1],
-                'location' => $explodedEvent[2],
-                'hall' => @$explodedEvent[3].' '.@$explodedEvent[4], // Ignore errors '@' 
-                'picture' => $row["picture"]
-            ];
-
-            // Add event to array
-            $eventList[] = new JazzEvent(
-                $eventData['ticketid'],
-                $eventData['date'],
-                $eventData['day'],
-                $eventData['time'],
-                $eventData['location'],
-                $eventData['hall'],
-                $eventData['artist'],
-                $eventData['price'],
-                $eventData['picture']
-            );   
+            }
+           
         }  
         $dbHandle->close();
         return $eventList;           

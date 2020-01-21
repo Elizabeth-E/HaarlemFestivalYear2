@@ -105,8 +105,7 @@ class JazzController extends AppController
         $eventsPerDate = [
             "Thursday 26th July" => [],
             "Friday 27th July" => [],
-            "Saturday 28th July" => [],
-            "Sunday 29th July" => []
+            "Saturday 28th July" => []
         ];
 
         foreach($eventList as $event)
