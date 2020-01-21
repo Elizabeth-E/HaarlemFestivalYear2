@@ -8,13 +8,14 @@ abstract class AppController
     protected $view = "";
     protected $action = "";
     protected $params = [];
+    protected $lang = "en";
 
     // Default layout & background
     protected $layout = VIEWS . "layouts" . DS . "default" . DS;
     protected $background = BASE_URL . "/img/backgrounds/home.jpg";
 
     public function __construct(string $action = "", array $params)
-    {    
+    {
         // Set the corresponding View and Action
         $this->action = $action;
         $this->params = $params;
@@ -73,6 +74,25 @@ abstract class AppController
         $this->view->assign("alertMessage", $cartController->getErrorMessage());
 
         return $cartController;
+    }
+
+    protected function getLanguage()
+    {
+        $allowedLangs = ["nl", "en"];
+        $cookieValue = \Framework\getCookie("lang");
+
+        // Only accept allowed cookie language
+		if ( ! empty($cookieValue) && in_array($cookieValue, $allowedLangs))
+		{
+			$this->lang = $cookieValue;
+        }
+        return $this->lang;
+    }
+
+    protected function setLanguage($cookievalue)
+    {
+        \Framework\createCookie("lang", $cookievalue);
+        $this->lang = $cookievalue;
     }
 }
 ?>

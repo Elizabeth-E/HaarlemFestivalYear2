@@ -9,10 +9,9 @@ class CartModel extends AppModel
     }
 
     //This is used to retrieve information from all pages
-    public function retrieveCartPages():array
+    public function retrieveCartPages($lang):array
     {
-        $db = $this->database->prepare("SELECT page.id, page.page_name, page.page_description, page.header_title FROM page 
-        WHERE page.header_title LIKE '%Festival%'");
+        $db = $this->database->prepare("SELECT * FROM page WHERE page.header_title LIKE '%Festival%'");
         $db->execute();
 
         $result = $db->get_result();
@@ -20,7 +19,10 @@ class CartModel extends AppModel
 
         while($row = $result->fetch_assoc())
         {
-            $page = new Page($row['id'], $row['page_name'], $row['page_description'], $row['header_title']);
+            $pageName = $row['page_name_'.$lang]; 
+            $pageDescription = $row['page_description_'.$lang];
+
+            $page = new Page($row['id'], $pageName, $pageDescription, $row['header_title']);
             $pages[] = $page;
         }
 

@@ -3,17 +3,22 @@ namespace App\Models;
 
 class JazzArtist extends AppModel
 {
+    private $id;
     private $artist;
     private $description;
     private $picture;
     private $urlSafeArtistName;
 
-    public function __construct($artist, $description, $picture)
+    public function __construct($id, $artist, $description, $picture)
     {
+        $this->id = $id;
         $this->artist = $artist;
         $this->description = $description;
         $this->picture = $picture;
 
+    }
+    public function getId(){
+        return intval($this->id);
     }
     public function getArtist()
     {
@@ -35,6 +40,7 @@ class JazzArtist extends AppModel
     public function toArray()
     {
         return [
+            "id" => $this->getId(),
             "artist" => $this->getArtist(),
             "description" => $this->getDescription(),
             "picture" => $this->getPicture(),

@@ -47,6 +47,7 @@ class JazzController extends AppController
     }
     public function artist_page(array $params)
     {   
+        // This passes the param to artist_page so artist_page_ajax has the correct param
         $artistName = $params[0];
         $artistURL = "/jazz/artist_page_ajax/";
         $artistPage = $artistURL.$artistName;
@@ -54,38 +55,19 @@ class JazzController extends AppController
         $eventList = $this->model->getJazzEvents();
 
 
-
-        // // Turn list of events to a nested array representation for Smarty templates
-        // foreach($eventList as $event)
-        // {
-        //     if($event->getArtist()==$artistName){
-        //         $artist = new JazzEvent(
-        //             $event['date'],
-        //             $event['day'],
-        //             $event['time'],
-        //             $event['location'],
-        //             $event['hall'],
-        //             $event['artist'],
-        //             $event['price']
-        //         );  
-        //     }
-        //     else{
-
-        //     }
-        // }
         $this->view->assign("title", "Jazz");
-        // $this->view->assign("artistPage", $artistPage);
         $this->view->assign("artistPage", $artistPage);
-
         $this->view->display("jazz/artist_page.tpl");
     }
     public function artist_page_ajax(array $params)
     {   
-        // $eventList = $this->model->getJazzEvent();
+        // This passes the param so artist_page_ajax loads the correct artist
         $artistName = $params[0];
         $artistName = str_replace("_"," ",$params[0]);
 
-        $artistInfo = $this->model->getJazzArtist($artistName);
+        //Gets the artist info for a specific artist and casts it to an array
+        $lang = $this->getLanguage();
+        $artistInfo = $this->model->getJazzArtist($artistName, $lang);
         $artistInfo = $artistInfo->toArray();
 
         $artistTicket = $this->model->getArtistSpecificTicket($artistName);
@@ -95,29 +77,21 @@ class JazzController extends AppController
             if($ticket->getLocation() == "Patronaat")
             {
                 $artistMainTicket = $ticket->toArray();
-                continue;
             }
-            //TODO:mitchel help
-            else{
-                if(!empty($ticket))
-                {
-                    $artistOtherTicket = $ticket->toArray();
-                }
-                else{
-                    $artistOtherTicket = "Not Playing elsewhere";
-                }
-            }
-
         }
 
-        // \Framework\debug($artistMainTicket);
-        // exit();
-
+        // Select 3 random artists
+        $allArtists = $this->model->getAllJazzArtists();
+        $crossSellingArtist = [];
+        for ($i = 0; $i < 3; $i++) {
+            $rndArtist = $allArtists[rand(0, count($allArtists) -1)];
+            $crossSellingArtist[] = $rndArtist->toArray();
+        }
 
         $this->view->assign("title", "Jazz");
         $this->view->assign("artistInfo", $artistInfo);
         $this->view->assign("artistTicket", $artistMainTicket);
-        $this->view->assign("artistOther", $artistOtherTicket );
+        $this->view->assign("crossSelling", $crossSellingArtist);
 
         $this->view->display("jazz/artist_page_ajax.tpl");
     }
@@ -131,8 +105,7 @@ class JazzController extends AppController
         $eventsPerDate = [
             "Thursday 26th July" => [],
             "Friday 27th July" => [],
-            "Saturday 28th July" => [],
-            "Sunday 29th July" => []
+            "Saturday 28th July" => []
         ];
 
         foreach($eventList as $event)
@@ -146,9 +119,6 @@ class JazzController extends AppController
                     break;
                 case "sat":
                     $eventsPerDate["Saturday 28th July"][] = $event->toArray();
-                    break;
-                case "sun":
-                    $eventsPerDate["Sunday 29th July"][] = $event->toArray();
                     break;
                 default:
                     break; 

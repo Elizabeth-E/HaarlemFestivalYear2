@@ -21,7 +21,8 @@ class NightController extends AppController
         $this->model = new Models\nightModel();
 
         //This is used to retrieve all pages for the At Night event
-        $this->at_night_pages = $this->model->retrieveAtNightPages();
+        $lang = $this->getLanguage();
+        $this->at_night_pages = $this->model->retrieveAtNightPages($lang);
 
         $this->getCart();
 
