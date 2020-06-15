@@ -71,45 +71,40 @@
                         Family Tickets: {print_r($item[6], true)}
                     </section>
                 </section>
-           {else if isset($item[0]) && strpos($item[0], 'Food') != false}
+
+
+           {else if isset($item[0]) && strpos($item[0], 'Food') == true}
 		        <section class="cart-tour-name">
                     <h1>{print_r($item[0], true)}</h1>
                     <form method=POST>
                         <button name=delete_single>x</button>
                         <input type=hidden name="hidden_cart_event_name" value='{print_r($item[0], true)}'>
-                        <input type=hidden name="hidden_cart_date" value='{print_r($item[1], true)}'>
-                        <input type=hidden name="hidden_cart_time" value='{print_r($item[2], true)}'>
-                        <input type=hidden name="hidden_no_of_adults" value='{print_r($item[3], true)}'>
-                        <input type=hidden name="hidden_no_of_kids" value='{print_r($item[4], true)}'>
-                        <input type=hidden name="hidden_food_price" value='{print_r($item[5], true)}'>
-						<input type=hidden name="hidden_cart_total" value='{print_r($item[6], true)}'>
+                        <input type=hidden name="hidden_cart_date" value='{print_r($item[5], true)}'>
+                        <input type=hidden name="hidden_cart_time" value='{print_r($item[4], true)}'>
+                        <input type=hidden name="hidden_no_of_adults" value='{print_r($item[2], true)}'>
+                        <input type=hidden name="hidden_no_of_kids" value='{print_r($item[3], true)}'>
+                        <input type=hidden name="hidden_cart_total" value='{print_r($item[1], true)}'>
                     </form>
                 </section>
 
 				<section class=cart-tour-data>
                     <!--date-->
                     <section class=tour-date>
-                        {print_r(date('l jS F Y', $item[1]), true)}
+                        {print_r(date('l jS F Y', $item[5]), true)}
                     </section>
                     <!--time-->
                     <section class=tour-time>
-                        Starts at: {print_r(date('H:i', $item[2]), true)}
+                        Starts at: {print_r(date('H:i', $item[4]), true)}
                     </section>
                     <!--Number of adults-->
                     <section class=tour-guide-name>
-                        <p>Adults: {print_r($item[3], true)}</p>
+                        <p>Adults: {print_r($item[2], true)}</p>
                     </section>
 					 <!--Number of kids-->
                     <section class=tour-guide-name>
-                        <p>Kids: {print_r($item[4], true)}</p>
+                        <p>Kids: {print_r($item[3], true)}</p>
                     </section>
-                </section>
-
-                <section class="cart-tour-tickets">
-                    <section id=ticket>
-                        Food Total: {print_r($item[5], true)}
-                    </section>
-                </section>
+                </section>  
             {/if}
             <br>
         {/foreach}
