@@ -10,7 +10,7 @@ function calcVals() {
 
   var totalCal = +selFrst + +selScnd;
   var sum = totalCal * 10;
-  document.getElementById("total_payment").value = sum;
+  document.getElementById("hidden_total_payment").value = sum;
 }
 </script>
 
@@ -105,7 +105,7 @@ function calcVals() {
 
  <div class="text-center">
         <div class="text ">
-         	 <p><span>Total: <input id="total_payment{$i}" type=text  name=hidden_total_payment  disabled='true' size="15" value='{number_format((float)print_r(20, true), 2, '.', '')}'/></span></p>
+         	 <p><span>Total: <input id="hidden_total_payment" type=text  name=hidden_total_payment  disabled='true' size="15" /></span></p>
 
 			<br>
 			<input type="hidden" name="hidden_event_name" value='Haarle Food-{$RestaurantName}'>
