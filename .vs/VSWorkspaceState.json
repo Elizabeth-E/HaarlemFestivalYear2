@@ -2,13 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\app",
-    "\\app\\controllers",
-    "\\app\\models",
     "\\app\\views",
-    "\\app\\views\\at_night",
-    "\\app\\views\\layouts",
-    "\\app\\views\\layouts\\default"
+    "\\app\\views\\layouts\\default",
+    "\\app\\views\\user",
+    "\\webroot",
+    "\\webroot\\img",
+    "\\webroot\\img\\food_event"
   ],
-  "SelectedNode": "\\app\\controllers\\userController.php",
+  "SelectedNode": "\\webroot\\img\\food_event",
   "PreviewInSolutionExplorer": false
 }
