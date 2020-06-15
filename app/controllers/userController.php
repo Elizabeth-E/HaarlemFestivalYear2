@@ -54,7 +54,8 @@ class UserController extends AppController
 					$_SESSION["role"] = \Framework\CryptXOR($this->model->getRole());
 
 					$this->view->assign("alertType", "success");
-					$this->view->assign("alertMessage", "Login successful!");			
+					$this->view->assign("alertMessage", "Login successful!");
+					$this->view->display("cart/checkout.tpl");			
 				}
 				elseif (!$this->model->getActivationStatus())
 				{
@@ -73,6 +74,7 @@ class UserController extends AppController
 				$this->view->assign("alertMessage", "Please fill in the entire form!");
 			}
 		}
+
 		else if(isset($_POST['register_user']))
 			$this->register();
 		else if(isset($_POST['logout']))
@@ -89,6 +91,7 @@ class UserController extends AppController
 		$this->view->assign("alert", $alert);
 		$this->view->display("user/login.tpl");
 	}
+
 
 	private function register()
 	{
