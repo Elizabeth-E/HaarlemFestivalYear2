@@ -26,7 +26,7 @@ class FoodController extends AppController
         $this->food_pages = $this->model->retrieveFoodPages($lang);
 
 		$this->getCart();
-        $this->setBackground("FoodHome.jpg");
+        $this->setBackground("Food.jpg");
  
     }
 //ctrl + K + C to comment paragraph!!!

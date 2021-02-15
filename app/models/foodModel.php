@@ -11,8 +11,8 @@ class FoodModel extends AppModel
         parent::__construct();
          
     }
-     //This is used to retrieve information of all pages that belongs to the food event
-  public function retrieveFoodPages($lang):array
+    //This is used to retrieve information of all pages that belongs to the food event
+public function retrieveFoodPages($lang):array
     {
          $db = $this->database->prepare("SELECT * FROM page 
         WHERE page.page_name_en  LIKE '%Specktakel%'

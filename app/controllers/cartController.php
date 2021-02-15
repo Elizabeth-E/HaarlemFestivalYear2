@@ -166,11 +166,14 @@ class CartController extends AppController
             if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
 
                 $ticket = array('Haarlem At Night - ' . $_POST['hidden_event_name'], (float)$_POST['hidden_total_payment'], strtotime($_POST['hidden_date']), $_POST['hidden_language'], $_POST['hidden_guide_name'], (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount'], (float)$_POST['hidden_regular_price'], (float)$_POST['hidden_family_price']);
-
-             if((strpos($_POST['hidden_event_name'], 'Food')) == true)
-                $ticket = array($_POST['hidden_event_name'], (float)$_POST['hidden_total_payment'], (int)$_POST['no_of_adults'], (int)$_POST['no_of_kids'], strtotime($_POST['hidden_time']), strtotime ($_POST['hidden_date']));
             
-           
+            
+//if(isset($_SESSION['total_payment']))
+//{
+    //$filename = $_POST['hidden_total_payment'];
+    if((strpos($_POST['hidden_event_name'], 'Food')) == true)
+                $ticket = array($_POST['hidden_event_name'], (int)$_POST['hidden_total_payment'], (int)$_POST['no_of_adults'], (int)$_POST['no_of_kids'], strtotime($_POST['hidden_time']), strtotime ($_POST['hidden_date']));
+//}
             
             /*if($this->checkDuplicateTicket($ticket))
             {
@@ -208,8 +211,6 @@ class CartController extends AppController
                 next($_SESSION['shoppingCart']);
             }      
 
-
-
         return $key;
     }
 
@@ -238,7 +239,8 @@ class CartController extends AppController
             if((int)$_POST['hidden_amount'] - (((int)$_POST['hidden_family_amount'] * 4)) + (int)$_POST['hidden_regular_amount'] >= 0)
                 return true;
 
-//chreck if the seats are available
+
+//check if the seats are available
         if((strpos($_POST['hidden_event_name'], 'Food')) == true)
 			if((int)$_POST['hidden_amount'] - (((int)$_POST['no_of_adults'])) + (int)$_POST['no_of_kids'] >= 0)
                 return true;
@@ -255,6 +257,8 @@ class CartController extends AppController
             if((int)$_POST['hidden_family_amount'] || (int)$_POST['hidden_regular_amount'] != 0)
                 return true;	
 
+
+//Checks if the user has selected a ticket.
 		 if(strpos($_POST['hidden_event_name'], 'Food') == true)
             if((int)$_POST['no_of_adults'] != 0 || (int)$_POST['no_of_kids'] != 0)
                 return true;
@@ -274,7 +278,8 @@ class CartController extends AppController
     {
         if(strpos($_POST['hidden_cart_event_name'], 'Night') !== false)
             $deleteTicket = array($_POST['hidden_cart_event_name'], $_POST['hidden_cart_total'], $_POST['hidden_cart_date'], $_POST['hidden_cart_language'], $_POST['hidden_cart_guide'], $_POST['hidden_cart_regular'], $_POST['hidden_cart_family'], $_POST['hidden_cart_regular_price'], $_POST['hidden_cart_family_price']);    
-             
+
+//Delete the selected  ticket.   
 		  if((strpos($_POST['hidden_cart_event_name'], 'Food')) == true)
             $deleteticket = array($_POST['hidden_no_of_adults'], $_POST['hidden_no_of_kids'], $_POST['hidden_cart_time'], $_POST['hidden_cart_event_name'], $_POST['hidden_cart_date'], $_POST['hidden_food_price'], $_POST['hidden_cart_total']);
                 

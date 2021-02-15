@@ -5,9 +5,9 @@ namespace Config;
 
 $GLOBALS["CONFIG"] = [
     "database" => [
-        "host" => "haarlemfestival.salero-tech.nl",
-        "username" => "haarlem",
-        "password" => "wr5OGcF64p@p",
+        "host" => "localhost",
+        "username" => "root",
+        "password" => "",
         "database" => "hffit1_db"
     ],
     "default" => [

@@ -2,13 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\app",
+    "\\app\\controllers",
+    "\\app\\models",
     "\\app\\views",
-    "\\app\\views\\layouts\\default",
-    "\\app\\views\\user",
-    "\\webroot",
-    "\\webroot\\img",
-    "\\webroot\\img\\food_event"
+    "\\app\\views\\at_night",
+    "\\app\\views\\cart",
+    "\\app\\views\\food"
   ],
-  "SelectedNode": "\\webroot\\img\\food_event",
+  "SelectedNode": "\\app\\views\\at_night\\at_night_ticket_page.tpl",
   "PreviewInSolutionExplorer": false
 }

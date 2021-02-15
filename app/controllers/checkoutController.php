@@ -86,8 +86,8 @@ class CheckoutController extends AppController
 
         }
         $pdf->Output();
-
     }
+    
     // public function send_pdf_to_user(){
     //     if(
     //         $_REQUEST['action'] == 'pdf_invoice' ){
