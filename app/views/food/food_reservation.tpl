@@ -3,18 +3,18 @@
 <html>
 <script>
 function calcVals() {
-  var e = document.getElementById("no_of_adults");
-  var f = document.getElementById("no_of_kids");
-  var selFrst = e.options[e.selectedIndex].value;
-  var selScnd = f.options[f.selectedIndex].value;
+  var adults = document.getElementById("no_of_adults");
+  var kids = document.getElementById("no_of_kids");
+  var selFrst = adults.options[adults.selectedIndex].value;
+  var selScnd = kids.options[kids.selectedIndex].value;
 
   var totalCal = +selFrst + +selScnd;
   var sum = totalCal * 10;
-  document.getElementById("hidden_total_payment").value = sum;
+   document.getElementById("total_payment").value = sum;
+   document.getElementById("total_amount").value = document.getElementById("total_payment").value;
 
 }
 </script>
-
 	<main>
 
 <section class=night-page>
@@ -106,8 +106,9 @@ function calcVals() {
 
  <div class="text-center">
         <div class="text ">
-         	 <p><span>Total: <input id="hidden_total_payment" type=text  name=hidden_total_payment disabled='true' size="15" /></span></p>
-
+			<input type=hidden name=hidden_total_payment id="total_amount">
+         	 <p><span>Total: <input disabled type=text name=hidden_total_payment id="total_payment" value='{number_format((float)print_r(0, true), 2, '.', '')}'></span></p>
+			 
 			<br>
 			<input type="hidden" name="hidden_event_name" value='Haarle Food-{$RestaurantName}'>
 			<button type="submit" name="add_ticket" class="btn">Add To Cart</button>

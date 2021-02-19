@@ -3,12 +3,9 @@
     "",
     "\\app",
     "\\app\\controllers",
-    "\\app\\models",
     "\\app\\views",
-    "\\app\\views\\at_night",
-    "\\app\\views\\cart",
-    "\\app\\views\\food"
+    "\\app\\views\\at_night"
   ],
-  "SelectedNode": "\\app\\views\\at_night\\at_night_ticket_page.tpl",
+  "SelectedNode": "\\app\\controllers\\cartController.php",
   "PreviewInSolutionExplorer": false
 }
