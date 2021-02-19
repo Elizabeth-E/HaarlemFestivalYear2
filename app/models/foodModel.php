@@ -25,17 +25,13 @@ public function retrieveFoodPages($lang):array
         OR page.page_name_en  LIKE '%Golden%'
         OR page.page_name_en  LIKE '%Food%'");
         $db->execute();
-
-        $result = $db->get_result();
-        
+        $result = $db->get_result();       
         $event_pages = [];
-
         while($row = $result->fetch_assoc())
         {
             $event_page = new Page($row['id'], $row['page_name_'.$lang], $row['page_description_'.$lang], $row['header_title']);
             $event_pages[] = $event_page;
         }
-
         return $event_pages;
     }
 
@@ -46,15 +42,12 @@ public function retrieveFoodPages($lang):array
         $db->bind_param("i", $page_id);
         $db->execute();
         $result = $db->get_result();
-
         $images_for_page = [];
-
         while($row = mysqli_fetch_assoc($result))
         {
             $image = $this->retrieveImage($row['picture_id']);
             $images_for_page[] = $image;
-        }
-        
+        } 
         $db->close();
         return $images_for_page;
     }
@@ -65,25 +58,20 @@ public function retrieveFoodPages($lang):array
         $db->bind_param("i", $picture_id);
         $db->execute();
         $result = $db->get_result();
-
         $image = null;
-
         if($result->num_rows > 0)
         {
             $data = $result->fetch_assoc();
             $image = new Picture($data['id'], $data['name'], $data['path']);
-        
         }
-
         return $image;
     }
 
     public function comment(string $comment)
 {  
     $dbHandle = $this->database->prepare("INSERT INTO food (reservation_comments) VALUES (?)");
-    $dbHandle->bind_param("sssss", $comment);
+    $dbHandle->bind_param("s", $comment);
     $dbHandle->execute();
-     
     $dbHandle->close();
 }
 public function retrieveAmountOfSeats(string $RestaurantName)
@@ -92,7 +80,6 @@ public function retrieveAmountOfSeats(string $RestaurantName)
         $db->bind_param("s", $RestaurantName);
         $db->execute();
         $result = $db->get_result();
-
             $AmountOfSeats = 0;
          if($result->num_rows > 0)
         {
@@ -101,5 +88,4 @@ public function retrieveAmountOfSeats(string $RestaurantName)
         }
         return $AmountOfSeats;
 }
- 
 }

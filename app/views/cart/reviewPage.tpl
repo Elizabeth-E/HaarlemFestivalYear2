@@ -18,10 +18,9 @@
                     <h6>{print_r($ticket[0], true)}</h6><!--event name-->
                     <h6>{print_r($ticket[3], true)}....................................</h6><!--language-->
                     <h6 name=price>€{number_format(print_r($ticket[1], true), 2, '.', '')}</h6>
-				{else if isset($ticket[0]) && strpos($ticket[0], 'Food') != false}
+				{else if isset($ticket[0]) && strpos($ticket[0], 'Food') == true}
                     <h6>{print_r($ticket[0], true)}</h6><!--event name-->
-                    <h6>{print_r($ticket[5], true)}................</h6> <!--maybe restaurant name-->
-				    <h6 name=price>€{number_format(print_r($ticket[5], true), 2, '.', '')}</h6> <!--reservation price-->
+				    <h6 name=price>€{number_format(print_r($ticket[1], true), 2, '.', '')}</h6> <!--reservation price-->
                 {/if}
                 <p></p>
             {/foreach}
@@ -101,24 +100,26 @@
                             <h3 name=total>Total: €{number_format(print_r($ticket[1], true), 2, '.', '')}</h3>
                         </section> 
 						
-					{else if  isset($ticket[0]) && strpos($item[0], 'Food') == true}
+
+<!--food reservation cart review-->						 
+					{else if  isset($ticket[0]) && strpos($ticket[0], 'Food') == true}
 						<section class=review-night-ticket>
                             <section name=review-night-event-name>                           
                                 <!--event name-->
                                 <h3 name=event> {print_r($ticket[0], true)}</h3>
 
                                 <!--date and time-->
-                                <h3>{print_r(date('l jS F Y', $ticket[1]), true)} - {print_r(date('H:i', $ticket[2]), true)}</h3>    
+                                <h3>{print_r(date('l jS F Y', $ticket[5]), true)} - {print_r(date('H:i', $ticket[4]), true)}</h3>    
 
                                 <!--Number of adults-->
-                                <h3>Adults: {print_r($ticket[3], true)}</h3>  
+                                <h3>Adults: {print_r($ticket[2], true)}</h3>  
                                 
                                 <!--Number of kids-->
-								<h3>Kids: {print_r($ticket[4], true)}</h3>  
+								<h3>Kids: {print_r($ticket[3], true)}</h3>  
                                 </section>
  
                             <!--total-->
-                            <h3 name=total>Total: €{number_format(print_r($ticket[5], true), 2, '.', '')}</h3>
+                            <h3 name=total>Total: €{number_format(print_r($ticket[1], true), 2, '.', '')}</h3>
                         </section> 
                         
                     {/if}

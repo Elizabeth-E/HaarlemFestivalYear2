@@ -72,7 +72,7 @@
                     </section>
                 </section>
 
-
+<!--food reservation cart-->
            {else if isset($item[0]) && strpos($item[0], 'Food') == true}
 		        <section class="cart-tour-name">
                     <h1>{print_r($item[0], true)}</h1>

@@ -161,21 +161,16 @@ class CartController extends AppController
     if the tickets are still available.*/
     private function createTicket()
     {
-
-        try{            
+        try
+		{            
             if((strpos($_POST['hidden_event_name'], 'Night')) !== false || (strpos($_POST['hidden_event_name'], 'Beer')) !== false || (strpos($_POST['hidden_event_name'], 'Cocktail')) !== false || (strpos($_POST['hidden_event_name'], 'Hookah')) !== false)
-
                 $ticket = array('Haarlem At Night - ' . $_POST['hidden_event_name'], (float)$_POST['hidden_total_payment'], strtotime($_POST['hidden_date']), $_POST['hidden_language'], $_POST['hidden_guide_name'], (int)$_POST['hidden_regular_amount'], (int)$_POST['hidden_family_amount'], (float)$_POST['hidden_regular_price'], (float)$_POST['hidden_family_price']);
-            
-            
-//if(isset($_SESSION['total_payment']))
-//{
-    //$filename = $_POST['hidden_total_payment'];
+                   
+//creat food reservation
     if((strpos($_POST['hidden_event_name'], 'Food')) == true)
                 $ticket = array($_POST['hidden_event_name'], (int)$_POST['hidden_total_payment'], (int)$_POST['no_of_adults'], (int)$_POST['no_of_kids'], strtotime($_POST['hidden_time']), strtotime ($_POST['hidden_date']));
-//}
             
-            /*if($this->checkDuplicateTicket($ticket))
+            if($this->checkDuplicateTicket($ticket))
             {
                 $key = $this->retrieveKey($ticket);
     
@@ -187,7 +182,7 @@ class CartController extends AppController
                 else
                     throw new \Exception("Only " . $_POST['hidden_amount'] . " people can be added to this activity");
             }
-            else */
+            else
                 $_SESSION['shoppingCart'][] = $ticket;       
         }
         catch(\Exception $e){
@@ -239,7 +234,6 @@ class CartController extends AppController
             if((int)$_POST['hidden_amount'] - (((int)$_POST['hidden_family_amount'] * 4)) + (int)$_POST['hidden_regular_amount'] >= 0)
                 return true;
 
-
 //check if the seats are available
         if((strpos($_POST['hidden_event_name'], 'Food')) == true)
 			if((int)$_POST['hidden_amount'] - (((int)$_POST['no_of_adults'])) + (int)$_POST['no_of_kids'] >= 0)
@@ -256,7 +250,6 @@ class CartController extends AppController
 
             if((int)$_POST['hidden_family_amount'] || (int)$_POST['hidden_regular_amount'] != 0)
                 return true;	
-
 
 //Checks if the user has selected a ticket.
 		 if(strpos($_POST['hidden_event_name'], 'Food') == true)
