@@ -97,8 +97,6 @@ function calcVals() {
 				<option>29-july-2018</option>
 			</select>
 		</div>
-
-			<p>Seats left: <input type="text" name="hidden_amount" readonly value='{$amount}'></p>
 			
  		<div class="form-group">
    			 <textarea  name ="hidden_comment" class="form-control" rows="7" >Enter your comment here...!!!!</textarea>
