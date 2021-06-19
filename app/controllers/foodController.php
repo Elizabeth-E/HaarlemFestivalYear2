@@ -1,36 +1,36 @@
 <?php
-namespace App\Controllers;
+  namespace App\Controllers;
  
-use App\Models;
+  use App\Models;
  
-class FoodController extends AppController
-{
+  class FoodController extends AppController
+  {
     protected $model = "";
     protected $params = [];
     private $language = "";
     private $food_pages = [];
 
  
-  public function __construct(string $action = NULL, array $params)
-    {
-        parent::__construct($action, $params);
+    public function __construct(string $action = NULL, array $params)
+      {
+          parent::__construct($action, $params);
 
-        $this->action = $action;
-        $this->params = $params;
-        //Model for the At food event
-        $this->model = new Models\foodModel();
+          $this->action = $action;
+          $this->params = $params;
+          //Model for the At food event
+          $this->model = new Models\foodModel();
 
-        
-        //This is used to retrieve all pages for the At Night event
-        $lang = $this->getLanguage();
-        $this->food_pages = $this->model->retrieveFoodPages($lang);
+          
+          //This is used to retrieve all pages for the At Night event
+          $lang = $this->getLanguage();
+          $this->food_pages = $this->model->retrieveFoodPages($lang);
 
-		$this->getCart();
-        $this->setBackground("Food.jpg");
- 
-    }
-//ctrl + K + C to comment paragraph!!!
- //loading food Home page
+  		    $this->getCart();
+          $this->setBackground("FoodHome.jpg");
+   
+      }
+    //ctrl + K + C to comment paragraph!!!
+  //loading food Home page
     public function index(array $param)
     {
         $restaurant_pages = array();
@@ -54,9 +54,9 @@ class FoodController extends AppController
         $this->view->assign("restaurant_pages", $restaurant_pages);
         $this->view->display("food/food_home.tpl");
     
-}
+    }
 
-//This is used to get page information
+    //This is used to get page information
      public function getPageInfo(array $params)
      {
          foreach($this->food_pages as $page)
@@ -85,5 +85,21 @@ class FoodController extends AppController
         //display food home page
         $this->view->display("food/food_reservation.tpl");
     }
-}
+
+    private function comment()
+      {
+        foreach($this->food_pages as $page)
+         {
+           if($page->getPageName() == 'Haarlem Food')
+            {
+       if((strpos($_POST['hidden_event_name'], 'Food')) == true)
+        {
+            $comment = $_POST["hidden_comment"]; 
+                      
+            $this->model->comment($comment, $page->getPageId());
+        }
+      }
+    }
+    }
+  }
 ?>

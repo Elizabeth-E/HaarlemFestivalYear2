@@ -67,10 +67,10 @@ public function retrieveFoodPages($lang):array
         return $image;
     }
 
-    public function comment(string $comment)
+    public function comment(string $comment, int $page_id)
 {  
-    $dbHandle = $this->database->prepare("INSERT INTO food (reservation_comments) VALUES (?)");
-    $dbHandle->bind_param("s", $comment);
+    $dbHandle = $this->database->prepare("INSERT INTO food (reservation_comments, event_id) VALUES (?, ?)");
+    $dbHandle->bind_param("si", $comment, $page_id);
     $dbHandle->execute();
     $dbHandle->close();
 }

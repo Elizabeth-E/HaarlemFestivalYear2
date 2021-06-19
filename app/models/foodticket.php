@@ -6,7 +6,7 @@ class FoodTicket extends Ticket
 	private no_of_adults;
 	private no_of_kids;
 	private time;
-	private comment;
+	private $comment;
     private food_price;
 
     public function __construct($date, $event_name, $amount, $no_of_adults, $no_of_kids, $time, $comment, $food_price)
@@ -33,7 +33,7 @@ class FoodTicket extends Ticket
     }
     public function getComment()
     {
-        return $this->comment;
+        $this->comment = $comment;
     }
     public function setTime(datetime $time())
     {

@@ -97,17 +97,19 @@ function calcVals() {
 				<option>29-july-2018</option>
 			</select>
 		</div>
+
+			<p> <input type=hidden name="hidden_amount" readonly value='{$amount}'></p>
 			
  		<div class="form-group">
-   			 <textarea  name ="hidden_comment" class="form-control" rows="7" >Enter your comment here...!!!!</textarea>
+   			 <textarea  name =hidden_comment class="form-control" rows="7" >Enter your comment here...!!!!</textarea>
   		</div>
 
  <div class="text-center">
         <div class="text ">
 			<input type=hidden name=hidden_total_payment id="total_amount">
          	 <p><span>Total: <input disabled type=text name=hidden_total_payment id="total_payment" value='{number_format((float)print_r(0, true), 2, '.', '')}'></span></p>
-			 
 			<br>
+            
 			<input type="hidden" name="hidden_event_name" value='Haarle Food-{$RestaurantName}'>
 			<button type="submit" name="add_ticket" class="btn">Add To Cart</button>
         </div>

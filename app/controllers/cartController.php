@@ -168,7 +168,9 @@ class CartController extends AppController
                    
 //creat food reservation
     if((strpos($_POST['hidden_event_name'], 'Food')) == true)
+        
                 $ticket = array($_POST['hidden_event_name'], (int)$_POST['hidden_total_payment'], (int)$_POST['no_of_adults'], (int)$_POST['no_of_kids'], strtotime($_POST['hidden_time']), strtotime ($_POST['hidden_date']));
+
             
             if($this->checkDuplicateTicket($ticket))
             {
@@ -220,8 +222,8 @@ class CartController extends AppController
                     if($value[0] == $ticket[0] && $value[2] == $ticket[2] && $value[3] == $ticket[3] && $value[4] == $ticket[4]) //checks the event of the ticket, date, language, and guide
                         return true;
 
-				 //if(strpos($value[0], 'Food') == true)
-                   // if($value[0] == $ticket[0] && $value[1] == $ticket[1] && $value[2] == $ticket[2] && $value[3] == $ticket[3] && $value[4] == $ticket[4] && $value[5] == $ticket[5] && $value[6] == $ticket[6])
+    //if(strpos($value[0], 'Food') == true)
+       // if($value[0] == $ticket[0] && $value[1] == $ticket[1] && $value[2] == $ticket[2] && $value[3] == $ticket[3] && $value[4] == $ticket[4] && $value[5] == $ticket[5] && $value[6] == $ticket[6])
                        // return true;
  
         return false;		
